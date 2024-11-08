@@ -12,7 +12,7 @@ export default function FormikTextField({
   const formik = useFormikContext<any>();
 
   const onChange: TextFieldProps["onChange"] = (e) => {
-    var newValue = null;
+    let newValue = null;
     if (type === "number") {
       if (e.target.value === "0") newValue = 0;
       else if (isNumeric(e.target.value)) newValue = Number(e.target.value);

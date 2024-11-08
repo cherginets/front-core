@@ -16,6 +16,7 @@ export function useMRTable<TData extends MRT_RowData>({refetch, renderTopToolbar
   return useOriginalMaterialReactTable({
     ...tableOptions,
     localization: MRT_Localization_RU,
+    enableDensityToggle: false,
     renderTopToolbarCustomActions: (...props) => {
       return <>
         {!!renderTopToolbarCustomActions && renderTopToolbarCustomActions(...props)}
