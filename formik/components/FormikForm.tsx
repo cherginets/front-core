@@ -16,6 +16,7 @@ export type FormikFormProps = {
   validationSchema?: FormikConfig<any>["validationSchema"];
   onSubmit: (values: any) => Promise<any>;
   showButtons?: boolean;
+  disabled?: boolean;
   fields: {
     label: string;
     name: string;
@@ -30,14 +31,19 @@ export default function FormikForm({
   fields,
   initialValues = {},
   innerRef,
+  disabled: allDisabled,
   validationSchema,
   onSubmit,
   showButtons: _showButtons
 }: FormikFormProps) {
-  const showButtons = useMemo<boolean>(() => !innerRef || !!_showButtons, [innerRef, _showButtons]);
+  const showButtons = useMemo<boolean>(() => {
+    if(_showButtons === false) return false;
+    return !innerRef || !!_showButtons
+  }, [innerRef, _showButtons]);
 
   return (
     <Formik
+
       innerRef={innerRef}
       initialValues={initialValues}
       validationSchema={validationSchema}
@@ -51,7 +57,7 @@ export default function FormikForm({
                 const defaultProps = {
                   name: field.name,
                   label: field.label,
-                  disabled: isSubmitting
+                  disabled: isSubmitting || allDisabled
                 };
 
                 if (field.FieldComponent) {

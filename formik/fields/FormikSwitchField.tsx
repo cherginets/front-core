@@ -6,8 +6,9 @@ import { useFormikContext } from "formik";
 export type FormikSwitchFieldProps = {
   label: string;
   name: string;
+  disabled: boolean
 };
-export default function FormikSwitchField({ label, name, ...props }: FormikSwitchFieldProps) {
+export default function FormikSwitchField({ label, name, disabled, ...props }: FormikSwitchFieldProps) {
   const formik = useFormikContext<{ [key: string]: any }>();
 
   const helperText = (formik.touched[name] && formik.errors[name]) as string;
@@ -16,6 +17,7 @@ export default function FormikSwitchField({ label, name, ...props }: FormikSwitc
     <FormGroup onBlur={formik.handleBlur}>
       <FormControlLabel
         onBlur={formik.handleBlur}
+        disabled={disabled}
         control={
           <Switch
             name={name}
