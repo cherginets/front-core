@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import { Formik, FormikConfig } from "formik";
 import { useMemo } from "react";
 import {FormikTextField} from "@/core/formik";
+import FormikAsyncAutocompleteField from "@/core/formik/fields/FormikAsyncAutocompleteField";
 
 export type FormikFormProps = {
   innerRef?: any; // React.Ref<FormikProps<any>>
@@ -18,7 +19,8 @@ export type FormikFormProps = {
   fields: {
     label: string;
     name: string;
-    type?: "string" | "number" | "autocomplete" | "select" | "boolean";
+    type?: "string" | "textarea" | "number" | "autocomplete" | "autocomplete_multiple" | "select" | "boolean";
+    loading?: boolean;
     options?: Option[];
     FieldComponent?: any;
   }[];
@@ -42,7 +44,6 @@ export default function FormikForm({
       onSubmit={(values) => onSubmit(values).catch(n_error)}
     >
       {({ handleSubmit, values, resetForm, isSubmitting }) => {
-        console.log("values", values);
         return (
           <form onSubmit={handleSubmit}>
             <Stack direction={"column"} spacing={2}>
@@ -63,9 +64,15 @@ export default function FormikForm({
                   case "string":
                   case undefined:
                     return <FormikTextField key={key} {...defaultProps} />;
+                  case "textarea":
+                  case undefined:
+                    return <FormikTextField key={key} multiline rows={3} {...defaultProps} />;
                   case "boolean":
                     return <FormikSwitchField key={key} {...defaultProps} />;
                   case "autocomplete":
+                    return <FormikAsyncAutocompleteField loading={!!field.loading} options={field.options!} {...defaultProps} />
+                  case "autocomplete_multiple":
+                    return <FormikAsyncAutocompleteField multiple loading={!!field.loading} options={field.options!} {...defaultProps} />
                   case "select":
                   default:
                     return (
