@@ -5,10 +5,12 @@ import { IconButton, Typography, TypographyProps } from "@mui/material";
 
 export default function CopyToClipboardTypography({
   textToCopy,
-  children,
+  children = textToCopy,
+    successText = "Скопировано!",
   ...props
 }: TypographyProps & {
   textToCopy: string;
+  successText?: string;
 }) {
   return (
     <Typography {...props}>
@@ -16,7 +18,7 @@ export default function CopyToClipboardTypography({
         size={"small"}
         onClick={() => {
           copyToClipboard({ value: textToCopy });
-          n_success("Скопировано!");
+          n_success(successText);
         }}
       >
         <ContentCopy fontSize={"small"} />

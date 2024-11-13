@@ -16,6 +16,7 @@ export default function FormikSelectField({
   helperText: _helperText,
   options,
   optionsMap: _optionsMap,
+                                            disabled,
   ...props
 }: FormikSelectFieldProps) {
   const formik = useFormikContext<any>();
@@ -35,6 +36,7 @@ export default function FormikSelectField({
       <Select
         labelId={labelId}
         id={name}
+        disabled={disabled}
         value={formik.values[name] || ""}
         label={label}
         onBlur={formik.handleBlur}
