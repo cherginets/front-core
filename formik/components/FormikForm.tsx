@@ -104,7 +104,7 @@ export default function FormikForm({
                     onClick={() => handleSubmit()}
                     endIcon={<Publish />}
                   >
-                    Сохранить
+                    Отправить
                   </Button>
                 </Stack>
               )}
