@@ -3,17 +3,29 @@ import { n_promise } from "@/core/features/notifications";
 import {MOMENT_DATE_MYSQL, MOMENT_DATE_PRETTY} from "@/core/utils";
 import { OpenInNew, ToggleOff, ToggleOn } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-import { MRT_ColumnDef, MRT_Row, MRT_RowData } from "material-react-table";
+import {MRT_Cell, MRT_ColumnDef, MRT_Row, MRT_RowData} from "material-react-table";
 import moment from "moment";
+import Link from "next/link";
 
-export const MRTColumns_id = function <T extends MRT_RowData = MRT_RowData>(): MRT_ColumnDef<T, any> {
+export const MRTColumns_id = function <T extends MRT_RowData = MRT_RowData>({getRowLink = () => null}: {
+  getRowLink?: (props: {
+    cell: MRT_Cell<T, any>;
+    row: MRT_Row<T>;
+  }) => string | null
+} = {}): MRT_ColumnDef<T, any> {
   return {
     accessorKey: "id",
     header: "ID",
     size: 0,
-    enableClickToCopy: true,
+    filterVariant: "range",
+    // enableClickToCopy: true,
     enableEditing: false,
-    enableSorting: true
+    enableSorting: true,
+    Cell: ({row, cell}) => {
+      const link = getRowLink({row, cell});
+      if(link) return <Link className={'link'} href={link}>{cell.getValue()}</Link>
+      return cell.getValue();
+    }
   };
 };
 
@@ -28,7 +40,8 @@ export const MRTColumns_active = function <T extends MRT_RowData = MRT_RowData>(
     size: 0,
     enableEditing: false,
     enableSorting: false,
-    enableColumnFilter: false,
+    enableColumnFilter: true,
+    filterVariant: "checkbox",
     enableGlobalFilter: false,
     Cell: ({ row }) => {
       const active = row.original["active"];
@@ -36,7 +49,6 @@ export const MRTColumns_active = function <T extends MRT_RowData = MRT_RowData>(
       const color = active ? "success" : "error";
       return (
         <IconButton
-          size={"small"}
           onClick={() => {
             if (onToggle) {
               n_promise(onToggle({ row }), {
@@ -45,7 +57,7 @@ export const MRTColumns_active = function <T extends MRT_RowData = MRT_RowData>(
             }
           }}
         >
-          <IconComponent fontSize={"small"} color={color} />
+          <IconComponent color={color} />
         </IconButton>
       );
     }
@@ -74,8 +86,10 @@ export const MRTColumns_link = function <T extends MRT_RowData = MRT_RowData>(
   };
 };
 
-const MRTColumns_date = (): Pick<MRT_ColumnDef<any>, "size" | "Cell"> => ({
+const MRTColumns_date = (): Pick<MRT_ColumnDef<any>, "size" | "Cell" | "enableColumnFilter"> => ({
   size: 0,
+  enableColumnFilter: false,
+  // filterVariant: "date-range",
   Cell: ({ row }: any) => moment(row.original.created_at).format(MOMENT_DATE_PRETTY)
 });
 

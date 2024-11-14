@@ -238,7 +238,7 @@ export const MuiLayout: FC<{
 
             if (!link) return null;
 
-            const { title, url, onClick, IconComponent } = link;
+            const { title, url, onClick, IconComponent, redCounter } = link;
 
             const Wrapper = url
               ? ({ children }: { children: ReactNode }) => <StyledLink href={url}>{children}</StyledLink>
@@ -270,7 +270,7 @@ export const MuiLayout: FC<{
                           justifyContent: "center"
                         }}
                       >
-                        {index % 2 === 0 ? <IconComponent /> : <IconComponent />}
+                        <Badge badgeContent={redCounter} color={'error'}> <IconComponent /></Badge>
                       </ListItemIcon>
                     </Tooltip>
 
