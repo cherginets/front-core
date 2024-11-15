@@ -15,6 +15,10 @@ export function randomString(length: number = 8) {
   return result;
 }
 
+export function randomBool() {
+  return !!randomInteger(0, 1);
+}
+
 export function randomDate() {
   return moment();
 }
