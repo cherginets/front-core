@@ -5,14 +5,21 @@ import {
 import { MRT_Localization_RU } from 'material-react-table/locales/ru';
 import IconButton from "@/core/mui/IconButton";
 import {Sync} from "@mui/icons-material";
+import {useEffect} from "react";
+import {n_error} from "@/core/features/notifications";
+import {formatError} from "@/core/utils";
 
 export function MRTable<TData extends MRT_RowData>(props: MaterialReactTableProps<TData>) {
   return <OriginalMaterialReactTable {...props} />
 }
 
-export function useMRTable<TData extends MRT_RowData>({refetch, renderTopToolbarCustomActions, ...tableOptions}: MRT_TableOptions<TData> & {
+export function useMRTable<TData extends MRT_RowData>({error, refetch, renderTopToolbarCustomActions, ...tableOptions}: MRT_TableOptions<TData> & {
   refetch?: () => any,
+  error?: any,
 }) {
+  useEffect(() => {
+    if(error) n_error(formatError(error));
+  }, [error]);
   return useOriginalMaterialReactTable({
     ...tableOptions,
     localization: MRT_Localization_RU,
