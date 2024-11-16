@@ -1,5 +1,5 @@
-import { number_format } from "./php";
 import { CHAR_RUBLE } from "../constants";
+import { number_format } from "./php";
 
 export const MOMENT_FOR_FILENAME = "YYYYMMDDHHmmss";
 

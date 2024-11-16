@@ -1,6 +1,5 @@
-import { ReactNode, useState } from "react";
 import { Button, Stack } from "@mui/material";
-import { ChevronLeft } from "@mui/icons-material";
+import { ReactNode, useState } from "react";
 
 export default function CutBlock({
   showMessage = "Показать",

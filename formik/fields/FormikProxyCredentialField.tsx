@@ -1,10 +1,8 @@
-import TextField, { TextFieldProps } from "@mui/material/TextField";
-import { useFormikContext } from "formik";
-import { isNumeric } from "@/core/utils/isNumeric";
-import { FormikTextFieldProps } from "@/core/formik/fields/FormikTextField";
 import { FormikTextField } from "@/core/formik";
+import { FormikTextFieldProps } from "@/core/formik/fields/FormikTextField";
 import { Sync } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
+import { useFormikContext } from "formik";
 
 export default function FormikProxyCredentialField({
   ...props

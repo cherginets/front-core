@@ -1,9 +1,9 @@
 "use client";
-import { ReactNode } from "react";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
-import { ThemeProvider } from "@mui/material";
 import theme from "@/styles/theme";
+import { ThemeProvider } from "@mui/material";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { ConfirmProvider } from "material-ui-confirm";
+import { ReactNode } from "react";
 
 export default function MuiThemeProvider({
   children,

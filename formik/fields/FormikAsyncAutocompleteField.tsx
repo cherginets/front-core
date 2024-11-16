@@ -1,7 +1,6 @@
 import { Option } from "@/core/formik/types/options";
 import Autocomplete, { AutocompleteProps } from "@/core/mui/Autocomplete";
 import { useFormikContext } from "formik";
-import { FormControl, FormHelperText } from "@mui/material";
 
 export type FormikAutocompleteFieldProps<OptionType extends Option = Option> = {
   label: string;
