@@ -16,6 +16,7 @@ export const formatError = (error: any): string => {
     error?.response?.data?.message ||
     error?.response?.data?.error ||
     error?.data?.errors ||
+    error?.data?.error ||
     error?.response?.data?.result ||
     error?.message ||
     error?.message ||
@@ -33,5 +34,5 @@ export const formatError = (error: any): string => {
     );
   }
 
-  return JSON.stringify(potentialError);
+  return typeof potentialError === 'string' ? potentialError : JSON.stringify(potentialError);
 }
