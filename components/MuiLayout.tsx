@@ -212,9 +212,11 @@ export const MuiLayout: FC<{
 
                 return (
                   <Wrapper key={id}>
-                    <IconButton color={"inherit"}>
-                      <Icon color={"inherit"} />
-                    </IconButton>
+                    <Tooltip title={title}>
+                      <IconButton color={"inherit"}>
+                        <Icon color={"inherit"} />
+                      </IconButton>
+                    </Tooltip>
                   </Wrapper>
                 );
               })}
