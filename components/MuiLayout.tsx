@@ -4,7 +4,7 @@ import {
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
   Group,
-  Menu as MenuIcon
+  Menu as MenuIcon,
 } from "@mui/icons-material";
 import {
   Badge,
@@ -23,7 +23,7 @@ import {
   Stack,
   Toolbar,
   Tooltip,
-  Typography
+  Typography,
 } from "@mui/material";
 import { CSSObject, Theme, styled, useTheme } from "@mui/material/styles";
 import { FC, Fragment, ReactNode, useMemo, useState } from "react";
@@ -37,21 +37,21 @@ const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen
+    duration: theme.transitions.duration.enteringScreen,
   }),
-  overflowX: "hidden"
+  overflowX: "hidden",
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen
+    duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: "hidden",
   width: `calc(${theme.spacing(7)} + 1px)`,
   [theme.breakpoints.up("sm")]: {
-    width: `calc(${theme.spacing(8)} + 1px)`
-  }
+    width: `calc(${theme.spacing(8)} + 1px)`,
+  },
 });
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -60,7 +60,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
-  ...theme.mixins.toolbar
+  ...theme.mixins.toolbar,
 }));
 
 interface AppBarProps extends MuiAppBarProps {
@@ -68,46 +68,48 @@ interface AppBarProps extends MuiAppBarProps {
 }
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open"
+  shouldForwardProp: (prop) => prop !== "open",
 })<AppBarProps>(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen
+    duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
-  })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" })(({ theme, open }) => ({
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
   width: drawerWidth,
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
   ...(open && {
     ...openedMixin(theme),
-    "& .MuiDrawer-paper": openedMixin(theme)
+    "& .MuiDrawer-paper": openedMixin(theme),
   }),
   ...(!open && {
     ...closedMixin(theme),
     "& .MuiDrawer-paper": closedMixin(theme),
     [theme.breakpoints.down("sm")]: {
-      display: "none"
-    }
-  })
+      display: "none",
+    },
+  }),
 }));
 
 const StyledLink = styled(Link)(({ theme }) => ({
   "&, &:hover, &:active": {
-    textDecoration: "none"
+    textDecoration: "none",
   },
-  color: "inherit"
+  color: "inherit",
 }));
 
 export type MuiLayoutLinkTypeBase = {
@@ -117,13 +119,18 @@ export type MuiLayoutLinkTypeBase = {
   redCounter?: ReactNode;
 };
 
-export type MuiLayoutLinkTypeBaseWithUrl = MuiLayoutLinkTypeBase & { url: string; onClick?: never };
+export type MuiLayoutLinkTypeBaseWithUrl = MuiLayoutLinkTypeBase & {
+  url: string;
+  onClick?: never;
+};
 export type MuiLayoutLinkTypeBaseWithOnClick = MuiLayoutLinkTypeBase & {
   url?: never;
   onClick: (link: MuiLayoutLinkType) => any;
 };
 
-export type MuiLayoutLinkType = MuiLayoutLinkTypeBaseWithUrl | MuiLayoutLinkTypeBaseWithOnClick;
+export type MuiLayoutLinkType =
+  | MuiLayoutLinkTypeBaseWithUrl
+  | MuiLayoutLinkTypeBaseWithOnClick;
 
 export const MuiLayout: FC<{
   left: string[];
@@ -138,7 +145,7 @@ export const MuiLayout: FC<{
 
   const linksMap = useMemo<Map<string, MuiLayoutLinkType>>(
     () => new Map(links.map((l) => [l.id || l.title, l])),
-    [links]
+    [links],
   );
 
   const handleDrawerOpen = () => {
@@ -154,11 +161,25 @@ export const MuiLayout: FC<{
 
     const titleElement =
       // Поиск точного совпадения
-      links.find((link) => !!link.url && pathname?.replaceAll("/", "") === (link.url || "").replaceAll("/", "")) ||
+      links.find(
+        (link) =>
+          !!link.url &&
+          pathname?.replaceAll("/", "") ===
+            (link.url || "").replaceAll("/", ""),
+      ) ||
       // Поиск по наибольшему совпадению
       (() => {
-        const weights = links.map((link) => (!link.url ? 0 : pathname?.indexOf(link.url) > -1 ? link.url.length : 0));
-        const maxIndex = weights.reduce((iMax, x, i, arr) => (x > arr[iMax] ? i : iMax), 0);
+        const weights = links.map((link) =>
+          !link.url
+            ? 0
+            : pathname?.indexOf(link.url) > -1
+              ? link.url.length
+              : 0,
+        );
+        const maxIndex = weights.reduce(
+          (iMax, x, i, arr) => (x > arr[iMax] ? i : iMax),
+          0,
+        );
 
         return links[maxIndex];
       })() ||
@@ -180,7 +201,7 @@ export const MuiLayout: FC<{
             edge="start"
             sx={{
               marginRight: 5,
-              ...(open && { display: "none" })
+              ...(open && { display: "none" }),
             }}
           >
             <MenuIcon />
@@ -198,8 +219,12 @@ export const MuiLayout: FC<{
                 const { title, url, onClick, IconComponent } = link;
 
                 const Wrapper = url
-                  ? ({ children }: { children: ReactNode }) => <StyledLink href={url}>{children}</StyledLink>
-                  : ({ children }: { children: ReactNode }) => <Fragment>{children}</Fragment>;
+                  ? ({ children }: { children: ReactNode }) => (
+                      <StyledLink href={url}>{children}</StyledLink>
+                    )
+                  : ({ children }: { children: ReactNode }) => (
+                      <Fragment>{children}</Fragment>
+                    );
 
                 const Icon =
                   link.redCounter !== undefined
@@ -228,7 +253,11 @@ export const MuiLayout: FC<{
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            {theme.direction === "rtl" ? (
+              <ChevronRightIcon />
+            ) : (
+              <ChevronLeftIcon />
+            )}
           </IconButton>
         </DrawerHeader>
         <Divider />
@@ -243,8 +272,12 @@ export const MuiLayout: FC<{
             const { title, url, onClick, IconComponent, redCounter } = link;
 
             const Wrapper = url
-              ? ({ children }: { children: ReactNode }) => <StyledLink href={url}>{children}</StyledLink>
-              : ({ children }: { children: ReactNode }) => <Fragment>{children}</Fragment>;
+              ? ({ children }: { children: ReactNode }) => (
+                  <StyledLink href={url}>{children}</StyledLink>
+                )
+              : ({ children }: { children: ReactNode }) => (
+                  <Fragment>{children}</Fragment>
+                );
 
             return (
               <Wrapper key={index}>
@@ -261,7 +294,7 @@ export const MuiLayout: FC<{
                     sx={{
                       minHeight: 48,
                       justifyContent: open ? "initial" : "center",
-                      px: 2.5
+                      px: 2.5,
                     }}
                   >
                     <Tooltip title={title}>
@@ -269,14 +302,20 @@ export const MuiLayout: FC<{
                         sx={{
                           minWidth: 0,
                           mr: open ? 3 : "auto",
-                          justifyContent: "center"
+                          justifyContent: "center",
                         }}
                       >
-                        <Badge badgeContent={redCounter} color={'error'}> <IconComponent /></Badge>
+                        <Badge badgeContent={redCounter} color={"error"}>
+                          {" "}
+                          <IconComponent />
+                        </Badge>
                       </ListItemIcon>
                     </Tooltip>
 
-                    <ListItemText primary={title} sx={{ opacity: open ? 1 : 0 }} />
+                    <ListItemText
+                      primary={title}
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
                   </ListItemButton>
                 </ListItem>
               </Wrapper>

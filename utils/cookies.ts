@@ -1,18 +1,30 @@
 const isBrowser = typeof window !== "undefined";
 
-export const setCookie = (name: string, value: string, options: any /*todo*/) => {
+export const setCookie = (
+  name: string,
+  value: string,
+  options: any /*todo*/,
+) => {
   if (!isBrowser) return;
 
   const optionsWithDefaults = {
     days: 7,
     path: "/",
-    ...options
+    ...options,
   };
 
-  const expires = new Date(Date.now() + optionsWithDefaults.days * 864e5).toUTCString();
+  const expires = new Date(
+    Date.now() + optionsWithDefaults.days * 864e5,
+  ).toUTCString();
 
   document.cookie =
-    name + "=" + encodeURIComponent(value) + "; expires=" + expires + "; path=" + optionsWithDefaults.path;
+    name +
+    "=" +
+    encodeURIComponent(value) +
+    "; expires=" +
+    expires +
+    "; path=" +
+    optionsWithDefaults.path;
 };
 
 export const getCookie = (name: string, initialValue = "") => {
@@ -28,6 +40,6 @@ export const getCookie = (name: string, initialValue = "") => {
 
 export const clearCookie = (name: string) => {
   setCookie(name, "", {
-    "max-age": -1
+    "max-age": -1,
   });
 };

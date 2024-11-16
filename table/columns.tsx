@@ -1,17 +1,24 @@
 import { NextLink } from "@/core/components/NextMuiLink";
 import { n_promise } from "@/core/features/notifications";
-import {MOMENT_DATE_MYSQL, MOMENT_DATE_PRETTY} from "@/core/utils";
+import { MOMENT_DATE_MYSQL, MOMENT_DATE_PRETTY } from "@/core/utils";
 import { OpenInNew, ToggleOff, ToggleOn } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-import {MRT_Cell, MRT_ColumnDef, MRT_Row, MRT_RowData} from "material-react-table";
+import {
+  MRT_Cell,
+  MRT_ColumnDef,
+  MRT_Row,
+  MRT_RowData,
+} from "material-react-table";
 import moment from "moment";
 import Link from "next/link";
 
-export const MRTColumns_id = function <T extends MRT_RowData = MRT_RowData>({getRowLink = () => null}: {
+export const MRTColumns_id = function <T extends MRT_RowData = MRT_RowData>({
+  getRowLink = () => null,
+}: {
   getRowLink?: (props: {
     cell: MRT_Cell<T, any>;
     row: MRT_Row<T>;
-  }) => string | null
+  }) => string | null;
 } = {}): MRT_ColumnDef<T, any> {
   return {
     accessorKey: "id",
@@ -21,16 +28,23 @@ export const MRTColumns_id = function <T extends MRT_RowData = MRT_RowData>({get
     // enableClickToCopy: true,
     enableEditing: false,
     enableSorting: true,
-    Cell: ({row, cell}) => {
-      const link = getRowLink({row, cell});
-      if(link) return <Link className={'link'} href={link}>{cell.getValue()}</Link>
+    Cell: ({ row, cell }) => {
+      const link = getRowLink({ row, cell });
+      if (link)
+        return (
+          <Link className={"link"} href={link}>
+            {cell.getValue()}
+          </Link>
+        );
       return cell.getValue();
-    }
+    },
   };
 };
 
-export const MRTColumns_active = function <T extends MRT_RowData = MRT_RowData>({
-  onToggle
+export const MRTColumns_active = function <
+  T extends MRT_RowData = MRT_RowData,
+>({
+  onToggle,
 }: {
   onToggle?: ({ row }: { row: MRT_Row<T> }) => Promise<any>;
 }): MRT_ColumnDef<T, any> {
@@ -52,7 +66,7 @@ export const MRTColumns_active = function <T extends MRT_RowData = MRT_RowData>(
           onClick={() => {
             if (onToggle) {
               n_promise(onToggle({ row }), {
-                pending: "Смена активности"
+                pending: "Смена активности",
               });
             }
           }}
@@ -60,13 +74,13 @@ export const MRTColumns_active = function <T extends MRT_RowData = MRT_RowData>(
           <IconComponent color={color} />
         </IconButton>
       );
-    }
+    },
   };
 };
 
 export const MRTColumns_link = function <T extends MRT_RowData = MRT_RowData>(
   getRowLink: (row: MRT_RowData) => string,
-  options: { _blank?: boolean } = {}
+  options: { _blank?: boolean } = {},
 ): MRT_ColumnDef<T, any> {
   return {
     id: "link",
@@ -82,25 +96,29 @@ export const MRTColumns_link = function <T extends MRT_RowData = MRT_RowData>(
           </IconButton>
         </NextLink>
       );
-    }
+    },
   };
 };
 
-const MRTColumns_date = (): Pick<MRT_ColumnDef<any>, "size" | "Cell" | "enableColumnFilter"> => ({
+const MRTColumns_date = (): Pick<
+  MRT_ColumnDef<any>,
+  "size" | "Cell" | "enableColumnFilter"
+> => ({
   size: 0,
   enableColumnFilter: false,
   // filterVariant: "date-range",
-  Cell: ({ row }: any) => moment(row.original.created_at).format(MOMENT_DATE_PRETTY)
+  Cell: ({ row }: any) =>
+    moment(row.original.created_at).format(MOMENT_DATE_PRETTY),
 });
 
 export const MRTColumns_updated_at = (): MRT_ColumnDef<any> => ({
   ...MRTColumns_date(),
   accessorKey: "updated_at",
-  header: "Обновлено"
+  header: "Обновлено",
 });
 
 export const MRTColumns_created_at = (): MRT_ColumnDef<any> => ({
   ...MRTColumns_date(),
   accessorKey: "created_at",
-  header: "Создано"
+  header: "Создано",
 });

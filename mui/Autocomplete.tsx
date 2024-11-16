@@ -5,12 +5,15 @@ import {
   IconButton,
   Autocomplete as MuiAutocomplete,
   AutocompleteProps as MuiAutocompleteProps,
-  Stack
+  Stack,
 } from "@mui/material";
 import TextField, { TextFieldProps } from "@mui/material/TextField";
 import { Fragment, useMemo } from "react";
 
-export type AutocompleteProps<OptionType extends Option = Option, Multiple extends boolean | undefined = boolean> = {
+export type AutocompleteProps<
+  OptionType extends Option = Option,
+  Multiple extends boolean | undefined = boolean,
+> = {
   label: string;
   name: string;
   loading?: boolean;
@@ -18,12 +21,14 @@ export type AutocompleteProps<OptionType extends Option = Option, Multiple exten
   optionsMap?: Map<OptionType["value"], OptionType>;
   onAddElementClick?: () => any;
   textFieldProps?: TextFieldProps;
-  onChange?: (value: Multiple extends true ? OptionType["value"][] : OptionType["value"]) => any;
+  onChange?: (
+    value: Multiple extends true ? OptionType["value"][] : OptionType["value"],
+  ) => any;
 } & Omit<MuiAutocompleteProps<OptionType, Multiple, any, any>, "renderInput">;
 
 export default function AutocompleteField<
   OptionType extends Option = Option,
-  Multiple extends boolean | undefined = boolean
+  Multiple extends boolean | undefined = boolean,
 >({
   value: _value,
   name,
@@ -37,7 +42,10 @@ export default function AutocompleteField<
   textFieldProps = {},
   ...props
 }: AutocompleteProps<OptionType, Multiple>) {
-  const optionsMap = useMemo(() => _optionsMap || new Map(options.map((o) => [o.value, o])), [_optionsMap, options]);
+  const optionsMap = useMemo(
+    () => _optionsMap || new Map(options.map((o) => [o.value, o])),
+    [_optionsMap, options],
+  );
   const value = _value || (multiple ? _value || [] : null);
 
   return (
@@ -56,7 +64,12 @@ export default function AutocompleteField<
         // @ts-ignore
         if (option.value === value) return true;
 
-        if (typeof option === "object" && typeof value === "object" && "value" in option && "value" in value) {
+        if (
+          typeof option === "object" &&
+          typeof value === "object" &&
+          "value" in option &&
+          "value" in value
+        ) {
           return option.value === value.value;
         }
 
@@ -72,7 +85,9 @@ export default function AutocompleteField<
               ? value.value
               : null
             : // @ts-ignore
-              value.map((option) => (typeof option === "object" ? option.value : option));
+              value.map((option) =>
+                typeof option === "object" ? option.value : option,
+              );
 
           onChange(newValue);
         }
@@ -87,17 +102,23 @@ export default function AutocompleteField<
             ...params.InputProps,
             endAdornment: (
               <Fragment>
-                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                {loading ? (
+                  <CircularProgress color="inherit" size={20} />
+                ) : null}
                 <Stack direction={"row"} spacing={2}>
                   {params.InputProps.endAdornment}
                   {!!onAddElementClick && (
-                    <IconButton size={"small"} color={"primary"} onClick={onAddElementClick}>
+                    <IconButton
+                      size={"small"}
+                      color={"primary"}
+                      onClick={onAddElementClick}
+                    >
                       <Add />
                     </IconButton>
                   )}
                 </Stack>
               </Fragment>
-            )
+            ),
           }}
           {...textFieldProps}
         />

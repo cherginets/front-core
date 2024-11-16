@@ -1,5 +1,8 @@
 import { Preloader } from "@/core/components/Preloader";
-import { useElementHistory, useElementHistoryProps } from "@/core/components/history/useElementHistory";
+import {
+  useElementHistory,
+  useElementHistoryProps,
+} from "@/core/components/history/useElementHistory";
 import { formatError } from "@/core/utils/formatError";
 import { Add, Close, Send, Sync } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
@@ -15,7 +18,7 @@ const PRIORITY_LABELS = {
   error: <span style={{ color: "red" }}>Ошибка</span>,
   info: <span style={{ color: "black" }}>Информация</span>,
   warning: <span style={{ color: "orange" }}>Предупреждение</span>,
-  debug: <span style={{ color: "gray" }}>Отладка</span>
+  debug: <span style={{ color: "gray" }}>Отладка</span>,
 };
 
 export type ElementHistoryProps = {
@@ -33,7 +36,7 @@ function ElementHistory({ title, ...props }: ElementHistoryProps) {
     fetch,
     fetchMore,
     canLoadMore,
-    loadingMore
+    loadingMore,
   } = useElementHistory(props);
 
   const { value: adding, toggle: addingToggle } = useBoolean(false);
@@ -64,7 +67,11 @@ function ElementHistory({ title, ...props }: ElementHistoryProps) {
               >
                 {adding ? "отменить написание" : "добавить комментарий"}
               </Button>
-              <Button onClick={fetch} endIcon={<Sync />} style={{ marginLeft: "auto" }}>
+              <Button
+                onClick={fetch}
+                endIcon={<Sync />}
+                style={{ marginLeft: "auto" }}
+              >
                 Обновить
               </Button>
             </div>
@@ -107,18 +114,27 @@ function ElementHistory({ title, ...props }: ElementHistoryProps) {
 
           {data && data.length > 0 ? (
             data.map(({ id, who_name, message, created_at, level }, i) => {
-              const date = moment(created_at).isValid() ? moment(created_at).format("DD-MM-YYYY HH:mm:ss") : created_at;
+              const date = moment(created_at).isValid()
+                ? moment(created_at).format("DD-MM-YYYY HH:mm:ss")
+                : created_at;
 
               return (
                 <Fragment key={id}>
                   <div className={classes.item}>
                     <div className={classes.firstLine}>
-                      <div className={classes.fieldIndex}>#{data.length - i}</div>
-                      <div className={classes.fieldPriority}>{PRIORITY_LABELS[level] || level}</div>
+                      <div className={classes.fieldIndex}>
+                        #{data.length - i}
+                      </div>
+                      <div className={classes.fieldPriority}>
+                        {PRIORITY_LABELS[level] || level}
+                      </div>
                       <div className={classes.fieldWho}>{who_name}</div>
                       <div className={classes.fieldDate}>{date}</div>
                     </div>
-                    <pre className={classes.fieldText} dangerouslySetInnerHTML={{ __html: message }} />
+                    <pre
+                      className={classes.fieldText}
+                      dangerouslySetInnerHTML={{ __html: message }}
+                    />
                   </div>
                   {i !== data.length - 1 && <Divider />}
                 </Fragment>

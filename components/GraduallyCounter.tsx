@@ -1,6 +1,6 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import {number_format} from "@/core/utils/php";
+"use client";
+import React, { useEffect, useState } from "react";
+import { number_format } from "@/core/utils/php";
 
 interface CounterProps {
   targetValue: number;
@@ -8,12 +8,11 @@ interface CounterProps {
   formatNumber?: (num: number) => string; // Время анимации в миллисекундах
 }
 
-const GraduallyCounter: React.FC<CounterProps> = (
-  {
-    targetValue
-    , duration
-    , formatNumber = (num) => number_format(num, 0, '.', " ")
-  }) => {
+const GraduallyCounter: React.FC<CounterProps> = ({
+  targetValue,
+  duration,
+  formatNumber = (num) => number_format(num, 0, ".", " "),
+}) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {

@@ -7,7 +7,7 @@ import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import { Formik, FormikConfig } from "formik";
 import { useMemo } from "react";
-import {FormikTextField} from "@/core/formik";
+import { FormikTextField } from "@/core/formik";
 import FormikAsyncAutocompleteField from "@/core/formik/fields/FormikAsyncAutocompleteField";
 
 export type FormikFormProps = {
@@ -20,7 +20,14 @@ export type FormikFormProps = {
   fields: {
     label: string;
     name: string;
-    type?: "string" | "textarea" | "number" | "autocomplete" | "autocomplete_multiple" | "select" | "boolean";
+    type?:
+      | "string"
+      | "textarea"
+      | "number"
+      | "autocomplete"
+      | "autocomplete_multiple"
+      | "select"
+      | "boolean";
     loading?: boolean;
     options?: Option[];
     FieldComponent?: any;
@@ -34,16 +41,15 @@ export default function FormikForm({
   disabled: allDisabled,
   validationSchema,
   onSubmit,
-  showButtons: _showButtons
+  showButtons: _showButtons,
 }: FormikFormProps) {
   const showButtons = useMemo<boolean>(() => {
-    if(_showButtons === false) return false;
-    return !innerRef || !!_showButtons
+    if (_showButtons === false) return false;
+    return !innerRef || !!_showButtons;
   }, [innerRef, _showButtons]);
 
   return (
     <Formik
-
       innerRef={innerRef}
       initialValues={initialValues}
       validationSchema={validationSchema}
@@ -57,7 +63,7 @@ export default function FormikForm({
                 const defaultProps = {
                   name: field.name,
                   label: field.label,
-                  disabled: isSubmitting || allDisabled
+                  disabled: isSubmitting || allDisabled,
                 };
 
                 if (field.FieldComponent) {
@@ -66,24 +72,51 @@ export default function FormikForm({
                 }
                 switch (field.type) {
                   case "number":
-                    return <FormikTextField key={key} type={"number"} {...defaultProps} />;
+                    return (
+                      <FormikTextField
+                        key={key}
+                        type={"number"}
+                        {...defaultProps}
+                      />
+                    );
                   case "string":
                   case undefined:
                     return <FormikTextField key={key} {...defaultProps} />;
                   case "textarea":
                   case undefined:
-                    return <FormikTextField key={key} multiline rows={3} {...defaultProps} />;
+                    return (
+                      <FormikTextField
+                        key={key}
+                        multiline
+                        rows={3}
+                        {...defaultProps}
+                      />
+                    );
                   case "boolean":
                     return <FormikSwitchField key={key} {...defaultProps} />;
                   case "autocomplete":
-                    return <FormikAsyncAutocompleteField loading={!!field.loading} options={field.options!} {...defaultProps} />
+                    return (
+                      <FormikAsyncAutocompleteField
+                        loading={!!field.loading}
+                        options={field.options!}
+                        {...defaultProps}
+                      />
+                    );
                   case "autocomplete_multiple":
-                    return <FormikAsyncAutocompleteField multiple loading={!!field.loading} options={field.options!} {...defaultProps} />
+                    return (
+                      <FormikAsyncAutocompleteField
+                        multiple
+                        loading={!!field.loading}
+                        options={field.options!}
+                        {...defaultProps}
+                      />
+                    );
                   case "select":
                   default:
                     return (
                       <Alert severity={"error"} key={key}>
-                        <b>{field.label}</b>: неизвестный тип <b>{field.type}</b>
+                        <b>{field.label}</b>: неизвестный тип{" "}
+                        <b>{field.type}</b>
                       </Alert>
                     );
                 }

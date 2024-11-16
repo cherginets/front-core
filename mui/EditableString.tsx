@@ -7,11 +7,16 @@ import { useBoolean } from "usehooks-ts";
 
 type EditableStringProps = {
   initValue: string;
-  nullLabel?: string
+  nullLabel?: string;
   onEdit: (value: string) => Promise<any>;
   children: ReactNode;
 };
-const EditableString: FC<EditableStringProps> = ({ children, initValue, onEdit, nullLabel }: EditableStringProps) => {
+const EditableString: FC<EditableStringProps> = ({
+  children,
+  initValue,
+  onEdit,
+  nullLabel,
+}: EditableStringProps) => {
   const [value, setValue] = useState(initValue);
   useEffect(() => setValue(initValue), [initValue]);
 
@@ -52,10 +57,20 @@ const EditableString: FC<EditableStringProps> = ({ children, initValue, onEdit, 
         autoFocus
         onKeyUp={(e) => e.key === "Enter" && submit()}
       />
-      <IconButton size={"small"} onClick={submit} style={{ color: "green" }} disabled={loading}>
+      <IconButton
+        size={"small"}
+        onClick={submit}
+        style={{ color: "green" }}
+        disabled={loading}
+      >
         <Check />
       </IconButton>
-      <IconButton size={"small"} style={{ color: "red" }} onClick={close} disabled={loading}>
+      <IconButton
+        size={"small"}
+        style={{ color: "red" }}
+        onClick={close}
+        disabled={loading}
+      >
         <Close />
       </IconButton>
     </div>

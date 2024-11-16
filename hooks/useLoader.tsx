@@ -9,13 +9,16 @@ export function useLoader(loadingDefault: boolean) {
 
   const start = useCallback(() => setLoading(true), [setLoading]);
   const stop = useCallback(() => setLoading(false), [setLoading]);
-  const ComponentPreloader = useCallback((props: any) => <Preloader loading={loading} {...props} />, [loading]);
+  const ComponentPreloader = useCallback(
+    (props: any) => <Preloader loading={loading} {...props} />,
+    [loading],
+  );
 
   return {
     loading,
     setLoading,
     start,
     stop,
-    Preloader: ComponentPreloader
+    Preloader: ComponentPreloader,
   };
 }

@@ -1,7 +1,7 @@
 import { Option } from "@/core/formik/types/options";
 import Autocomplete, { AutocompleteProps } from "@/core/mui/Autocomplete";
 import { useFormikContext } from "formik";
-import {FormControl, FormHelperText} from "@mui/material";
+import { FormControl, FormHelperText } from "@mui/material";
 
 export type FormikAutocompleteFieldProps<OptionType extends Option = Option> = {
   label: string;
@@ -12,11 +12,9 @@ export type FormikAutocompleteFieldProps<OptionType extends Option = Option> = {
   onAddElementClick?: () => any;
 } & Omit<AutocompleteProps<OptionType, any>, "renderInput">;
 
-export default function FormikAsyncAutocompleteField<OptionType extends Option = Option>({
-  name,
-                                                                                           helperText,
-  ...props
-}: FormikAutocompleteFieldProps<OptionType>) {
+export default function FormikAsyncAutocompleteField<
+  OptionType extends Option = Option,
+>({ name, helperText, ...props }: FormikAutocompleteFieldProps<OptionType>) {
   const formik = useFormikContext<any>();
 
   return (

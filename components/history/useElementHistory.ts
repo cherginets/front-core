@@ -34,7 +34,7 @@ export function useElementHistory({
   reloadValue,
   actionSearchHistory,
   actionAddHistory,
-  limit = 10
+  limit = 10,
 }: useElementHistoryProps) {
   const [newComment, setNewComment] = useState("");
 
@@ -44,7 +44,11 @@ export function useElementHistory({
   const [total, setTotal] = useState(0);
   const [error, setError] = useState(null);
   const { start, stop, loading } = useLoader(true);
-  const { start: startMore, stop: stopMore, loading: loadingMore } = useLoader(false);
+  const {
+    start: startMore,
+    stop: stopMore,
+    loading: loadingMore,
+  } = useLoader(false);
   const fetch = useCallback(() => {
     setError(null);
     start();
@@ -79,7 +83,11 @@ export function useElementHistory({
   // endregion
 
   // region Submit
-  const { start: submitStart, stop: submitStop, loading: submitLoading } = useLoader(false);
+  const {
+    start: submitStart,
+    stop: submitStop,
+    loading: submitLoading,
+  } = useLoader(false);
   const send = useCallback(() => {
     submitStart();
     actionAddHistory(newComment)
@@ -104,6 +112,6 @@ export function useElementHistory({
     fetch,
     fetchMore,
     loadingMore,
-    canLoadMore: data.length < total
+    canLoadMore: data.length < total,
   };
 }

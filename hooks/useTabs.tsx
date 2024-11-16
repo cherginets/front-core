@@ -27,11 +27,14 @@ export function useTabs({
   tabs,
   routePrefix,
   onChange,
-  tabsStyle = {}
+  tabsStyle = {},
 }: useTabsProps): useTabsResult {
   const { push } = useRouter();
   const params = useParams();
-  const currentTab = useMemo(() => _currentTab || params.tab, [params, _currentTab]);
+  const currentTab = useMemo(
+    () => _currentTab || params.tab,
+    [params, _currentTab],
+  );
 
   const [stateTab, setStateTab] = useState(defaultTab);
 
@@ -63,7 +66,7 @@ export function useTabs({
         })}
       </Tabs>
     ),
-    [tab, setTab, tabs, onChange, tabsStyle]
+    [tab, setTab, tabs, onChange, tabsStyle],
   );
 
   const TabsComponent = useCallback(
@@ -85,12 +88,12 @@ export function useTabs({
         })}
       </Tabs>
     ),
-    [tab, setTab, tabs, onChange]
+    [tab, setTab, tabs, onChange],
   );
 
   return {
     tab,
     renderedTabs,
-    TabsComponent
+    TabsComponent,
   };
 }

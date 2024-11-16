@@ -1,5 +1,12 @@
 import { Option } from "@/core/formik/types/options";
-import { FormControl, FormHelperText, InputLabel, MenuItem, Select, SelectProps } from "@mui/material";
+import {
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectProps,
+} from "@mui/material";
 import { useFormikContext } from "formik";
 import { useMemo } from "react";
 
@@ -16,21 +23,28 @@ export default function FormikSelectField({
   helperText: _helperText,
   options,
   optionsMap: _optionsMap,
-                                            disabled,
+  disabled,
   ...props
 }: FormikSelectFieldProps) {
   const formik = useFormikContext<any>();
 
-  const optionsMap = useMemo(() => _optionsMap || new Map(options.map((o) => [o.value, o])), [_optionsMap, options]);
+  const optionsMap = useMemo(
+    () => _optionsMap || new Map(options.map((o) => [o.value, o])),
+    [_optionsMap, options],
+  );
 
   const labelId = `${name}-label`;
-  const helperText = ((formik.touched[name] && formik.errors[name]) || _helperText) as string;
+  const helperText = ((formik.touched[name] && formik.errors[name]) ||
+    _helperText) as string;
 
   return (
     <FormControl
       fullWidth
       disabled={formik.isSubmitting}
-      error={(formik.touched[name] || formik.submitCount > 0) && !!formik.errors[name]}
+      error={
+        (formik.touched[name] || formik.submitCount > 0) &&
+        !!formik.errors[name]
+      }
     >
       <InputLabel id={labelId}>{label}</InputLabel>
       <Select

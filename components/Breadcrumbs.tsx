@@ -34,7 +34,8 @@ const NextBreadcrumb = ({
       </Link>
       {pathNames.map((label, index) => {
         let href = `/${pathNames.slice(0, index + 1).join("/")}`;
-        let itemClasses = paths === href ? `${listClasses} ${activeClasses}` : listClasses;
+        let itemClasses =
+          paths === href ? `${listClasses} ${activeClasses}` : listClasses;
         if (excludeLabels.includes(label)) {
           return null;
         }

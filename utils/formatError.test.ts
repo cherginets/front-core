@@ -21,8 +21,10 @@ test("formatError", () => {
     -5,
     false,
     true,
-    0
+    0,
   ];
 
-  values.forEach((v) => expect(typeof formatError(v) === "string", `"${v}" не строка`).toBeTruthy());
+  values.forEach((v) =>
+    expect(typeof formatError(v) === "string", `"${v}" не строка`).toBeTruthy(),
+  );
 });

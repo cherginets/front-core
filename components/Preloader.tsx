@@ -1,4 +1,6 @@
-import CircularProgress, { CircularProgressProps } from "@mui/material/CircularProgress";
+import CircularProgress, {
+  CircularProgressProps,
+} from "@mui/material/CircularProgress";
 import { DetailedHTMLProps, HTMLAttributes } from "react";
 
 export type PreloaderLoadingType = boolean;
@@ -9,12 +11,18 @@ export const Preloader = ({
   position,
   overlayProps,
   overrideOverlayProps,
-  progressProps
+  progressProps,
 }: {
   loading?: boolean;
   position?: PreloaderPositionType;
-  overlayProps?: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
-  overrideOverlayProps?: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+  overlayProps?: DetailedHTMLProps<
+    HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+  >;
+  overrideOverlayProps?: DetailedHTMLProps<
+    HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+  >;
   progressProps?: CircularProgressProps;
 }) => {
   if (!loading) return null;
@@ -38,9 +46,9 @@ export const Preloader = ({
                     right: 0,
                     top: 0,
                     bottom: 0,
-                    zIndex: 2
+                    zIndex: 2,
                   }),
-              ...overlayProps?.style
+              ...overlayProps?.style,
             }
       }
     >

@@ -3,7 +3,14 @@
 import theme from "@/styles/theme";
 import { LockOutlined } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Alert, Avatar, Button, CircularProgress, Grid, Stack } from "@mui/material";
+import {
+  Alert,
+  Avatar,
+  Button,
+  CircularProgress,
+  Grid,
+  Stack,
+} from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-mui";
 import { useCallback } from "react";
@@ -20,7 +27,7 @@ type InitialData = {
 };
 const initialData: InitialData = {
   username: "",
-  password: ""
+  password: "",
 };
 
 type MuiAuthFormProps = {
@@ -33,33 +40,55 @@ type MuiAuthFormProps = {
   forgotLink?: string;
 };
 
-function MuiAuthForm(
-  {
-    isLoading,
-    error,
-    onSubmit,
-    disableAuthByCode = true,
-    disableAuthByServices = true,
-    registerLink, forgotLink
-  }: MuiAuthFormProps) {
+function MuiAuthForm({
+  isLoading,
+  error,
+  onSubmit,
+  disableAuthByCode = true,
+  disableAuthByServices = true,
+  registerLink,
+  forgotLink,
+}: MuiAuthFormProps) {
   const PreparedTextField = useCallback(
-    (p: any) => <TextField fullWidth size={"medium"} InputLabelProps={{shrink: true}} {...p} />,
-    []
+    (p: any) => (
+      <TextField
+        fullWidth
+        size={"medium"}
+        InputLabelProps={{ shrink: true }}
+        {...p}
+      />
+    ),
+    [],
   );
 
   return (
-    <Grid container spacing={2} alignContent={"center"} justifyContent={"center"} alignItems={"center"}>
+    <Grid
+      container
+      spacing={2}
+      alignContent={"center"}
+      justifyContent={"center"}
+      alignItems={"center"}
+    >
       <Grid item xs={12} md={12}>
         <Formik<InitialData>
           initialValues={initialData}
-          onSubmit={(values, {setSubmitting}) => {
+          onSubmit={(values, { setSubmitting }) => {
             return onSubmit(values);
           }}
-          render={({submitForm}) => (
+          render={({ submitForm }) => (
             <Form>
-              <Stack style={{position: "relative"}} direction={"column"} spacing={3} alignItems={"center"}>
-                <Avatar sx={{bgcolor: theme.palette.primary.main}}>
-                  {isLoading ? <CircularProgress size={25} style={{color: "white"}}/> : <LockOutlined/>}
+              <Stack
+                style={{ position: "relative" }}
+                direction={"column"}
+                spacing={3}
+                alignItems={"center"}
+              >
+                <Avatar sx={{ bgcolor: theme.palette.primary.main }}>
+                  {isLoading ? (
+                    <CircularProgress size={25} style={{ color: "white" }} />
+                  ) : (
+                    <LockOutlined />
+                  )}
                 </Avatar>
 
                 <Field
@@ -95,17 +124,24 @@ function MuiAuthForm(
         />
       </Grid>
 
-      {registerLink && <Grid item xs={6}>
-        <NextLink href={registerLink}><Button fullWidth>Регистрация</Button></NextLink>
-      </Grid>}
+      {registerLink && (
+        <Grid item xs={6}>
+          <NextLink href={registerLink}>
+            <Button fullWidth>Регистрация</Button>
+          </NextLink>
+        </Grid>
+      )}
 
-      {forgotLink && <Grid item xs={6}>
-        <NextLink href={forgotLink}><Button fullWidth>Забыли пароль</Button></NextLink>
-      </Grid>}
+      {forgotLink && (
+        <Grid item xs={6}>
+          <NextLink href={forgotLink}>
+            <Button fullWidth>Забыли пароль</Button>
+          </NextLink>
+        </Grid>
+      )}
 
       {!disableAuthByCode && (
         <Grid item xs={12} md={6}>
-
           <Stack direction={"column"} spacing={2}>
             <h2>По коду</h2>
             <Button fullWidth variant={"outlined"}>

@@ -1,8 +1,9 @@
 import TextField, { TextFieldProps } from "@mui/material/TextField";
 import { useFormikContext } from "formik";
-import {isNumeric} from "@/core/utils/isNumeric";
+import { isNumeric } from "@/core/utils/isNumeric";
 
-export type FormikTextFieldProps = Omit<TextFieldProps, "name"> & Required<Pick<TextFieldProps, "name">>;
+export type FormikTextFieldProps = Omit<TextFieldProps, "name"> &
+  Required<Pick<TextFieldProps, "name">>;
 export default function FormikTextField({
   name,
   helperText,
@@ -40,7 +41,10 @@ export default function FormikTextField({
       }
       onChange={onChange}
       onBlur={formik.handleBlur}
-      error={(formik.touched[name] || formik.submitCount > 0) && !!formik.errors[name]}
+      error={
+        (formik.touched[name] || formik.submitCount > 0) &&
+        !!formik.errors[name]
+      }
       // @ts-ignore
       helperText={(formik.touched[name] && formik.errors[name]) || helperText}
       disabled={formik.isSubmitting}
