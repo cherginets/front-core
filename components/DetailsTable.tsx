@@ -49,7 +49,7 @@ const DetailsTable: FC<DetailsTableProps> = ({ groups }) => {
                     <TableCell variant={"head"} align={"right"}>
                       <Typography
                         variant={"subtitle2"}
-                        style={{ maxWidth: 250, }}
+                        style={{ maxWidth: 250 }}
                       >
                         {row.title}
                       </Typography>
