@@ -8,7 +8,10 @@ export const MOMENT_DATE_PRETTY = "YYYY-MM-DD HH:mm";
 
 export const formatMoney = (value: string | number) => {
   if (!value) value = 0;
-  return `${number_format(typeof value === "string" ? parseFloat(value) : value, 2, ".", " ")} ${CHAR_RUBLE}`;
+  let formattedNum = number_format(typeof value === "string" ? parseFloat(value) : value, 2, ".", " ");
+  if(formattedNum.endsWith(".00")) formattedNum = formattedNum.slice(0, formattedNum.length - 3);
+
+  return `${formattedNum} ${CHAR_RUBLE}`;
 };
 
 /**
