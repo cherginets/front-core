@@ -1,20 +1,13 @@
 "use client";
 
 import theme from "@/styles/theme";
-import { LockOutlined } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
-import {
-  Alert,
-  Avatar,
-  Button,
-  CircularProgress,
-  Grid,
-  Stack,
-} from "@mui/material";
-import { Field, Form, Formik } from "formik";
-import { TextField } from "formik-mui";
-import { useCallback } from "react";
-import { NextLink } from "../NextMuiLink";
+import {LockOutlined} from "@mui/icons-material";
+import {LoadingButton} from "@mui/lab";
+import {Alert, Avatar, Button, CircularProgress, Grid, Stack} from "@mui/material";
+import {Field, Form, Formik} from "formik";
+import {TextField} from "formik-mui";
+import {useCallback} from "react";
+import {NextLink} from "../NextMuiLink";
 
 interface Values {
   username: string;
@@ -50,45 +43,23 @@ function MuiAuthForm({
   forgotLink,
 }: MuiAuthFormProps) {
   const PreparedTextField = useCallback(
-    (p: any) => (
-      <TextField
-        fullWidth
-        size={"medium"}
-        InputLabelProps={{ shrink: true }}
-        {...p}
-      />
-    ),
-    [],
+    (p: any) => <TextField fullWidth size={"medium"} InputLabelProps={{shrink: true}} {...p} />,
+    []
   );
 
   return (
-    <Grid
-      container
-      spacing={2}
-      alignContent={"center"}
-      justifyContent={"center"}
-      alignItems={"center"}
-    >
+    <Grid container spacing={2} alignContent={"center"} justifyContent={"center"} alignItems={"center"}>
       <Grid item xs={12} md={12}>
         <Formik<InitialData>
           initialValues={initialData}
-          onSubmit={(values, { setSubmitting }) => {
+          onSubmit={(values, {setSubmitting}) => {
             return onSubmit(values);
           }}
-          render={({ submitForm }) => (
+          render={({submitForm}) => (
             <Form>
-              <Stack
-                style={{ position: "relative" }}
-                direction={"column"}
-                spacing={3}
-                alignItems={"center"}
-              >
-                <Avatar sx={{ bgcolor: theme.palette.primary.main }}>
-                  {isLoading ? (
-                    <CircularProgress size={25} style={{ color: "white" }} />
-                  ) : (
-                    <LockOutlined />
-                  )}
+              <Stack style={{position: "relative"}} direction={"column"} spacing={3} alignItems={"center"}>
+                <Avatar sx={{bgcolor: theme.palette.primary.main}}>
+                  {isLoading ? <CircularProgress size={25} style={{color: "white"}} /> : <LockOutlined />}
                 </Avatar>
 
                 <Field

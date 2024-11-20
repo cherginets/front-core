@@ -12,11 +12,7 @@ interface ICopyToClipboard {
   message?: string;
 }
 
-export const copyToClipboard = async ({
-  target,
-  message,
-  value,
-}: ICopyToClipboard) => {
+export const copyToClipboard = async ({target, message, value}: ICopyToClipboard) => {
   try {
     let copyValue = "";
 

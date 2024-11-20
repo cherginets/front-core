@@ -25,11 +25,11 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { CSSObject, Theme, styled, useTheme } from "@mui/material/styles";
-import { FC, Fragment, ReactNode, useMemo, useState } from "react";
+import {CSSObject, Theme, styled, useTheme} from "@mui/material/styles";
+import {FC, Fragment, ReactNode, useMemo, useState} from "react";
 
-import { Link } from "@/core/components/NextMuiLink";
-import { usePathname } from "next/navigation";
+import {Link} from "@/core/components/NextMuiLink";
+import {usePathname} from "next/navigation";
 
 const drawerWidth = 240;
 
@@ -54,7 +54,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
   },
 });
 
-const DrawerHeader = styled("div")(({ theme }) => ({
+const DrawerHeader = styled("div")(({theme}) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "flex-end",
@@ -69,7 +69,7 @@ interface AppBarProps extends MuiAppBarProps {
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
-})<AppBarProps>(({ theme, open }) => ({
+})<AppBarProps>(({theme, open}) => ({
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
@@ -87,7 +87,7 @@ const AppBar = styled(MuiAppBar, {
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
+})(({theme, open}) => ({
   width: drawerWidth,
   flexShrink: 0,
   whiteSpace: "nowrap",
@@ -105,7 +105,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const StyledLink = styled(Link)(({ theme }) => ({
+const StyledLink = styled(Link)(({theme}) => ({
   "&, &:hover, &:active": {
     textDecoration: "none",
   },
@@ -128,9 +128,7 @@ export type MuiLayoutLinkTypeBaseWithOnClick = MuiLayoutLinkTypeBase & {
   onClick: (link: MuiLayoutLinkType) => any;
 };
 
-export type MuiLayoutLinkType =
-  | MuiLayoutLinkTypeBaseWithUrl
-  | MuiLayoutLinkTypeBaseWithOnClick;
+export type MuiLayoutLinkType = MuiLayoutLinkTypeBaseWithUrl | MuiLayoutLinkTypeBaseWithOnClick;
 
 export const MuiLayout: FC<{
   left: string[];
@@ -138,14 +136,14 @@ export const MuiLayout: FC<{
   links: MuiLayoutLinkType[];
   topRightElements?: any;
   children?: any;
-}> = ({ left = [], top = [], links, topRightElements, children }) => {
+}> = ({left = [], top = [], links, topRightElements, children}) => {
   const pathname = usePathname() || "";
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
   const linksMap = useMemo<Map<string, MuiLayoutLinkType>>(
     () => new Map(links.map((l) => [l.id || l.title, l])),
-    [links],
+    [links]
   );
 
   const handleDrawerOpen = () => {
@@ -161,25 +159,11 @@ export const MuiLayout: FC<{
 
     const titleElement =
       // Поиск точного совпадения
-      links.find(
-        (link) =>
-          !!link.url &&
-          pathname?.replaceAll("/", "") ===
-            (link.url || "").replaceAll("/", ""),
-      ) ||
+      links.find((link) => !!link.url && pathname?.replaceAll("/", "") === (link.url || "").replaceAll("/", "")) ||
       // Поиск по наибольшему совпадению
       (() => {
-        const weights = links.map((link) =>
-          !link.url
-            ? 0
-            : pathname?.indexOf(link.url) > -1
-              ? link.url.length
-              : 0,
-        );
-        const maxIndex = weights.reduce(
-          (iMax, x, i, arr) => (x > arr[iMax] ? i : iMax),
-          0,
-        );
+        const weights = links.map((link) => (!link.url ? 0 : pathname?.indexOf(link.url) > -1 ? link.url.length : 0));
+        const maxIndex = weights.reduce((iMax, x, i, arr) => (x > arr[iMax] ? i : iMax), 0);
 
         return links[maxIndex];
       })() ||
@@ -190,7 +174,7 @@ export const MuiLayout: FC<{
   }, [links, pathname]);
 
   return (
-    <Box sx={{ display: "flex", flexGrow: 1 }}>
+    <Box sx={{display: "flex", flexGrow: 1}}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
@@ -201,7 +185,7 @@ export const MuiLayout: FC<{
             edge="start"
             sx={{
               marginRight: 5,
-              ...(open && { display: "none" }),
+              ...(open && {display: "none"}),
             }}
           >
             <MenuIcon />
@@ -209,22 +193,18 @@ export const MuiLayout: FC<{
           <Typography variant="h6" noWrap component="div">
             {title}
           </Typography>
-          <div style={{ margin: "auto" }} />
+          <div style={{margin: "auto"}} />
           {top.length > 0 && (
-            <Stack direction={"row"} spacing={2} sx={{ marginRight: 4 }}>
+            <Stack direction={"row"} spacing={2} sx={{marginRight: 4}}>
               {top.map((id, index) => {
                 const link = linksMap.get(id);
                 if (!link) return null;
 
-                const { title, url, onClick, IconComponent } = link;
+                const {title, url, onClick, IconComponent} = link;
 
                 const Wrapper = url
-                  ? ({ children }: { children: ReactNode }) => (
-                      <StyledLink href={url}>{children}</StyledLink>
-                    )
-                  : ({ children }: { children: ReactNode }) => (
-                      <Fragment>{children}</Fragment>
-                    );
+                  ? ({children}: {children: ReactNode}) => <StyledLink href={url}>{children}</StyledLink>
+                  : ({children}: {children: ReactNode}) => <Fragment>{children}</Fragment>;
 
                 const Icon =
                   link.redCounter !== undefined
@@ -253,11 +233,7 @@ export const MuiLayout: FC<{
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
+            {theme.direction === "rtl" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
@@ -269,21 +245,17 @@ export const MuiLayout: FC<{
 
             if (!link) return null;
 
-            const { title, url, onClick, IconComponent, redCounter } = link;
+            const {title, url, onClick, IconComponent, redCounter} = link;
 
             const Wrapper = url
-              ? ({ children }: { children: ReactNode }) => (
-                  <StyledLink href={url}>{children}</StyledLink>
-                )
-              : ({ children }: { children: ReactNode }) => (
-                  <Fragment>{children}</Fragment>
-                );
+              ? ({children}: {children: ReactNode}) => <StyledLink href={url}>{children}</StyledLink>
+              : ({children}: {children: ReactNode}) => <Fragment>{children}</Fragment>;
 
             return (
               <Wrapper key={index}>
                 <ListItem
                   disablePadding
-                  sx={{ display: "block" }}
+                  sx={{display: "block"}}
                   onClick={() => {
                     if (!!onClick) {
                       onClick(link);
@@ -312,10 +284,7 @@ export const MuiLayout: FC<{
                       </ListItemIcon>
                     </Tooltip>
 
-                    <ListItemText
-                      primary={title}
-                      sx={{ opacity: open ? 1 : 0 }}
-                    />
+                    <ListItemText primary={title} sx={{opacity: open ? 1 : 0}} />
                   </ListItemButton>
                 </ListItem>
               </Wrapper>
@@ -324,7 +293,7 @@ export const MuiLayout: FC<{
         </List>
         <Divider />
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{flexGrow: 1, p: 3}}>
         <DrawerHeader />
         {children}
       </Box>

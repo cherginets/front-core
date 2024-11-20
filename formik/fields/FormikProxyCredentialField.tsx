@@ -1,12 +1,10 @@
-import { FormikTextField } from "@/core/formik";
-import { FormikTextFieldProps } from "@/core/formik/fields/FormikTextField";
-import { Sync } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
-import { useFormikContext } from "formik";
+import {FormikTextField} from "@/core/formik";
+import {FormikTextFieldProps} from "@/core/formik/fields/FormikTextField";
+import {Sync} from "@mui/icons-material";
+import {IconButton} from "@mui/material";
+import {useFormikContext} from "formik";
 
-export default function FormikProxyCredentialField({
-  ...props
-}: FormikTextFieldProps) {
+export default function FormikProxyCredentialField({...props}: FormikTextFieldProps) {
   const formik = useFormikContext<any>();
 
   return (

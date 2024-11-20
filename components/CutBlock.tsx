@@ -1,5 +1,5 @@
-import { Button, Stack } from "@mui/material";
-import { ReactNode, useState } from "react";
+import {Button, Stack} from "@mui/material";
+import {ReactNode, useState} from "react";
 
 export default function CutBlock({
   showMessage = "Показать",
@@ -14,10 +14,8 @@ export default function CutBlock({
 
   return (
     <Stack direction={"column"} spacing={1}>
-      <Button onClick={() => setOpen((o) => !o)}>
-        {open ? hideMessage : showMessage}
-      </Button>
-      {open && <div style={{ width: "100%" }}>{children}</div>}
+      <Button onClick={() => setOpen((o) => !o)}>{open ? hideMessage : showMessage}</Button>
+      {open && <div style={{width: "100%"}}>{children}</div>}
     </Stack>
   );
 }

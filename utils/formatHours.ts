@@ -1,4 +1,4 @@
-import { declension } from "@/core/utils/formatters";
+import {declension} from "@/core/utils/formatters";
 
 export default function formatHours(hours: number | undefined | null) {
   if (!hours) return "-";
@@ -31,10 +31,8 @@ export default function formatHours(hours: number | undefined | null) {
   }
 
   // Месяца
-  if (!(days % 30))
-    return `${days / 30} ${declension(days / 30, ["месяц", "месяца", "месяцев"])}`;
-  if (!(days % 31))
-    return `${days / 31} ${declension(days / 31, ["месяц", "месяца", "месяцев"])}`;
+  if (!(days % 30)) return `${days / 30} ${declension(days / 30, ["месяц", "месяца", "месяцев"])}`;
+  if (!(days % 31)) return `${days / 31} ${declension(days / 31, ["месяц", "месяца", "месяцев"])}`;
 
   return hours + " ч.";
 }

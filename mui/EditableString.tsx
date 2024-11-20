@@ -1,9 +1,9 @@
-import { n_error } from "@/core/features/notifications";
-import { Check, Close, Edit } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
+import {n_error} from "@/core/features/notifications";
+import {Check, Close, Edit} from "@mui/icons-material";
+import {IconButton} from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { FC, ReactNode, useCallback, useEffect, useState } from "react";
-import { useBoolean } from "usehooks-ts";
+import {FC, ReactNode, useCallback, useEffect, useState} from "react";
+import {useBoolean} from "usehooks-ts";
 
 type EditableStringProps = {
   initValue: string;
@@ -11,16 +11,11 @@ type EditableStringProps = {
   onEdit: (value: string) => Promise<any>;
   children: ReactNode;
 };
-const EditableString: FC<EditableStringProps> = ({
-  children,
-  initValue,
-  onEdit,
-  nullLabel,
-}: EditableStringProps) => {
+const EditableString: FC<EditableStringProps> = ({children, initValue, onEdit, nullLabel}: EditableStringProps) => {
   const [value, setValue] = useState(initValue);
   useEffect(() => setValue(initValue), [initValue]);
 
-  const { setTrue: start, setFalse: stop, value: loading } = useBoolean(false);
+  const {setTrue: start, setFalse: stop, value: loading} = useBoolean(false);
 
   const [edit, setEdit] = useState(false);
 
@@ -40,14 +35,14 @@ const EditableString: FC<EditableStringProps> = ({
   }, [start, stop, onEdit, value]);
 
   return !edit ? (
-    <div style={{ display: "flex", alignItems: "center" }}>
+    <div style={{display: "flex", alignItems: "center"}}>
       {children}
       <IconButton size={"small"} onClick={setEdit.bind(null, true)}>
         <Edit />
       </IconButton>
     </div>
   ) : (
-    <div style={{ display: "flex", alignItems: "center" }}>
+    <div style={{display: "flex", alignItems: "center"}}>
       <TextField
         label={"Введите значение"}
         size={"small"}
@@ -57,20 +52,10 @@ const EditableString: FC<EditableStringProps> = ({
         autoFocus
         onKeyUp={(e) => e.key === "Enter" && submit()}
       />
-      <IconButton
-        size={"small"}
-        onClick={submit}
-        style={{ color: "green" }}
-        disabled={loading}
-      >
+      <IconButton size={"small"} onClick={submit} style={{color: "green"}} disabled={loading}>
         <Check />
       </IconButton>
-      <IconButton
-        size={"small"}
-        style={{ color: "red" }}
-        onClick={close}
-        disabled={loading}
-      >
+      <IconButton size={"small"} style={{color: "red"}} onClick={close} disabled={loading}>
         <Close />
       </IconButton>
     </div>

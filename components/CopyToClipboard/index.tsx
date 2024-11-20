@@ -1,7 +1,7 @@
-import { copyToClipboard } from "@/core/components/CopyToClipboard/clipboard";
-import { n_success } from "@/core/features/notifications";
-import { ContentCopy } from "@mui/icons-material";
-import { IconButton, Typography, TypographyProps } from "@mui/material";
+import {copyToClipboard} from "@/core/components/CopyToClipboard/clipboard";
+import {n_success} from "@/core/features/notifications";
+import {ContentCopy} from "@mui/icons-material";
+import {IconButton, Typography, TypographyProps} from "@mui/material";
 
 export default function CopyToClipboardTypography({
   textToCopy,
@@ -17,7 +17,7 @@ export default function CopyToClipboardTypography({
       <IconButton
         size={"small"}
         onClick={() => {
-          copyToClipboard({ value: textToCopy });
+          copyToClipboard({value: textToCopy});
           n_success(successText);
         }}
       >

@@ -1,5 +1,5 @@
-import { expect, test } from "vitest";
-import { formatError } from "./formatError";
+import {expect, test} from "vitest";
+import {formatError} from "./formatError";
 
 test("formatError", () => {
   const defaultError = "error";
@@ -7,16 +7,16 @@ test("formatError", () => {
   const values = [
     defaultError,
     [defaultError],
-    { error: defaultError },
-    { error: { error: { error: defaultError } } },
-    { response: { result: { error: defaultError } } },
-    { result: { error: defaultError } },
-    { result: { errors: defaultError } },
-    { errors: defaultError },
+    {error: defaultError},
+    {error: {error: {error: defaultError}}},
+    {response: {result: {error: defaultError}}},
+    {result: {error: defaultError}},
+    {result: {errors: defaultError}},
+    {errors: defaultError},
     {},
     null,
     undefined,
-    { a: 5 },
+    {a: 5},
     5,
     -5,
     false,
@@ -24,7 +24,5 @@ test("formatError", () => {
     0,
   ];
 
-  values.forEach((v) =>
-    expect(typeof formatError(v) === "string", `"${v}" не строка`).toBeTruthy(),
-  );
+  values.forEach((v) => expect(typeof formatError(v) === "string", `"${v}" не строка`).toBeTruthy());
 });

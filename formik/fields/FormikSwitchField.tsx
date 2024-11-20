@@ -1,20 +1,15 @@
-import { FormHelperText, Switch } from "@mui/material";
+import {FormHelperText, Switch} from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
-import { useFormikContext } from "formik";
+import {useFormikContext} from "formik";
 
 export type FormikSwitchFieldProps = {
   label: string;
   name: string;
   disabled?: boolean;
 };
-export default function FormikSwitchField({
-  label,
-  name,
-  disabled,
-  ...props
-}: FormikSwitchFieldProps) {
-  const formik = useFormikContext<{ [key: string]: any }>();
+export default function FormikSwitchField({label, name, disabled, ...props}: FormikSwitchFieldProps) {
+  const formik = useFormikContext<{[key: string]: any}>();
 
   const helperText = (formik.touched[name] && formik.errors[name]) as string;
 
@@ -28,7 +23,7 @@ export default function FormikSwitchField({
             name={name}
             checked={formik.values[name]}
             onChange={(_, checked) => {
-              formik.setValues((values) => ({ ...values, [name]: checked }));
+              formik.setValues((values) => ({...values, [name]: checked}));
             }}
           />
         }

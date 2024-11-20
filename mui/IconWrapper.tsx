@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { CSSProperties, FC, useMemo } from "react";
+import {CSSProperties, FC, useMemo} from "react";
 
 export type StyledIconProps = {
   size?: "xsmall" | "small" | "medium" | "large";
@@ -32,7 +32,7 @@ export const getIconWidth = (size: StyledIconProps["size"]) => {
   }
 };
 
-const IconWrapper: FC<StyledIconProps> = ({ style = {}, size, children }) => {
+const IconWrapper: FC<StyledIconProps> = ({style = {}, size, children}) => {
   const width = useMemo<number>(() => getIconWidth(size), [size]);
   const height = useMemo(() => width, [width]);
 

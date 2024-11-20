@@ -1,5 +1,5 @@
-import { Close, Done } from "@mui/icons-material";
-import IconButton, { IconButtonProps } from "./IconButton";
+import {Close, Done} from "@mui/icons-material";
+import IconButton, {IconButtonProps} from "./IconButton";
 
 type IconButtonActionSaveProps = IconButtonProps;
 export function IconButtonActionSave(props: IconButtonActionSaveProps) {

@@ -1,9 +1,7 @@
 export const formatError = (error: any): string => {
-  const status =
-    error?.response?.status || error?.status || error?.statusCode || 0;
+  const status = error?.response?.status || error?.status || error?.statusCode || 0;
 
-  const UNKNOWN_ERROR =
-    `${status > 0 ? `[${status}] ` : ""}` + JSON.stringify(error);
+  const UNKNOWN_ERROR = `${status > 0 ? `[${status}] ` : ""}` + JSON.stringify(error);
 
   if (!error) {
     return UNKNOWN_ERROR;
@@ -36,7 +34,5 @@ export const formatError = (error: any): string => {
     );
   }
 
-  return typeof potentialError === "string"
-    ? potentialError
-    : JSON.stringify(potentialError);
+  return typeof potentialError === "string" ? potentialError : JSON.stringify(potentialError);
 };

@@ -1,5 +1,5 @@
-import { expect, test } from "vitest";
-import { declension } from "./formatters";
+import {expect, test} from "vitest";
+import {declension} from "./formatters";
 
 test("formatError", () => {
   const words = ["клиент", "клиента", "клиентов"];

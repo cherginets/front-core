@@ -1,14 +1,14 @@
-import { n_error } from "@/core/features/notifications";
-import { FormikTextField } from "@/core/formik";
+import {n_error} from "@/core/features/notifications";
+import {FormikTextField} from "@/core/formik";
 import FormikAsyncAutocompleteField from "@/core/formik/fields/FormikAsyncAutocompleteField";
 import FormikSwitchField from "@/core/formik/fields/FormikSwitchField";
-import { Option } from "@/core/formik/types/options";
-import { Publish, RestartAlt } from "@mui/icons-material";
-import { Stack } from "@mui/material";
+import {Option} from "@/core/formik/types/options";
+import {Publish, RestartAlt} from "@mui/icons-material";
+import {Stack} from "@mui/material";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
-import { Formik, FormikConfig } from "formik";
-import { useMemo } from "react";
+import {Formik, FormikConfig} from "formik";
+import {useMemo} from "react";
 
 export type FormikFormProps = {
   innerRef?: any; // React.Ref<FormikProps<any>>
@@ -20,14 +20,7 @@ export type FormikFormProps = {
   fields: {
     label: string;
     name: string;
-    type?:
-      | "string"
-      | "textarea"
-      | "number"
-      | "autocomplete"
-      | "autocomplete_multiple"
-      | "select"
-      | "boolean";
+    type?: "string" | "textarea" | "number" | "autocomplete" | "autocomplete_multiple" | "select" | "boolean";
     loading?: boolean;
     options?: Option[];
     FieldComponent?: any;
@@ -55,7 +48,7 @@ export default function FormikForm({
       validationSchema={validationSchema}
       onSubmit={(values) => onSubmit(values).catch(n_error)}
     >
-      {({ handleSubmit, values, resetForm, isSubmitting }) => {
+      {({handleSubmit, values, resetForm, isSubmitting}) => {
         return (
           <form onSubmit={handleSubmit}>
             <Stack direction={"column"} spacing={2}>
@@ -72,26 +65,13 @@ export default function FormikForm({
                 }
                 switch (field.type) {
                   case "number":
-                    return (
-                      <FormikTextField
-                        key={key}
-                        type={"number"}
-                        {...defaultProps}
-                      />
-                    );
+                    return <FormikTextField key={key} type={"number"} {...defaultProps} />;
                   case "string":
                   case undefined:
                     return <FormikTextField key={key} {...defaultProps} />;
                   case "textarea":
                   case undefined:
-                    return (
-                      <FormikTextField
-                        key={key}
-                        multiline
-                        rows={3}
-                        {...defaultProps}
-                      />
-                    );
+                    return <FormikTextField key={key} multiline rows={3} {...defaultProps} />;
                   case "boolean":
                     return <FormikSwitchField key={key} {...defaultProps} />;
                   case "autocomplete":
@@ -115,8 +95,7 @@ export default function FormikForm({
                   default:
                     return (
                       <Alert severity={"error"} key={key}>
-                        <b>{field.label}</b>: неизвестный тип{" "}
-                        <b>{field.type}</b>
+                        <b>{field.label}</b>: неизвестный тип <b>{field.type}</b>
                       </Alert>
                     );
                 }
@@ -127,7 +106,7 @@ export default function FormikForm({
                     variant={"text"}
                     onClick={() => resetForm()}
                     endIcon={<RestartAlt />}
-                    style={{ marginRight: "auto" }}
+                    style={{marginRight: "auto"}}
                   >
                     сбросить
                   </Button>

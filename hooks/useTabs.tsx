@@ -1,10 +1,10 @@
-import { Tab, TabProps } from "@mui/material";
-import Tabs, { TabsProps } from "@mui/material/Tabs";
+import {Tab, TabProps} from "@mui/material";
+import Tabs, {TabsProps} from "@mui/material/Tabs";
 import CSS from "csstype";
-import { useParams, useRouter } from "next/navigation";
-import { FC, useCallback, useMemo, useState } from "react";
+import {useParams, useRouter} from "next/navigation";
+import {FC, useCallback, useMemo, useState} from "react";
 
-type TabType = { label: string; value: string } & Partial<TabProps>;
+type TabType = {label: string; value: string} & Partial<TabProps>;
 
 export type useTabsProps = {
   defaultTab: string;
@@ -29,12 +29,9 @@ export function useTabs({
   onChange,
   tabsStyle = {},
 }: useTabsProps): useTabsResult {
-  const { push } = useRouter();
+  const {push} = useRouter();
   const params = useParams();
-  const currentTab = useMemo(
-    () => _currentTab || params.tab,
-    [params, _currentTab],
-  );
+  const currentTab = useMemo(() => _currentTab || params.tab, [params, _currentTab]);
 
   const [stateTab, setStateTab] = useState(defaultTab);
 
@@ -61,12 +58,12 @@ export function useTabs({
         indicatorColor={"secondary"}
         style={tabsStyle}
       >
-        {tabs.map(({ value, label, ...props }: TabType, i: number) => {
+        {tabs.map(({value, label, ...props}: TabType, i: number) => {
           return <Tab key={i} value={value} label={label} {...props} />;
         })}
       </Tabs>
     ),
-    [tab, setTab, tabs, onChange, tabsStyle],
+    [tab, setTab, tabs, onChange, tabsStyle]
   );
 
   const TabsComponent = useCallback(
@@ -78,17 +75,17 @@ export function useTabs({
           setTab(newTab);
           if (onChange) onChange(newTab);
         }}
-        style={{ marginBottom: 16 }}
+        style={{marginBottom: 16}}
         indicatorColor={"secondary"}
         {...props}
       >
-        {tabs.map(({ value, label, ...props }: TabType, i: number) => {
+        {tabs.map(({value, label, ...props}: TabType, i: number) => {
           console.log("props", props);
           return <Tab key={i} value={value} label={label} {...props} />;
         })}
       </Tabs>
     ),
-    [tab, setTab, tabs, onChange],
+    [tab, setTab, tabs, onChange]
   );
 
   return {

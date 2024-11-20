@@ -1,12 +1,6 @@
-import {
-  TableCell as MuiTableCell,
-  Table,
-  TableBody,
-  TableRow,
-  Typography,
-} from "@mui/material";
-import { styled } from "@mui/material/styles";
-import { FC, Fragment, ReactNode } from "react";
+import {TableCell as MuiTableCell, Table, TableBody, TableRow, Typography} from "@mui/material";
+import {styled} from "@mui/material/styles";
+import {FC, Fragment, ReactNode} from "react";
 
 type DetailsTableProps = {
   groups: {
@@ -28,7 +22,7 @@ const TableCell = styled((p: any) => <MuiTableCell {...p} />)({
   },
 });
 
-const DetailsTable: FC<DetailsTableProps> = ({ groups }) => {
+const DetailsTable: FC<DetailsTableProps> = ({groups}) => {
   return (
     <Table>
       <TableBody>
@@ -47,10 +41,7 @@ const DetailsTable: FC<DetailsTableProps> = ({ groups }) => {
                 return (
                   <TableRow key={i}>
                     <TableCell variant={"head"} align={"right"}>
-                      <Typography
-                        variant={"subtitle2"}
-                        style={{ maxWidth: 250 }}
-                      >
+                      <Typography variant={"subtitle2"} style={{maxWidth: 250}}>
                         {row.title}
                       </Typography>
                     </TableCell>

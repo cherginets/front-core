@@ -1,30 +1,27 @@
-import { Preloader } from "@/core/components/Preloader";
-import {
-  useElementHistory,
-  useElementHistoryProps,
-} from "@/core/components/history/useElementHistory";
-import { formatError } from "@/core/utils/formatError";
-import { Add, Close, Send, Sync } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
-import { Alert, Button, Divider } from "@mui/material";
+import {Preloader} from "@/core/components/Preloader";
+import {useElementHistory, useElementHistoryProps} from "@/core/components/history/useElementHistory";
+import {formatError} from "@/core/utils/formatError";
+import {Add, Close, Send, Sync} from "@mui/icons-material";
+import {LoadingButton} from "@mui/lab";
+import {Alert, Button, Divider} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import moment from "moment";
-import { Fragment } from "react";
-import { useBoolean } from "usehooks-ts";
+import {Fragment} from "react";
+import {useBoolean} from "usehooks-ts";
 import classes from "./ElementHistory.module.scss";
 
 const PRIORITY_LABELS = {
-  success: <span style={{ color: "green" }}>Успех</span>,
-  error: <span style={{ color: "red" }}>Ошибка</span>,
-  info: <span style={{ color: "black" }}>Информация</span>,
-  warning: <span style={{ color: "orange" }}>Предупреждение</span>,
-  debug: <span style={{ color: "gray" }}>Отладка</span>,
+  success: <span style={{color: "green"}}>Успех</span>,
+  error: <span style={{color: "red"}}>Ошибка</span>,
+  info: <span style={{color: "black"}}>Информация</span>,
+  warning: <span style={{color: "orange"}}>Предупреждение</span>,
+  debug: <span style={{color: "gray"}}>Отладка</span>,
 };
 
 export type ElementHistoryProps = {
   title: string;
 } & useElementHistoryProps;
-function ElementHistory({ title, ...props }: ElementHistoryProps) {
+function ElementHistory({title, ...props}: ElementHistoryProps) {
   const {
     data,
     newComment,
@@ -39,7 +36,7 @@ function ElementHistory({ title, ...props }: ElementHistoryProps) {
     loadingMore,
   } = useElementHistory(props);
 
-  const { value: adding, toggle: addingToggle } = useBoolean(false);
+  const {value: adding, toggle: addingToggle} = useBoolean(false);
 
   if (loading) return <Preloader />;
 
@@ -59,7 +56,7 @@ function ElementHistory({ title, ...props }: ElementHistoryProps) {
       ) : (
         <>
           <div className={classes.newMessage}>
-            <div style={{ display: "flex", marginBottom: 12, width: "100%" }}>
+            <div style={{display: "flex", marginBottom: 12, width: "100%"}}>
               <Button
                 endIcon={adding ? <Close /> : <Add />}
                 onClick={addingToggle}
@@ -67,11 +64,7 @@ function ElementHistory({ title, ...props }: ElementHistoryProps) {
               >
                 {adding ? "отменить написание" : "добавить комментарий"}
               </Button>
-              <Button
-                onClick={fetch}
-                endIcon={<Sync />}
-                style={{ marginLeft: "auto" }}
-              >
+              <Button onClick={fetch} endIcon={<Sync />} style={{marginLeft: "auto"}}>
                 Обновить
               </Button>
             </div>
@@ -92,7 +85,7 @@ function ElementHistory({ title, ...props }: ElementHistoryProps) {
                       send();
                     }
                   }}
-                  style={{ marginBottom: 12 }}
+                  style={{marginBottom: 12}}
                   autoFocus
                 />
                 <Button
@@ -113,28 +106,19 @@ function ElementHistory({ title, ...props }: ElementHistoryProps) {
           {loading && <Preloader />}
 
           {data && data.length > 0 ? (
-            data.map(({ id, who_name, message, created_at, level }, i) => {
-              const date = moment(created_at).isValid()
-                ? moment(created_at).format("DD-MM-YYYY HH:mm:ss")
-                : created_at;
+            data.map(({id, who_name, message, created_at, level}, i) => {
+              const date = moment(created_at).isValid() ? moment(created_at).format("DD-MM-YYYY HH:mm:ss") : created_at;
 
               return (
                 <Fragment key={id}>
                   <div className={classes.item}>
                     <div className={classes.firstLine}>
-                      <div className={classes.fieldIndex}>
-                        #{data.length - i}
-                      </div>
-                      <div className={classes.fieldPriority}>
-                        {PRIORITY_LABELS[level] || level}
-                      </div>
+                      <div className={classes.fieldIndex}>#{data.length - i}</div>
+                      <div className={classes.fieldPriority}>{PRIORITY_LABELS[level] || level}</div>
                       <div className={classes.fieldWho}>{who_name}</div>
                       <div className={classes.fieldDate}>{date}</div>
                     </div>
-                    <pre
-                      className={classes.fieldText}
-                      dangerouslySetInnerHTML={{ __html: message }}
-                    />
+                    <pre className={classes.fieldText} dangerouslySetInnerHTML={{__html: message}} />
                   </div>
                   {i !== data.length - 1 && <Divider />}
                 </Fragment>

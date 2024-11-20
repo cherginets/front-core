@@ -2,7 +2,7 @@ export function number_format(
   number: number,
   decimals: number = 0,
   dec_point: string = ".",
-  thousands_sep: string = " ",
+  thousands_sep: string = " "
 ): string {
   // Validate the input number
   if (isNaN(number) || !isFinite(number)) {

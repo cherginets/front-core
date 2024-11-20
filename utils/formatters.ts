@@ -1,5 +1,5 @@
-import { CHAR_RUBLE } from "../constants";
-import { number_format } from "./php";
+import {CHAR_RUBLE} from "../constants";
+import {number_format} from "./php";
 
 export const MOMENT_FOR_FILENAME = "YYYYMMDDHHmmss";
 
@@ -8,14 +8,8 @@ export const MOMENT_DATE_PRETTY = "YYYY-MM-DD HH:mm";
 
 export const formatMoney = (value: string | number) => {
   if (!value) value = 0;
-  let formattedNum = number_format(
-    typeof value === "string" ? parseFloat(value) : value,
-    2,
-    ".",
-    " ",
-  );
-  if (formattedNum.endsWith(".00"))
-    formattedNum = formattedNum.slice(0, formattedNum.length - 3);
+  let formattedNum = number_format(typeof value === "string" ? parseFloat(value) : value, 2, ".", " ");
+  if (formattedNum.endsWith(".00")) formattedNum = formattedNum.slice(0, formattedNum.length - 3);
 
   return `${formattedNum} ${CHAR_RUBLE}`;
 };
@@ -31,7 +25,7 @@ export const formatMoney = (value: string | number) => {
 export const declension = (number: number, words: string[]): string => {
   if (words.length < 3) {
     throw new Error(
-      "Должно быть передано 3 формы слова (именительный, родительный и родительный во множественном числе).",
+      "Должно быть передано 3 формы слова (именительный, родительный и родительный во множественном числе)."
     );
   }
 
@@ -46,11 +40,7 @@ export const declension = (number: number, words: string[]): string => {
 
   if (remainder10 === 1 && remainder100 !== 11) {
     result = nominative;
-  } else if (
-    remainder10 >= 2 &&
-    remainder10 <= 4 &&
-    (remainder100 < 12 || remainder100 > 14)
-  ) {
+  } else if (remainder10 >= 2 && remainder10 <= 4 && (remainder100 < 12 || remainder100 > 14)) {
     result = genitiveSingular;
   } else {
     result = genitivePlural;

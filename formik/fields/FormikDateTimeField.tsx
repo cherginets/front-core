@@ -1,37 +1,26 @@
 "use client";
 
-import {
-  Button,
-  ButtonProps,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { useFormikContext } from "formik";
+import {Button, ButtonProps, Stack, TextField, Typography} from "@mui/material";
+import {useFormikContext} from "formik";
 import moment from "moment";
 
 export type FormikDateTimeFieldProps = {
   name: string;
   label: string;
 };
-export default function FormikDateTimeField({
-  label,
-  name,
-}: FormikDateTimeFieldProps) {
+export default function FormikDateTimeField({label, name}: FormikDateTimeFieldProps) {
   const formik = useFormikContext<any>();
 
   const momentValue = moment(formik.values[name]);
 
-  const value = momentValue.isValid()
-    ? momentValue.format("YYYY-MM-DDTHH:mm")
-    : "";
+  const value = momentValue.isValid() ? momentValue.format("YYYY-MM-DDTHH:mm") : "";
 
   const disabled = formik.isSubmitting;
 
   const buttonProps: Partial<ButtonProps> = {
     disabled,
     size: "small",
-    style: { padding: 0 },
+    style: {padding: 0},
     variant: "outlined",
   };
 
@@ -52,8 +41,7 @@ export default function FormikDateTimeField({
         <Button
           {...buttonProps}
           onClick={() => {
-            if (momentValue.isValid())
-              formik.setFieldValue(name, momentValue.add(1, "day"));
+            if (momentValue.isValid()) formik.setFieldValue(name, momentValue.add(1, "day"));
           }}
         >
           +1 дн
@@ -61,8 +49,7 @@ export default function FormikDateTimeField({
         <Button
           {...buttonProps}
           onClick={() => {
-            if (momentValue.isValid())
-              formik.setFieldValue(name, momentValue.subtract(1, "day"));
+            if (momentValue.isValid()) formik.setFieldValue(name, momentValue.subtract(1, "day"));
           }}
         >
           -1 дн
@@ -70,8 +57,7 @@ export default function FormikDateTimeField({
         <Button
           {...buttonProps}
           onClick={() => {
-            if (momentValue.isValid())
-              formik.setFieldValue(name, momentValue.add(30, "day"));
+            if (momentValue.isValid()) formik.setFieldValue(name, momentValue.add(30, "day"));
           }}
         >
           +30 дн
@@ -79,16 +65,13 @@ export default function FormikDateTimeField({
         <Button
           {...buttonProps}
           onClick={() => {
-            if (momentValue.isValid())
-              formik.setFieldValue(name, momentValue.subtract(30, "day"));
+            if (momentValue.isValid()) formik.setFieldValue(name, momentValue.subtract(30, "day"));
           }}
         >
           -30 дн
         </Button>
       </Stack>
-      {momentValue.isValid() && (
-        <Typography variant={"caption"}>{momentValue.fromNow()}</Typography>
-      )}
+      {momentValue.isValid() && <Typography variant={"caption"}>{momentValue.fromNow()}</Typography>}
     </Stack>
   );
 }

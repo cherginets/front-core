@@ -1,6 +1,6 @@
 "use client";
-import { number_format } from "@/core/utils/php";
-import React, { useEffect, useState } from "react";
+import {number_format} from "@/core/utils/php";
+import React, {useEffect, useState} from "react";
 
 interface CounterProps {
   targetValue: number;

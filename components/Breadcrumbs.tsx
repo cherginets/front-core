@@ -1,11 +1,11 @@
 "use client";
-import { Link } from "@/core/components/NextMuiLink";
-import { Breadcrumbs as MuiBreadcrumbs, Typography } from "@mui/material";
-import { FC } from "react";
+import {Link} from "@/core/components/NextMuiLink";
+import {Breadcrumbs as MuiBreadcrumbs, Typography} from "@mui/material";
+import {FC} from "react";
 
-import { ReactNode } from "react";
+import {ReactNode} from "react";
 
-import { usePathname } from "next/navigation";
+import {usePathname} from "next/navigation";
 
 type TBreadCrumbProps = {
   homeElement?: ReactNode;
@@ -34,8 +34,7 @@ const NextBreadcrumb = ({
       </Link>
       {pathNames.map((label, index) => {
         let href = `/${pathNames.slice(0, index + 1).join("/")}`;
-        let itemClasses =
-          paths === href ? `${listClasses} ${activeClasses}` : listClasses;
+        let itemClasses = paths === href ? `${listClasses} ${activeClasses}` : listClasses;
         if (excludeLabels.includes(label)) {
           return null;
         }

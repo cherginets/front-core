@@ -1,7 +1,7 @@
-import { AlertWithError } from "@/core/components/AlertWithError";
+import {AlertWithError} from "@/core/components/AlertWithError";
 import IconButton from "@/core/mui/IconButton";
-import { Sync } from "@mui/icons-material";
-import { TypedUseQueryHookResult } from "@reduxjs/toolkit/query/react";
+import {Sync} from "@mui/icons-material";
+import {TypedUseQueryHookResult} from "@reduxjs/toolkit/query/react";
 import {
   MaterialReactTableProps,
   MRT_Row,
@@ -10,12 +10,10 @@ import {
   MaterialReactTable as OriginalMaterialReactTable,
   useMaterialReactTable as useOriginalMaterialReactTable,
 } from "material-react-table";
-import { MRT_Localization_RU } from "material-react-table/locales/ru";
-import { useMemo } from "react";
+import {MRT_Localization_RU} from "material-react-table/locales/ru";
+import {useMemo} from "react";
 
-export function MRTable<TData extends MRT_RowData>(
-  props: MaterialReactTableProps<TData>,
-) {
+export function MRTable<TData extends MRT_RowData>(props: MaterialReactTableProps<TData>) {
   return <OriginalMaterialReactTable {...props} />;
 }
 
@@ -37,7 +35,7 @@ export function useMRTable<TData extends MRT_RowData>({
     query?: TypedUseQueryHookResult<any, void, any, any>;
     queryGetRows?: (result: any) => TData[];
     queryGetTotal?: (result: any) => number;
-    onRowClick?: ({ row }: { row: MRT_Row<TData> }) => any;
+    onRowClick?: ({row}: {row: MRT_Row<TData>}) => any;
   }) {
   const state = useMemo(() => {
     return {
@@ -75,12 +73,11 @@ export function useMRTable<TData extends MRT_RowData>({
     renderTopToolbarCustomActions: (...props) => {
       return (
         <>
-          {!!renderTopToolbarCustomActions &&
-            renderTopToolbarCustomActions(...props)}
-          <div style={{ marginLeft: "auto" }} />
+          {!!renderTopToolbarCustomActions && renderTopToolbarCustomActions(...props)}
+          <div style={{marginLeft: "auto"}} />
           {!!refetch && (
             <IconButton
-              style={{ marginRight: -8 }}
+              style={{marginRight: -8}}
               title={"Обновить данные"}
               onClick={() => {
                 refetch();
@@ -95,8 +92,8 @@ export function useMRTable<TData extends MRT_RowData>({
 
     muiTableBodyRowProps: !onRowClick
       ? undefined
-      : ({ row }) => ({
-          onClick: () => onRowClick({ row }),
+      : ({row}) => ({
+          onClick: () => onRowClick({row}),
           sx: {
             cursor: "pointer", //you might want to change the cursor too when adding an onClick
           },

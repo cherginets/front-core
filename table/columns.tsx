@@ -1,24 +1,16 @@
-import { NextLink } from "@/core/components/NextMuiLink";
-import { n_promise } from "@/core/features/notifications";
-import { MOMENT_DATE_PRETTY } from "@/core/utils";
-import { OpenInNew, ToggleOff, ToggleOn } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
-import {
-  MRT_Cell,
-  MRT_ColumnDef,
-  MRT_Row,
-  MRT_RowData,
-} from "material-react-table";
+import {NextLink} from "@/core/components/NextMuiLink";
+import {n_promise} from "@/core/features/notifications";
+import {MOMENT_DATE_PRETTY} from "@/core/utils";
+import {OpenInNew, ToggleOff, ToggleOn} from "@mui/icons-material";
+import {IconButton} from "@mui/material";
+import {MRT_Cell, MRT_ColumnDef, MRT_Row, MRT_RowData} from "material-react-table";
 import moment from "moment";
 import Link from "next/link";
 
 export const MRTColumns_id = function <T extends MRT_RowData = MRT_RowData>({
   getRowLink = () => null,
 }: {
-  getRowLink?: (props: {
-    cell: MRT_Cell<T, any>;
-    row: MRT_Row<T>;
-  }) => string | null;
+  getRowLink?: (props: {cell: MRT_Cell<T, any>; row: MRT_Row<T>}) => string | null;
 } = {}): MRT_ColumnDef<T, any> {
   return {
     accessorKey: "id",
@@ -28,8 +20,8 @@ export const MRTColumns_id = function <T extends MRT_RowData = MRT_RowData>({
     // enableClickToCopy: true,
     enableEditing: false,
     enableSorting: true,
-    Cell: ({ row, cell }) => {
-      const link = getRowLink({ row, cell });
+    Cell: ({row, cell}) => {
+      const link = getRowLink({row, cell});
       if (link)
         return (
           <Link className={"link"} href={link}>
@@ -41,12 +33,10 @@ export const MRTColumns_id = function <T extends MRT_RowData = MRT_RowData>({
   };
 };
 
-export const MRTColumns_active = function <
-  T extends MRT_RowData = MRT_RowData,
->({
+export const MRTColumns_active = function <T extends MRT_RowData = MRT_RowData>({
   onToggle,
 }: {
-  onToggle?: ({ row }: { row: MRT_Row<T> }) => Promise<any>;
+  onToggle?: ({row}: {row: MRT_Row<T>}) => Promise<any>;
 }): MRT_ColumnDef<T, any> {
   return {
     accessorKey: "active",
@@ -57,7 +47,7 @@ export const MRTColumns_active = function <
     enableColumnFilter: true,
     filterVariant: "checkbox",
     enableGlobalFilter: false,
-    Cell: ({ row }) => {
+    Cell: ({row}) => {
       const active = row.original["active"];
       const IconComponent = active ? ToggleOn : ToggleOff;
       const color = active ? "success" : "error";
@@ -65,7 +55,7 @@ export const MRTColumns_active = function <
         <IconButton
           onClick={() => {
             if (onToggle) {
-              n_promise(onToggle({ row }), {
+              n_promise(onToggle({row}), {
                 pending: "Смена активности",
               });
             }
@@ -80,18 +70,18 @@ export const MRTColumns_active = function <
 
 export const MRTColumns_link = function <T extends MRT_RowData = MRT_RowData>(
   getRowLink: (row: MRT_RowData) => string,
-  options: { _blank?: boolean } = {},
+  options: {_blank?: boolean} = {}
 ): MRT_ColumnDef<T, any> {
   return {
     id: "link",
     header: "#",
     size: 0,
     enablePinning: true,
-    Cell: ({ row, table }: any) => {
+    Cell: ({row, table}: any) => {
       const href = getRowLink(row);
       return (
         <NextLink href={href} target={options._blank ? "_blank" : undefined}>
-          <IconButton sx={{ p: "0 5px" }} size={"small"}>
+          <IconButton sx={{p: "0 5px"}} size={"small"}>
             <OpenInNew fontSize={"small"} />
           </IconButton>
         </NextLink>
@@ -100,15 +90,11 @@ export const MRTColumns_link = function <T extends MRT_RowData = MRT_RowData>(
   };
 };
 
-const MRTColumns_date = (): Pick<
-  MRT_ColumnDef<any>,
-  "size" | "Cell" | "enableColumnFilter"
-> => ({
+const MRTColumns_date = (): Pick<MRT_ColumnDef<any>, "size" | "Cell" | "enableColumnFilter"> => ({
   size: 0,
   enableColumnFilter: false,
   // filterVariant: "date-range",
-  Cell: ({ row }: any) =>
-    moment(row.original.created_at).format(MOMENT_DATE_PRETTY),
+  Cell: ({row}: any) => moment(row.original.created_at).format(MOMENT_DATE_PRETTY),
 });
 
 export const MRTColumns_updated_at = (): MRT_ColumnDef<any> => ({
