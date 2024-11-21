@@ -13,7 +13,6 @@ export const NotificationsProvider = ({children}: {children: ReactNode}) => (
 export const n_default = toast;
 export const n_success = toast.success;
 export const n_error = (error: ToastContent, options?: ToastOptions) => {
-  console.log("formatError(error)", formatError(error));
   toast.error(formatError(error), options);
 };
 export const n_info = toast.info;
