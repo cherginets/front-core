@@ -37,7 +37,7 @@ export function useMRTable<TData extends MRT_RowData>({
     queryGetTotal?: (result: any) => number;
     onRowClick?: ({row}: {row: MRT_Row<TData>}) => any;
   }) {
-  const state = useMemo(() => {
+  const state = useMemo<MRT_TableOptions<TData>['state']>(() => {
     return {
       isLoading: query && query?.isLoading,
       ..._state,
