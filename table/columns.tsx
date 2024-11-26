@@ -53,7 +53,9 @@ export const MRTColumns_active = function <T extends MRT_RowData = MRT_RowData>(
       const color = active ? "success" : "error";
       return (
         <IconButton
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
             if (onToggle) {
               n_promise(onToggle({row}), {
                 pending: "Смена активности",
