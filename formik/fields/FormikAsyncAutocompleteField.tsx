@@ -27,6 +27,7 @@ export default function FormikAsyncAutocompleteField<OptionType extends Option =
         formik.setValues((v: any) => ({...v, [name]: value}));
       }}
       disabled={formik.isSubmitting}
+      helperText={helperText}
       {...props}
     />
   );

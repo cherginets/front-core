@@ -13,6 +13,7 @@ import {Fragment, useMemo} from "react";
 export type AutocompleteProps<OptionType extends Option = Option, Multiple extends boolean | undefined = boolean> = {
   label: string;
   name: string;
+  helperText: string;
   loading?: boolean;
   multiple?: Multiple;
   optionsMap?: Map<OptionType["value"], OptionType>;
@@ -29,6 +30,7 @@ export default function AutocompleteField<
   name,
   label,
   loading = false,
+                                             helperText,
   multiple,
   options,
   optionsMap: _optionsMap,
@@ -81,6 +83,7 @@ export default function AutocompleteField<
       renderInput={(params) => (
         <TextField
           {...params}
+          helperText={helperText}
           label={label}
           name={name}
           InputProps={{
