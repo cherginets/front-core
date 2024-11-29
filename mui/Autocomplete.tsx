@@ -13,7 +13,7 @@ import {Fragment, useMemo} from "react";
 export type AutocompleteProps<OptionType extends Option = Option, Multiple extends boolean | undefined = boolean> = {
   label: string;
   name: string;
-  helperText: string;
+  helperText?: string;
   loading?: boolean;
   multiple?: Multiple;
   optionsMap?: Map<OptionType["value"], OptionType>;
