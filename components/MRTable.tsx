@@ -19,13 +19,13 @@ export function MRTable<TData extends MRT_RowData>(props: MaterialReactTableProp
 
 export type UseMRTableProps<TData extends MRT_RowData> = Omit<MRT_TableOptions<TData>, "data"> &
   Pick<Partial<MRT_TableOptions<TData>>, "data"> & {
-  refetch?: () => any;
-  error?: any;
-  query?: TypedUseQueryHookResult<any, void, any, any>;
-  queryGetRows?: (result: any) => TData[];
-  queryGetTotal?: (result: any) => number;
-  onRowClick?: ({row}: {row: MRT_Row<TData>}) => any;
-}
+    refetch?: () => any;
+    error?: any;
+    query?: TypedUseQueryHookResult<any, void, any, any>;
+    queryGetRows?: (result: any) => TData[];
+    queryGetTotal?: (result: any) => number;
+    onRowClick?: ({row}: {row: MRT_Row<TData>}) => any;
+  };
 
 export function useMRTable<TData extends MRT_RowData>({
   error: _error,
