@@ -7,8 +7,9 @@ import moment from "moment";
 export type FormikDateTimeFieldProps = {
   name: string;
   label: string;
+  disableButtons?: boolean;
 };
-export default function FormikDateTimeField({label, name}: FormikDateTimeFieldProps) {
+export default function FormikDateTimeField({label, name, disableButtons}: FormikDateTimeFieldProps) {
   const formik = useFormikContext<any>();
 
   const momentValue = moment(formik.values[name]);
@@ -37,7 +38,7 @@ export default function FormikDateTimeField({label, name}: FormikDateTimeFieldPr
           formik.setFieldValue(name, e.target.value);
         }}
       />
-      <Stack direction={"row"} spacing={0} justifyContent={"space-between"}>
+      {!disableButtons && <Stack direction={"row"} spacing={0} justifyContent={"space-between"}>
         <Button
           {...buttonProps}
           onClick={() => {
@@ -70,7 +71,7 @@ export default function FormikDateTimeField({label, name}: FormikDateTimeFieldPr
         >
           -30 дн
         </Button>
-      </Stack>
+      </Stack>}
       {momentValue.isValid() && <Typography variant={"caption"}>{momentValue.fromNow()}</Typography>}
     </Stack>
   );

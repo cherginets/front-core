@@ -6,7 +6,7 @@ type DetailsTableProps = {
   groups: {
     title?: string;
     rows: {
-      title: string;
+      title: ReactNode;
       value: ReactNode;
     }[];
   }[];
