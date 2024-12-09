@@ -4,12 +4,16 @@ import {NextRequest} from "next/server";
 const BASIC_AUTH_USER = process.env.BASIC_AUTH_USER || "admin";
 const BASIC_AUTH_PASSWORD = process.env.BASIC_AUTH_PASSWORD || "password";
 
-export const basicAuthMiddleware = (req: NextRequest, options: {
-  excludedPathsStartsWith?: string[]
-}, callback: (req: NextRequest) => any) => {
+export const basicAuthMiddleware = (
+  req: NextRequest,
+  options: {
+    excludedPathsStartsWith?: string[];
+  },
+  callback: (req: NextRequest) => any
+) => {
   if (
     process.env.BASIC_AUTH === "on" &&
-    !((options.excludedPathsStartsWith || []).find(path => req.nextUrl.pathname.startsWith(path)))
+    !(options.excludedPathsStartsWith || []).find((path) => req.nextUrl.pathname.startsWith(path))
   ) {
     // Проверяем заголовок авторизации
     const authHeader = req.headers.get("authorization");
@@ -36,4 +40,4 @@ export const basicAuthMiddleware = (req: NextRequest, options: {
   }
 
   return callback(req);
-}
+};

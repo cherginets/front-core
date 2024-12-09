@@ -38,40 +38,42 @@ export default function FormikDateTimeField({label, name, disableButtons}: Formi
           formik.setFieldValue(name, e.target.value);
         }}
       />
-      {!disableButtons && <Stack direction={"row"} spacing={0} justifyContent={"space-between"}>
-        <Button
-          {...buttonProps}
-          onClick={() => {
-            if (momentValue.isValid()) formik.setFieldValue(name, momentValue.add(1, "day"));
-          }}
-        >
-          +1 дн
-        </Button>
-        <Button
-          {...buttonProps}
-          onClick={() => {
-            if (momentValue.isValid()) formik.setFieldValue(name, momentValue.subtract(1, "day"));
-          }}
-        >
-          -1 дн
-        </Button>
-        <Button
-          {...buttonProps}
-          onClick={() => {
-            if (momentValue.isValid()) formik.setFieldValue(name, momentValue.add(30, "day"));
-          }}
-        >
-          +30 дн
-        </Button>
-        <Button
-          {...buttonProps}
-          onClick={() => {
-            if (momentValue.isValid()) formik.setFieldValue(name, momentValue.subtract(30, "day"));
-          }}
-        >
-          -30 дн
-        </Button>
-      </Stack>}
+      {!disableButtons && (
+        <Stack direction={"row"} spacing={0} justifyContent={"space-between"}>
+          <Button
+            {...buttonProps}
+            onClick={() => {
+              if (momentValue.isValid()) formik.setFieldValue(name, momentValue.add(1, "day"));
+            }}
+          >
+            +1 дн
+          </Button>
+          <Button
+            {...buttonProps}
+            onClick={() => {
+              if (momentValue.isValid()) formik.setFieldValue(name, momentValue.subtract(1, "day"));
+            }}
+          >
+            -1 дн
+          </Button>
+          <Button
+            {...buttonProps}
+            onClick={() => {
+              if (momentValue.isValid()) formik.setFieldValue(name, momentValue.add(30, "day"));
+            }}
+          >
+            +30 дн
+          </Button>
+          <Button
+            {...buttonProps}
+            onClick={() => {
+              if (momentValue.isValid()) formik.setFieldValue(name, momentValue.subtract(30, "day"));
+            }}
+          >
+            -30 дн
+          </Button>
+        </Stack>
+      )}
       {momentValue.isValid() && <Typography variant={"caption"}>{momentValue.fromNow()}</Typography>}
     </Stack>
   );

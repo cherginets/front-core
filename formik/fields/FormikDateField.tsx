@@ -1,13 +1,16 @@
+import {ButtonProps, Stack, TextField} from "@mui/material";
+import {TextFieldProps} from "@mui/material/TextField";
 import {useFormikContext} from "formik";
 import moment from "moment/moment";
-import {Button, ButtonProps, Stack, TextField, Typography} from "@mui/material";
-import {FormikDateTimeFieldProps} from "@/core/formik/fields/FormikDateTimeField";
-import {TextFieldProps} from "@mui/material/TextField";
 
-export default function FormikDateField({label, name, ...props}: {
+export default function FormikDateField({
+  label,
+  name,
+  ...props
+}: {
   name: string;
   label: string;
-} & Omit<TextFieldProps, 'name' | 'label'>) {
+} & Omit<TextFieldProps, "name" | "label">) {
   const formik = useFormikContext<any>();
 
   const momentValue = moment(formik.values[name]);
