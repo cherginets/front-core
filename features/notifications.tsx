@@ -1,3 +1,4 @@
+'use client';
 import {formatError} from "@/core/utils/formatError";
 import {Fragment, ReactNode} from "react";
 import {ToastContainer, ToastContent, ToastOptions, toast} from "react-toastify";
