@@ -8,7 +8,7 @@ import {
   MRT_RowData,
   MRT_TableOptions,
   MaterialReactTable as OriginalMaterialReactTable,
-  useMaterialReactTable as useOriginalMaterialReactTable,
+  useMaterialReactTable as useOriginalMaterialReactTable, MRT_ColumnDef,
 } from "material-react-table";
 import {MRT_Localization_RU} from "material-react-table/locales/ru";
 import {useMemo} from "react";
@@ -17,8 +17,9 @@ export function MRTable<TData extends MRT_RowData>(props: MaterialReactTableProp
   return <OriginalMaterialReactTable {...props} />;
 }
 
-export type UseMRTableProps<TData extends MRT_RowData> = Omit<MRT_TableOptions<TData>, "data"> &
+export type UseMRTableProps<TData extends MRT_RowData> = Omit<MRT_TableOptions<TData>, "data" | 'columns'> &
   Pick<Partial<MRT_TableOptions<TData>>, "data"> & {
+    columns: (MRT_ColumnDef<TData, any> | null | false)[]
     refetch?: () => any;
     error?: any;
     query?: TypedUseQueryHookResult<any, void, any, any>;
@@ -31,6 +32,7 @@ export function useMRTable<TData extends MRT_RowData>({
   error: _error,
   data: _data,
   refetch: _refetch,
+                                                        columns,
   query,
   queryGetRows = (result) => result?.rows || [],
   queryGetTotal = (result) => result?.total || [],
@@ -65,6 +67,7 @@ export function useMRTable<TData extends MRT_RowData>({
 
   return useOriginalMaterialReactTable({
     ...tableOptions,
+    columns: columns.filter(c => !!c),
     state,
     data,
     localization: MRT_Localization_RU,
