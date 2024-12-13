@@ -1,4 +1,4 @@
-import HttpError from "@/services/errors/HttpError";
+import HttpError from "@/core/errors/http/HttpError";
 
 export default class ForbiddenError extends HttpError {
   httpCode = 403;
