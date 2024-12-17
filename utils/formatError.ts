@@ -17,6 +17,7 @@ export const formatError = (error: any): string => {
     error?.response?.data?.error ||
     error?.data?.errors ||
     error?.data?.error ||
+    error?.data ||
     error?.response?.data?.result ||
     error?.message ||
     error?.message ||

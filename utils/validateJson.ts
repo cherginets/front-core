@@ -11,7 +11,7 @@ export default async function validateJson(schema: Schema, json: any) {
     // Обработка ошибок валидации
     if (err instanceof ValidationError) {
       console.error("Ошибки валидации:", err.errors);
-      throw new BadRequestError(`Ошибка валидации: ${err.errors.join("; ")}`);
+      throw new BadRequestError(`Ошибки валидации: ${err.errors.join("; ")}`);
     } else {
       throw err;
     }
