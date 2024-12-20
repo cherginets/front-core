@@ -6,7 +6,8 @@ export function number_format(
 ): string {
   // Validate the input number
   if (isNaN(number) || !isFinite(number)) {
-    throw new Error("Input is not a valid number");
+    console.error(number, "Input is not a valid number")
+    return null;
   }
 
   // Check if the input number has decimals
