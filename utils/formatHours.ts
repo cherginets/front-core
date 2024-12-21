@@ -6,28 +6,13 @@ export default function formatHours(hours: number | undefined | null) {
     return `${hours} ${declension(hours, ["час", "часа", "часов"])}`;
   }
   const days: number = hours / 24;
+  const months: number = days / 30;
 
-  switch (days) {
-    case 1:
-      return "1 день";
-    case 7:
-      return "1 неделя";
-    case 14:
-      return "2 недели";
-    case 21:
-      return "3 недели";
-    case 30:
-      return "1 месяц";
-    case 60:
-      return "2 месяца";
-    case 90:
-      return "3 месяца";
-    case 120:
-      return "4 месяца";
-    case 150:
-      return "5 месяцев";
-    case 180:
-      return "пол года";
+  if(Number.isInteger(months)) {
+    return `${months} ${declension(months, ['месяц', "месяца", "месяцев"])}`
+  }
+  if(Number.isInteger(days)) {
+    return `${days} ${declension(days, ['день', "дня", "дней"])}`
   }
 
   // Месяца
