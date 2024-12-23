@@ -1,4 +1,4 @@
-import HttpError from "@/services/errors/HttpError";
+import HttpError from "@/core/errors/http/HttpError";
 
 export default class NotFoundError extends HttpError {
   httpCode = 404;

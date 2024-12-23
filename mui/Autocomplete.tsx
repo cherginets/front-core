@@ -10,7 +10,7 @@ import {
 import TextField, {TextFieldProps} from "@mui/material/TextField";
 import {Fragment, useMemo} from "react";
 
-export type AutocompleteProps<OptionType extends Option = Option, Multiple extends boolean | undefined = boolean> = {
+export type AutocompleteProps<OptionType extends Option = Option, Multiple extends boolean | undefined = false> = {
   label: string;
   name: string;
   placeholder?: string;
@@ -19,8 +19,9 @@ export type AutocompleteProps<OptionType extends Option = Option, Multiple exten
   optionsMap?: Map<OptionType["value"], OptionType>;
   onAddElementClick?: () => any;
   textFieldProps?: TextFieldProps;
+  value?: string | number | null | undefined
   onChange?: (value: Multiple extends true ? OptionType["value"][] : OptionType["value"]) => any;
-} & Omit<MuiAutocompleteProps<OptionType, Multiple, any, any>, "renderInput">;
+} & Omit<MuiAutocompleteProps<OptionType, Multiple, any, any>, "renderInput" | "value">;
 
 export default function AutocompleteField<
   OptionType extends Option = Option,

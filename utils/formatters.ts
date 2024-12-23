@@ -6,7 +6,7 @@ export const MOMENT_FOR_FILENAME = "YYYYMMDDHHmmss";
 export const MOMENT_DATE_MYSQL = "YYYY-MM-DD HH:mm:ss";
 export const MOMENT_DATE_PRETTY = "YYYY-MM-DD HH:mm";
 
-export const formatMoney = (value: string | number) => {
+export const formatMoney = (value: string | number | null | undefined) => {
   if (!value) value = 0;
   let formattedNum = number_format(typeof value === "string" ? parseFloat(value) : value, 2, ".", " ");
   if (formattedNum.endsWith(".00")) formattedNum = formattedNum.slice(0, formattedNum.length - 3);
