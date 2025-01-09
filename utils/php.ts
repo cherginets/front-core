@@ -16,5 +16,6 @@ export function number_format(
   integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, thousands_sep);
 
   // Combine integer part and decimal part
-  return decimalPart ? integerPart + dec_point + decimalPart : integerPart;
+  // todo сделать округление параметризуемым
+  return (decimalPart ? integerPart + dec_point + decimalPart : integerPart).replace(/\.[0]+$/, '');
 }
