@@ -17,5 +17,5 @@ export function number_format(
 
   // Combine integer part and decimal part
   // todo сделать округление параметризуемым
-  return (decimalPart ? integerPart + dec_point + decimalPart : integerPart).replace(/\.[0]+$/, '');
+  return (decimalPart ? integerPart + dec_point + decimalPart : integerPart).replace(/\.[0]+$/, "");
 }
