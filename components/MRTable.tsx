@@ -8,10 +8,11 @@ import {
   MRT_RowData,
   MRT_TableOptions,
   MaterialReactTable as OriginalMaterialReactTable,
-  useMaterialReactTable as useOriginalMaterialReactTable,
+  useMaterialReactTable as useOriginalMaterialReactTable, MRT_TableState,
 } from "material-react-table";
 import {MRT_Localization_RU} from "material-react-table/locales/ru";
 import {useMemo} from "react";
+import {useLocalStorage} from "usehooks-ts";
 
 export function MRTable<TData extends MRT_RowData>(props: MaterialReactTableProps<TData>) {
   return <OriginalMaterialReactTable {...props} />;
@@ -19,6 +20,7 @@ export function MRTable<TData extends MRT_RowData>(props: MaterialReactTableProp
 
 export type UseMRTableProps<TData extends MRT_RowData> = Omit<MRT_TableOptions<TData>, "data"> &
   Pick<Partial<MRT_TableOptions<TData>>, "data"> & {
+    id: string
     refetch?: () => any;
     error?: any;
     query?: TypedUseQueryHookResult<any, void, any, any>;
@@ -28,6 +30,7 @@ export type UseMRTableProps<TData extends MRT_RowData> = Omit<MRT_TableOptions<T
   };
 
 export function useMRTable<TData extends MRT_RowData>({
+  id,
   error: _error,
   data: _data,
   refetch: _refetch,
@@ -39,12 +42,14 @@ export function useMRTable<TData extends MRT_RowData>({
   state: _state,
   ...tableOptions
 }: UseMRTableProps<TData>) {
+  const [columnVisibility, setColumnVisibility] = useLocalStorage<MRT_TableState<TData>['columnVisibility']>(`MRT_${id}_COLUMN_VISIBILITY`, {});
   const state = useMemo<MRT_TableOptions<TData>["state"]>(() => {
     return {
       isLoading: query && query?.isLoading,
+      columnVisibility,
       ..._state,
     };
-  }, [_state, query]);
+  }, [_state, query, columnVisibility]);
 
   const refetch = useMemo(() => {
     if (query) return query.refetch;
@@ -69,6 +74,7 @@ export function useMRTable<TData extends MRT_RowData>({
     data,
     localization: MRT_Localization_RU,
     enableDensityToggle: false,
+    onColumnVisibilityChange: setColumnVisibility,
     renderEmptyRowsFallback: () => {
       if (error) return <AlertWithError error={error} />;
     },
