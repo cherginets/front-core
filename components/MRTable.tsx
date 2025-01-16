@@ -7,8 +7,9 @@ import {
   MRT_Row,
   MRT_RowData,
   MRT_TableOptions,
+  MRT_TableState,
   MaterialReactTable as OriginalMaterialReactTable,
-  useMaterialReactTable as useOriginalMaterialReactTable, MRT_TableState,
+  useMaterialReactTable as useOriginalMaterialReactTable,
 } from "material-react-table";
 import {MRT_Localization_RU} from "material-react-table/locales/ru";
 import {useMemo} from "react";
@@ -20,7 +21,7 @@ export function MRTable<TData extends MRT_RowData>(props: MaterialReactTableProp
 
 export type UseMRTableProps<TData extends MRT_RowData> = Omit<MRT_TableOptions<TData>, "data"> &
   Pick<Partial<MRT_TableOptions<TData>>, "data"> & {
-    id: string
+    id: string;
     refetch?: () => any;
     error?: any;
     query?: TypedUseQueryHookResult<any, void, any, any>;
@@ -42,7 +43,10 @@ export function useMRTable<TData extends MRT_RowData>({
   state: _state,
   ...tableOptions
 }: UseMRTableProps<TData>) {
-  const [columnVisibility, setColumnVisibility] = useLocalStorage<MRT_TableState<TData>['columnVisibility']>(`MRT_${id}_COLUMN_VISIBILITY`, {});
+  const [columnVisibility, setColumnVisibility] = useLocalStorage<MRT_TableState<TData>["columnVisibility"]>(
+    `MRT_${id}_COLUMN_VISIBILITY`,
+    {}
+  );
   const state = useMemo<MRT_TableOptions<TData>["state"]>(() => {
     return {
       isLoading: query && query?.isLoading,
