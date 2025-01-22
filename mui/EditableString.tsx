@@ -1,17 +1,18 @@
 import {n_error} from "@/core/features/notifications";
 import {Check, Close, Edit} from "@mui/icons-material";
 import {IconButton} from "@mui/material";
-import TextField from "@mui/material/TextField";
+import TextField, {TextFieldProps} from "@mui/material/TextField";
 import {FC, ReactNode, useCallback, useEffect, useState} from "react";
 import {useBoolean} from "usehooks-ts";
 
-type EditableStringProps = {
-  initValue: string;
+export type EditableStringProps<T> = {
+  initValue: T;
   nullLabel?: string;
-  onEdit: (value: string) => Promise<any>;
+  onEdit: (value: T) => Promise<any>;
+  textFieldProps?: TextFieldProps,
   children: ReactNode;
 };
-const EditableString: FC<EditableStringProps> = ({children, initValue, onEdit, nullLabel}: EditableStringProps) => {
+const EditableString = function<T = string> ({children, initValue, onEdit, nullLabel, textFieldProps}: EditableStringProps<T>) {
   const [value, setValue] = useState(initValue);
   useEffect(() => setValue(initValue), [initValue]);
 
@@ -47,10 +48,11 @@ const EditableString: FC<EditableStringProps> = ({children, initValue, onEdit, n
         label={"Введите значение"}
         size={"small"}
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) => setValue(e.target.value as any)}
         disabled={loading}
         autoFocus
         onKeyUp={(e) => e.key === "Enter" && submit()}
+        {...textFieldProps}
       />
       <IconButton size={"small"} onClick={submit} style={{color: "green"}} disabled={loading}>
         <Check />
