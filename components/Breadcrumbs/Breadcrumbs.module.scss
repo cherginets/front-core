@@ -1,0 +1,25 @@
+.container { display: flex; }
+.list {
+  display: flex;
+  font-size: 14px;
+
+  & > span {
+    display: inline-flex;
+    padding: 0;
+    &:not(:first-child) {
+      margin-left: 10px;
+      &:before {
+        content: "/";
+        color: lightgray;
+        margin-right: 5px;
+      }
+    }
+  }
+}
+.activeItem {
+
+}
+
+.inactiveItem {
+
+}

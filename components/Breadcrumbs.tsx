@@ -71,6 +71,8 @@ const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
             return "Пользователи";
           case "blog":
             return "Блог";
+          case "articles":
+            return "Статьи";
           case "server":
             return "Сервер";
           case "servers":
