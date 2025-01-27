@@ -6,6 +6,8 @@ export const DEBUG_ON = process.env.NEXT_PUBLIC_DEBUG === "on";
 
 export const CHAR_DOT = "•";
 export const CHAR_RUBLE = "₽";
+export const CHAR_LAQUO = "«";
+export const CHAR_RAQUO = "»";
 
 export const TIME_SEC = {
   SECOND: 1, // 1 секунда в миллисекундах
