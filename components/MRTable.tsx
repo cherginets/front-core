@@ -21,7 +21,8 @@ export function MRTable<TData extends MRT_RowData>(props: MaterialReactTableProp
 
 export type UseMRTableProps<TData extends MRT_RowData> = Omit<MRT_TableOptions<TData>, "data" | 'columns'> &
   Pick<Partial<MRT_TableOptions<TData>>, "data"> & {
-    id: string;
+    id?: string;
+    columns: (MRT_ColumnDef<TData, any> | undefined | null | false)[]
     refetch?: () => any;
     error?: any;
     query?: TypedUseQueryHookResult<any, void, any, any>;
@@ -31,7 +32,7 @@ export type UseMRTableProps<TData extends MRT_RowData> = Omit<MRT_TableOptions<T
   };
 
 export function useMRTable<TData extends MRT_RowData>({
-  id,
+  id = 'default-table',
   error: _error,
   data: _data,
   refetch: _refetch,
