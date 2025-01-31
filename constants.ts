@@ -9,6 +9,8 @@ export const CHAR_RUBLE = "₽";
 export const CHAR_LAQUO = "«";
 export const CHAR_RAQUO = "»";
 
+export const lrquo = (str: string): string => `${CHAR_LAQUO}${str}${CHAR_RAQUO}`;
+
 export const TIME_SEC = {
   SECOND: 1, // 1 секунда в миллисекундах
   MINUTE: 60, // 1 минута в миллисекундах
