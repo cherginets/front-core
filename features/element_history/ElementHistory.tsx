@@ -1,89 +1,78 @@
-import TextField from "@mui/material/TextField";
+'use client';
 import Button from "@mui/material/Button";
-import {Add, Close, Send} from "@mui/icons-material";
-import {Switch, TextareaAutosize} from "@mui/material";
-import {useMemo, useState} from "react";
-import {CheckboxWithLabel} from "formik-mui";
+import {Add, Close, Send, Sync} from "@mui/icons-material";
+import {IconButton, LinearProgress, Switch, TextareaAutosize} from "@mui/material";
+import {useCallback, useState} from "react";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import {useLocalStorage} from "usehooks-ts";
-import {randomBool} from "@/core/utils/random";
+import {n_error} from "@/core/features/notifications";
+import {HistoryRow} from "@/core/features/element_history/ElementHistory.types";
+import {ElementHistoryRow} from "@/core/features/element_history/ElementHistoryRow";
 
 export type ElementHistoryProps = {
   title?: string;
   element_type: string
   element_id: string | number
+  useAddMutation: any
+  useSearchQuery: any
 };
 
-const ElementHistory = ({title, element_type, element_id}: ElementHistoryProps) => {
-  const rows = new Array(10).fill(null)
-
+const ElementHistory = ({title, element_type, element_id, useAddMutation, useSearchQuery}: ElementHistoryProps) => {
+  const {data: {rows} = {rows: []}, isLoading, isFetching, refetch} = useSearchQuery({element_type, element_id});
+  const [add, {isLoading: addLoading}] = useAddMutation();
 
   const [adding, setAdding] = useState(false);
   const [showContext, setShowContext] = useLocalStorage(`history_showContext-[${element_type}]`, true);
   const [newComment, setNewComment] = useState('');
 
+  const submitAdd = useCallback(() => {
+    add({element_type, element_id: String(element_id), text: newComment})
+      .unwrap()
+      .then(() => {
+        setNewComment("")
+        setAdding(false)
+      })
+      .catch(n_error)
+  }, [newComment, add, element_type, element_id]);
+
   return <div className={'flex flex-col'}>
     {title && <div className={'text-2xl font-bold mb-4'}>{title}</div>}
 
-    <div className={'flex flex-row items-center justify-between max-sm:flex-col max-sm:items-start max-md:gap-2 max-md:mb-2'}>
+    <div className={'flex flex-row items-center gap-4 mb-2 max-sm:flex-col max-sm:items-start max-md:gap-2 max-md:mb-2'}>
       <FormControlLabel label={`Показывать контекст`} onChange={(e, checked) => setShowContext(sc => !sc)} control={<Switch checked={showContext} />} />
+      <div className={'mx-auto'} />
       {!adding
         ? <Button startIcon={<Add/>} variant={'outlined'} onClick={() => setAdding(a => !a)}>Добавить комментарий</Button>
         : <Button startIcon={<Close/>} onClick={() => {
           setAdding(a => !a)
           setNewComment("")
         }} color={'error'}>Отменить комментарий</Button>}
+      <IconButton onClick={refetch}><Sync /></IconButton>
     </div>
 
     {adding && <div className={'flex my-2'}>
-      <TextareaAutosize
-        autoFocus placeholder={'Введите текст комментария'}
-        value={newComment} onChange={e => setNewComment(e.target.value)}
-                        className={'!grow border outline-none p-2'}/>
-      <Button className={'!ml-4'} variant={'outlined'} endIcon={<Send/>}>Отправить</Button>
+      <div className={'flex flex-col gap-1 grow'}>
+        <TextareaAutosize
+          autoFocus placeholder={'Введите текст комментария'}
+          value={newComment} onChange={e => setNewComment(e.target.value)}
+          className={'!grow border outline-none p-2'}
+          onKeyUp={e => {
+            if(e.ctrlKey && e.key === 'Enter') {
+              submitAdd();
+            }
+          }}
+        />
+        <div className={'pl-2 text-gray-500 text-xs'}>Отправка доступна по CTRL+Enter. Отправленное сообщение нельзя будет удалить</div>
+
+      </div>
+      <Button className={'!ml-4'} variant={'outlined'} endIcon={<Send/>} disabled={addLoading} onClick={() => submitAdd()}>Отправить</Button>
     </div>}
 
-    <div className={'divide-y'}>
-      {rows.map((_, i) => {
-        return <Row key={i} index={rows.length - i} defaultShowContext={showContext} />
+    <div className={'divide-y relative'}>
+      {(isLoading || isFetching) && <LinearProgress className={'!absolute !left-0 !right-0 top-[-4px]'} />}
+      {rows.map((row: HistoryRow, i: number) => {
+        return <ElementHistoryRow key={i} index={rows.length - i} row={row} defaultShowContext={showContext} />
       })}
-    </div>
-  </div>
-}
-
-const Row = ({defaultShowContext, index}: {
-  defaultShowContext: boolean
-  index: number
-}) => {
-
-  const context = useMemo(() => randomBool() ? {gawgawgwaG: 15} : null, []);
-
-  const [manualShowContext, setManualShowContext] = useState(false);
-
-  const showContext = useMemo(() => defaultShowContext || manualShowContext, [defaultShowContext, manualShowContext])
-
-  return <div className={'flex flex-col gap-1 py-2'}>
-    <div className={'flex flex-row gap-2 text-sm max-md:flex-col'}>
-      <div className={'flex gap-2'}>
-        <div>#{index}</div>
-        <b>Информация</b>
-        <span>/</span>
-        <b>anton.cherginets@gmail.com</b>
-      </div>
-
-
-      <div className={'flex flex-row gap-2 text-gray-500 ml-auto max-md:ml-0'}>
-        <span>1016678</span>
-        <span>/</span>
-        <span>2025-02-03 12:50:40</span>
-      </div>
-    </div>
-    <div>
-      <div className={'whitespace-break-spaces break-words'}>Какое-то сообщение</div>
-      {!defaultShowContext && context && <div className={'text-blue-700 cursor-pointer'} onClick={() => setManualShowContext(sc => !sc)}>{manualShowContext ? "скрыть контекст" : "показать контекст"}</div>}
-      {showContext && context !== null && <pre className={'bg-gray-100 text-gray-500 p-2 rounded-xl mt-2 whitespace-break-spaces break-words'}>
-              {JSON.stringify(context, null, 2)}
-            </pre>}
     </div>
   </div>
 }
