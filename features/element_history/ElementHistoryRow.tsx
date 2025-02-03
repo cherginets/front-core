@@ -25,6 +25,12 @@ export const ElementHistoryRow = ({defaultShowContext, index, row}: {
         {formatElementHistoryLevelAsJSX(row.level)}
         <span>/</span>
         {renderWho}
+        {!defaultShowContext && row.context && <>
+          <span>/</span>
+          <div className={'text-blue-700 cursor-pointer'}
+               onClick={() => setManualShowContext(sc => !sc)}>{manualShowContext ? "скрыть контекст" : "показать контекст"}</div>
+        </>}
+
       </div>
 
 
@@ -36,8 +42,6 @@ export const ElementHistoryRow = ({defaultShowContext, index, row}: {
     </div>
     <div>
       <div className={'whitespace-break-spaces break-words'} dangerouslySetInnerHTML={{__html: row.text}}/>
-      {!defaultShowContext && row.context && <div className={'text-blue-700 cursor-pointer'}
-                                                  onClick={() => setManualShowContext(sc => !sc)}>{manualShowContext ? "скрыть контекст" : "показать контекст"}</div>}
       {showContext && row.context !== null &&
         <pre className={'bg-gray-100 text-gray-500 p-2 rounded-xl mt-2 whitespace-break-spaces break-words'}>
               {JSON.stringify(row.context, null, 2)}
