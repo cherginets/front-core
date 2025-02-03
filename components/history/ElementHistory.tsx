@@ -5,7 +5,7 @@ import {Add, Close, Send, Sync} from "@mui/icons-material";
 import {LoadingButton} from "@mui/lab";
 import {Alert, Button, Divider} from "@mui/material";
 import TextField from "@mui/material/TextField";
-import moment from "moment";
+import moment from "@/core/moment";
 import {Fragment} from "react";
 import {useBoolean} from "usehooks-ts";
 import classes from "./ElementHistory.module.scss";

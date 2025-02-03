@@ -1,5 +1,6 @@
 import EditableString, {EditableStringProps} from "@/core/mui/EditableString";
-import moment, {Moment} from "moment";
+import {Moment} from "moment";
+import moment from "@/core/moment";
 
 export const EditableDateTimeString = ({initValue, onEdit, ...props}: EditableStringProps<Moment>) => {
   return <EditableString<string>
