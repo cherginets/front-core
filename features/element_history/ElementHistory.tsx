@@ -57,12 +57,12 @@ const ElementHistory = ({title, element_type, element_id, useAddMutation, useSea
       <IconButton onClick={refetch}><Sync /></IconButton>
     </div>
 
-    {adding && <div className={'flex my-2'}>
+    {adding && <div className={'flex my-2 gap-4'}>
       <div className={'flex flex-col gap-1 grow'}>
         <TextareaAutosize
           autoFocus placeholder={'Введите текст комментария'}
           value={newComment} onChange={e => setNewComment(e.target.value)}
-          className={'!grow border outline-none p-2'}
+          className={'!grow border !outline-none p-2'}
           onKeyUp={e => {
             if(e.ctrlKey && e.key === 'Enter') {
               submitAdd();
