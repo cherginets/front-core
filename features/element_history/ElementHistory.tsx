@@ -6,15 +6,22 @@ import {useCallback, useState} from "react";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import {useLocalStorage} from "usehooks-ts";
 import {n_error} from "@/core/features/notifications";
-import {HistoryRow} from "@/core/features/element_history/ElementHistory.types";
+import {
+  ElementHistoryAddRequest,
+  ElementHistoryAddResponse,
+  HistoryRow
+} from "@/core/features/element_history/ElementHistory.types";
 import {ElementHistoryRow} from "@/core/features/element_history/ElementHistoryRow";
+import {MutationDefinition, QueryDefinition, BaseQueryFn } from "@reduxjs/toolkit/query";
+// @ts-expect-error something
+import { UseMutation, UseQuery } from '@reduxjs/toolkit/dist/query/react';
 
 export type ElementHistoryProps = {
   title?: string;
   element_type: string
   element_id: string | number
-  useAddMutation: any
-  useSearchQuery: any
+  useAddMutation: UseMutation<MutationDefinition<ElementHistoryAddRequest, BaseQueryFn , any, ElementHistoryAddResponse>>
+  useSearchQuery: UseMutation<QueryDefinition<ElementHistoryAddRequest, BaseQueryFn , any, ElementHistoryAddResponse>>
 };
 
 const ElementHistory = ({title, element_type, element_id, useAddMutation, useSearchQuery}: ElementHistoryProps) => {

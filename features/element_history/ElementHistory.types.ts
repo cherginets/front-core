@@ -19,18 +19,13 @@ export type HistoryLevel = "debug" | "info" | "warning" | "error"
 
 export type HistoryRow = {
   id: number;
-
   element_type: string;
   element_id: string;
-
   level: HistoryLevel,
-
   who_id?: number;
   who_name?: string;
   who_link?: string;
-
   text: string;
   context?: any | null;
-
   created_at: string;
 }
