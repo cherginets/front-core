@@ -17,6 +17,7 @@ import {MutationDefinition, QueryDefinition, BaseQueryFn } from "@reduxjs/toolki
 import { UseMutation, UseQuery } from '@reduxjs/toolkit/dist/query/react';
 
 export type ElementHistoryProps = {
+  className?: string;
   title?: string;
   element_type: string
   element_id: string | number
@@ -24,7 +25,7 @@ export type ElementHistoryProps = {
   useSearchQuery: UseMutation<QueryDefinition<ElementHistoryAddRequest, BaseQueryFn , any, ElementHistoryAddResponse>>
 };
 
-const ElementHistory = ({title, element_type, element_id, useAddMutation, useSearchQuery}: ElementHistoryProps) => {
+const ElementHistory = ({className, title, element_type, element_id, useAddMutation, useSearchQuery}: ElementHistoryProps) => {
   const {data: {rows} = {rows: []}, isLoading, isFetching, refetch} = useSearchQuery({element_type, element_id});
   const [add, {isLoading: addLoading}] = useAddMutation();
 
@@ -42,7 +43,7 @@ const ElementHistory = ({title, element_type, element_id, useAddMutation, useSea
       .catch(n_error)
   }, [newComment, add, element_type, element_id]);
 
-  return <div className={'flex flex-col'}>
+  return <div className={'flex flex-col ' + (className || "")}>
     {title && <div className={'text-2xl font-bold mb-4'}>{title}</div>}
 
     <div className={'flex flex-row items-center gap-4 mb-2 max-sm:flex-col max-sm:items-start max-md:gap-2 max-md:mb-2'}>
