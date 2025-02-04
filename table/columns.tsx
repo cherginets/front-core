@@ -4,7 +4,7 @@ import {MOMENT_DATE_PRETTY} from "@/core/utils";
 import {OpenInNew, ToggleOff, ToggleOn} from "@mui/icons-material";
 import {IconButton} from "@mui/material";
 import {MRT_Cell, MRT_ColumnDef, MRT_Row, MRT_RowData} from "material-react-table";
-import moment from "moment";
+import moment from "@/core/moment";
 import Link from "next/link";
 
 export const MRTColumns_id = function <T extends MRT_RowData = MRT_RowData>({

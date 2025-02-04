@@ -1,7 +1,7 @@
 import {ButtonProps, Stack, TextField} from "@mui/material";
 import {TextFieldProps} from "@mui/material/TextField";
 import {useFormikContext} from "formik";
-import moment from "moment/moment";
+import moment from "@/core/moment";
 
 export default function FormikDateField({
   label,
