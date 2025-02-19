@@ -5,20 +5,20 @@ export const formatElementHistoryLevelAsJSX = (level: HistoryLevel) => {
   let className: string = "";
   switch (level) {
     case "debug":
-      label = "Отладка"
-      className = 'text-gray-500 font-light';
+      label = "Отладка";
+      className = "text-gray-500 font-light";
       break;
     case "info":
-      label = "Информация"
+      label = "Информация";
       break;
     case "warning":
-      label = "Предупреждение"
-      className = 'text-orange-500 font-bold';
+      label = "Предупреждение";
+      className = "text-orange-500 font-bold";
       break;
     case "error":
-      label = "Ошибка"
-      className = 'text-red-500 font-bold';
+      label = "Ошибка";
+      className = "text-red-500 font-bold";
       break;
   }
-  return <span className={className}>{label}</span>
-}
+  return <span className={className}>{label}</span>;
+};

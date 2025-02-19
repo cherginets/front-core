@@ -1,5 +1,5 @@
-import {Schema, ValidationError} from "yup";
 import BadRequestError from "@/core/errors/http/BadRequestError";
+import {Schema, ValidationError} from "yup";
 
 // Функция для валидации
 export default async function validateJson(schema: Schema, json: any) {

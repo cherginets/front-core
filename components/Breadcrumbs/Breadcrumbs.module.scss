@@ -1,4 +1,6 @@
-.container { display: flex; }
+.container {
+  display: flex;
+}
 .list {
   display: flex;
   font-size: 14px;
@@ -17,9 +19,7 @@
   }
 }
 .activeItem {
-
 }
 
 .inactiveItem {
-
 }

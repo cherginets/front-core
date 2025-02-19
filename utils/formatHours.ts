@@ -8,11 +8,11 @@ export default function formatHours(hours: number | undefined | null) {
   const days: number = hours / 24;
   const months: number = days / 30;
 
-  if(Number.isInteger(months)) {
-    return `${months} ${declension(months, ['месяц', "месяца", "месяцев"])}`
+  if (Number.isInteger(months)) {
+    return `${months} ${declension(months, ["месяц", "месяца", "месяцев"])}`;
   }
-  if(Number.isInteger(days)) {
-    return `${days} ${declension(days, ['день', "дня", "дней"])}`
+  if (Number.isInteger(days)) {
+    return `${days} ${declension(days, ["день", "дня", "дней"])}`;
   }
 
   // Месяца

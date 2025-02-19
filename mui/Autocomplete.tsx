@@ -19,7 +19,7 @@ export type AutocompleteProps<OptionType extends Option = Option, Multiple exten
   optionsMap?: Map<OptionType["value"], OptionType>;
   onAddElementClick?: () => any;
   textFieldProps?: TextFieldProps;
-  value?: string | number | null | undefined
+  value?: string | number | null | undefined;
   onChange?: (value: Multiple extends true ? OptionType["value"][] : OptionType["value"]) => any;
 } & Omit<MuiAutocompleteProps<OptionType, Multiple, any, any>, "renderInput" | "value">;
 
@@ -30,7 +30,7 @@ export default function AutocompleteField<
   value: _value,
   name,
   label,
-                                             placeholder,
+  placeholder,
   loading = false,
   multiple,
   options,
