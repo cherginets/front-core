@@ -17,7 +17,6 @@ export default async function cacheAsyncFunction<ResultType>(
   if(cache.has(id)) {
     return cache.get(id)!;
   }
-
   const result = await foo();
   cache.set(id, result);
   return result;
