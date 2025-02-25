@@ -1,15 +1,17 @@
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import MuiSelect, { SelectChangeEvent, SelectProps } from '@mui/material/Select';
+import MuiSelect, { SelectChangeEvent, SelectProps as MuiSelectProps } from '@mui/material/Select';
 import {Option} from "@/core/formik/types/options";
 
-function Select<T>({label, value, options, onChange, ...props}: {
+export type SelectProps<T> = {
   label?: string
   value: string | number | null;
   options: Option<T>[]
   onChange: (value: T) => any
-} & Omit<SelectProps, 'value' | 'onChange'>) {
+} & Omit<MuiSelectProps, 'label' | 'value' | 'onChange'>
+
+function Select<T>({label, value, options, onChange, ...props}: SelectProps<T>) {
   return <FormControl fullWidth>
     {label && <InputLabel>{label}</InputLabel>}
     <MuiSelect
