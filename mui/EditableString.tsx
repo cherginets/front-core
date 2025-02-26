@@ -2,17 +2,23 @@ import {n_error} from "@/core/features/notifications";
 import {Check, Close, Edit} from "@mui/icons-material";
 import {IconButton} from "@mui/material";
 import TextField, {TextFieldProps} from "@mui/material/TextField";
-import {FC, ReactNode, useCallback, useEffect, useState} from "react";
+import {ReactNode, useCallback, useEffect, useState} from "react";
 import {useBoolean} from "usehooks-ts";
 
 export type EditableStringProps<T> = {
   initValue: T;
   nullLabel?: string;
   onEdit: (value: T) => Promise<any>;
-  textFieldProps?: TextFieldProps,
+  textFieldProps?: TextFieldProps;
   children: ReactNode;
 };
-const EditableString = function<T = string> ({children, initValue, onEdit, nullLabel, textFieldProps}: EditableStringProps<T>) {
+const EditableString = function <T = string>({
+  children,
+  initValue,
+  onEdit,
+  nullLabel,
+  textFieldProps,
+}: EditableStringProps<T>) {
   const [value, setValue] = useState(initValue);
   useEffect(() => setValue(initValue), [initValue]);
 

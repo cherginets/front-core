@@ -135,8 +135,9 @@ export const MuiLayout: FC<{
   top: string[];
   links: MuiLayoutLinkType[];
   topRightElements?: any;
+  topLeftElements?: any;
   children?: any;
-}> = ({left = [], top = [], links, topRightElements, children}) => {
+}> = ({left = [], top = [], links, topLeftElements, topRightElements, children}) => {
   const pathname = usePathname() || "";
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -194,6 +195,7 @@ export const MuiLayout: FC<{
             {title}
           </Typography>
           <div style={{margin: "auto"}} />
+          {topLeftElements}
           {top.length > 0 && (
             <Stack direction={"row"} spacing={2} sx={{marginRight: 4}}>
               {top.map((id, index) => {

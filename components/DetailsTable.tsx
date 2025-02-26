@@ -19,7 +19,6 @@ const TableCell = styled((p: any) => <MuiTableCell {...p} />)({
     fontSize: "14px",
     padding: 4,
     lineHeight: "16px",
-
   },
   '&.MuiTableCell-head[colspan="2"]': {
     padding: 4,

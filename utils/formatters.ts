@@ -6,12 +6,20 @@ export const MOMENT_FOR_FILENAME = "YYYYMMDDHHmmss";
 export const MOMENT_DATE_MYSQL = "YYYY-MM-DD HH:mm:ss";
 export const MOMENT_DATE_PRETTY = "YYYY-MM-DD HH:mm";
 
-export const formatMoney = (value: string | number | null | undefined) => {
+export const formatMoney = (value: any, options:{
+  show_ruble?: boolean
+} = {
+  show_ruble: true,
+}) => {
+  const show_ruble = !!options.show_ruble;
+
+  console.log('show_ruble', show_ruble);
+
   if (!value) value = 0;
   let formattedNum = number_format(typeof value === "string" ? parseFloat(value) : value, 2, ".", " ");
   if (formattedNum.endsWith(".00")) formattedNum = formattedNum.slice(0, formattedNum.length - 3);
 
-  return `${formattedNum} ${CHAR_RUBLE}`;
+  return `${formattedNum}${show_ruble ? (` ` + CHAR_RUBLE) : ""}`;
 };
 
 /**

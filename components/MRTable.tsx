@@ -4,12 +4,13 @@ import {Sync} from "@mui/icons-material";
 import {TypedUseQueryHookResult} from "@reduxjs/toolkit/query/react";
 import {
   MaterialReactTableProps,
+  MRT_ColumnDef,
   MRT_Row,
   MRT_RowData,
   MRT_TableOptions,
   MRT_TableState,
   MaterialReactTable as OriginalMaterialReactTable,
-  useMaterialReactTable as useOriginalMaterialReactTable, MRT_ColumnDef,
+  useMaterialReactTable as useOriginalMaterialReactTable,
 } from "material-react-table";
 import {MRT_Localization_RU} from "material-react-table/locales/ru";
 import {useMemo} from "react";
@@ -19,10 +20,10 @@ export function MRTable<TData extends MRT_RowData>(props: MaterialReactTableProp
   return <OriginalMaterialReactTable {...props} />;
 }
 
-export type UseMRTableProps<TData extends MRT_RowData> = Omit<MRT_TableOptions<TData>, "data" | 'columns'> &
+export type UseMRTableProps<TData extends MRT_RowData> = Omit<MRT_TableOptions<TData>, "data" | "columns"> &
   Pick<Partial<MRT_TableOptions<TData>>, "data"> & {
     id?: string;
-    columns: (MRT_ColumnDef<TData, any> | undefined | null | false)[]
+    columns: (MRT_ColumnDef<TData, any> | undefined | null | false)[];
     refetch?: () => any;
     error?: any;
     query?: TypedUseQueryHookResult<any, void, any, any>;
@@ -32,7 +33,7 @@ export type UseMRTableProps<TData extends MRT_RowData> = Omit<MRT_TableOptions<T
   };
 
 export function useMRTable<TData extends MRT_RowData>({
-  id = 'default-table',
+  id = "default-table",
   error: _error,
   data: _data,
   refetch: _refetch,
@@ -76,7 +77,7 @@ export function useMRTable<TData extends MRT_RowData>({
 
   return useOriginalMaterialReactTable({
     ...tableOptions,
-    columns: columns.filter(c => !!c),
+    columns: columns.filter((c) => !!c),
     state,
     data,
     localization: MRT_Localization_RU,

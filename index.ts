@@ -1,6 +1,6 @@
 import * as yup from "yup";
-import {ru} from "yup-locales"
+import {ru} from "yup-locales";
 
-yup.setLocale(ru)
+yup.setLocale(ru);
 
 export {yup};

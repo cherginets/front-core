@@ -1,5 +1,5 @@
-import moment from 'moment';
+import moment from "moment";
 
-moment.locale('ru');
+moment.locale("ru");
 
 export default moment as typeof moment;

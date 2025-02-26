@@ -6,7 +6,7 @@ export function number_format(
 ): string {
   // Validate the input number
   if (isNaN(number) || !isFinite(number)) {
-    console.error(number, "Input is not a valid number")
+    console.error(number, "Input is not a valid number");
     return "";
   }
 
@@ -19,4 +19,10 @@ export function number_format(
   // Combine integer part and decimal part
   // todo сделать округление параметризуемым
   return (decimalPart ? integerPart + dec_point + decimalPart : integerPart).replace(/\.[0]+$/, "");
+}
+
+export function array_unique<T = any>(array: Array<T>): Array<T> {
+  return array.filter(function(value, index, array) {
+    return array.indexOf(value) === index;
+  })
 }
