@@ -20,3 +20,9 @@ export function number_format(
   // todo сделать округление параметризуемым
   return (decimalPart ? integerPart + dec_point + decimalPart : integerPart).replace(/\.[0]+$/, "");
 }
+
+export function array_unique<T = any>(array: Array<T>): Array<T> {
+  return array.filter(function(value, index, array) {
+    return array.indexOf(value) === index;
+  })
+}
