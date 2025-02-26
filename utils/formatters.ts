@@ -13,8 +13,6 @@ export const formatMoney = (value: any, options:{
 }) => {
   const show_ruble = !!options.show_ruble;
 
-  console.log('show_ruble', show_ruble);
-
   if (!value) value = 0;
   let formattedNum = number_format(typeof value === "string" ? parseFloat(value) : value, 2, ".", " ");
   if (formattedNum.endsWith(".00")) formattedNum = formattedNum.slice(0, formattedNum.length - 3);
