@@ -33,7 +33,7 @@ export default function AutocompleteField<
   label,
   placeholder,
   loading = false,
-                                             helperText,
+  helperText,
   multiple,
   options,
   optionsMap: _optionsMap,
