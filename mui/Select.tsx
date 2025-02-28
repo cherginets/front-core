@@ -15,8 +15,20 @@ function Select<T>({label, value, options, onChange, ...props}: SelectProps<T>) 
   return (
     <FormControl fullWidth>
       {label && <InputLabel>{label}</InputLabel>}
-      <MuiSelect
+      <MuiSelect sx={{
+        boxShadow: "none",
+        ".MuiOutlinedInput-notchedOutline": { border: 0 },
+        "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+          {
+            border: 0,
+          },
+        "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+          {
+            border: 0,
+          },
+      }}
         fullWidth
+                 disableUnderline
         value={value}
         label={label}
         onChange={(event, child) => onChange(event.target.value as any)}
