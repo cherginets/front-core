@@ -1,4 +1,4 @@
-import moment from "@/core/moment";
+import moment from "moment";
 import {MOMENT_DATE_PRETTY} from "@/core/utils/formatters";
 import {MomentInput} from "moment";
 

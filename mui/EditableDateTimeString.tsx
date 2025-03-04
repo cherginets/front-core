@@ -1,4 +1,4 @@
-import moment from "@/core/moment";
+import moment from "moment";
 import EditableString, {EditableStringProps} from "@/core/mui/EditableString";
 import {Moment} from "moment";
 

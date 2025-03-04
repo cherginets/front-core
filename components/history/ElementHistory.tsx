@@ -1,6 +1,6 @@
 import {Preloader} from "@/core/components/Preloader";
 import {useElementHistory, useElementHistoryProps} from "@/core/components/history/useElementHistory";
-import moment from "@/core/moment";
+import moment from "moment";
 import {formatError} from "@/core/utils/formatError";
 import {Add, Close, Send, Sync} from "@mui/icons-material";
 import {LoadingButton} from "@mui/lab";

@@ -1,4 +1,4 @@
-import moment from "@/core/moment";
+import moment from "moment";
 
 export function randomInteger(min: number = 0, max: number = 1000000) {
   return Math.floor(Math.random() * (max - min + 1) + min);
