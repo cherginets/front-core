@@ -12,7 +12,7 @@ const formatPath = (path: string):string => lrquo((path in  defaultNames) ? defa
 
 export let mixed: LocaleObject['mixed'] = {
   default: "содержит ошибку",
-  required: "обязательно для заполнения",
+  required: ({path}: {path: string}) => `${formatPath(path)} обязательно для заполнения`,
   defined: '${path} должен быть определен',
   oneOf: "должен содержать одно из следующих значение: ${values}",
   notOneOf: "не должен содержать одно из следующих значение: ${values}",
@@ -64,7 +64,12 @@ export let date: LocaleObject['date'] = {
 };
 
 export let boolean: LocaleObject['boolean'] = {
-  isValue: "должно иметь значение: ${value}",
+  isValue: ({value, originalPath}: {value: "true" | "false", originalPath: string}) => {
+    if(originalPath === 'is_confirm') {
+      return `Необходимо согласиться с правилами`;
+    }
+    return `должно иметь значение: ${value === 'true' ? "Да" : "Нет"}`
+  },
 };
 
 export let object: LocaleObject['object'] = {

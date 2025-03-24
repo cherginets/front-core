@@ -21,11 +21,11 @@ const FormikCheckboxField = ({ label, name, ...props }: FormikCheckboxFieldProps
           onChange={(event, checked) => helpers.setValue(checked)}
           {...props}
         />
-        <div className={'inline text-left text-xs'}>{label}</div>
+        <div className={'inline text-left'}>{label}</div>
 
       </label>
       {meta.touched && meta.error ? (
-        <div className="text-red-500 text-xs text-left">{meta.error}</div>
+        <div className="text-red-500 text-left">{meta.error}</div>
       ) : null}
     </div>
   );
