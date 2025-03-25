@@ -6,6 +6,7 @@ import {OpenInNew, ToggleOff, ToggleOn} from "@mui/icons-material";
 import {IconButton} from "@mui/material";
 import {MRT_Cell, MRT_ColumnDef, MRT_Row, MRT_RowData} from "material-react-table";
 import Link from "next/link";
+import {IconButtonProps} from "@/core/mui/IconButton";
 
 export const MRTColumns_id = function <T extends MRT_RowData = MRT_RowData>({
   getRowLink = () => null,
@@ -35,8 +36,10 @@ export const MRTColumns_id = function <T extends MRT_RowData = MRT_RowData>({
 
 export const MRTColumns_active = function <T extends MRT_RowData = MRT_RowData>({
   onToggle,
+  rowIsDisabled,
 }: {
   onToggle?: ({row}: {row: MRT_Row<T>}) => Promise<any>;
+  rowIsDisabled?: ({row}: {row: MRT_Row<T>}) => boolean;
 }): MRT_ColumnDef<T, any> {
   return {
     accessorKey: "active",
@@ -50,7 +53,11 @@ export const MRTColumns_active = function <T extends MRT_RowData = MRT_RowData>(
     Cell: ({row}) => {
       const active = row.original["active"];
       const IconComponent = active ? ToggleOn : ToggleOff;
-      const color = active ? "success" : "error";
+
+      const disabled = rowIsDisabled ? rowIsDisabled({row}) : false;
+
+      const color: IconButtonProps['color'] = disabled ? 'inherit' : active ? "success" : "error";
+
       return (
         <IconButton
           onClick={(e) => {
@@ -62,6 +69,7 @@ export const MRTColumns_active = function <T extends MRT_RowData = MRT_RowData>(
               });
             }
           }}
+          disabled={disabled}
         >
           <IconComponent color={color} />
         </IconButton>

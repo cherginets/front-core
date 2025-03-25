@@ -19,6 +19,8 @@ export default function FormikTextField({name, helperText, type, ...props}: Form
     formik.setFieldValue(name, newValue);
   };
 
+  const {value} = formik.getFieldProps(name);
+
   return (
     <TextField
       fullWidth
@@ -26,12 +28,12 @@ export default function FormikTextField({name, helperText, type, ...props}: Form
       type={type}
       value={
         type === "number"
-          ? formik.values[name] === 0
+          ? value === 0
             ? "0"
-            : formik.values[name]
-              ? formik.values[name]
+            : value
+              ? value
               : ""
-          : formik.values[name] || ""
+          : value || ""
       }
       onChange={onChange}
       onBlur={formik.handleBlur}

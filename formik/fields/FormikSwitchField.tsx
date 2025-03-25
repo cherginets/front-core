@@ -13,6 +13,8 @@ export default function FormikSwitchField({label, name, disabled, ...props}: For
 
   const helperText = (formik.touched[name] && formik.errors[name]) as string;
 
+  const {value: checked} = formik.getFieldProps(name)
+
   return (
     <FormGroup onBlur={formik.handleBlur}>
       <FormControlLabel
@@ -21,9 +23,9 @@ export default function FormikSwitchField({label, name, disabled, ...props}: For
         control={
           <Switch
             name={name}
-            checked={formik.values[name]}
+            checked={checked}
             onChange={(_, checked) => {
-              formik.setValues((values) => ({...values, [name]: checked}));
+              formik.setFieldValue(name, checked)
             }}
           />
         }
