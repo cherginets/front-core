@@ -2,7 +2,10 @@
 import {ConfirmProvider as OriginalConfirmProvider} from "material-ui-confirm";
 import {ReactNode} from "react";
 
-export default function ConfirmProvider({children}: {children: ReactNode}) {
+export type ConfirmProviderProps = {
+  children: ReactNode
+}
+export default function ConfirmProvider({children}: ConfirmProviderProps) {
   return (
     <OriginalConfirmProvider
       defaultOptions={{
