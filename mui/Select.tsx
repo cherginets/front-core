@@ -34,8 +34,8 @@ function Select<T>({label, value, options, onChange, ...props}: SelectProps<T>) 
         onChange={(event, child) => onChange(event.target.value as any)}
         {...props}
       >
-        {options.map(({label, value}, i) => (
-          <MenuItem value={value as string} key={i}>{label}</MenuItem>
+        {options.map(({label, value, disabled}, i) => (
+          <MenuItem value={value as string} key={i} disabled={disabled}>{label}</MenuItem>
         ))}
       </MuiSelect>
     </FormControl>

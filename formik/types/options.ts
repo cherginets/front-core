@@ -7,4 +7,5 @@ export type Option<ValueType = string | number> = {
   label: string;
   value: ValueType;
   color?: CSS.Properties["color"];
+  disabled?: boolean
 };
