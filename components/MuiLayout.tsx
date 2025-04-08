@@ -157,8 +157,6 @@ export const MuiLayout: FC<{
   };
 
   const title = useMemo(() => {
-    // @ts-ignore
-
     const titleElement =
       // Поиск точного совпадения
       links.find((link) => !!link.url && pathname?.replaceAll("/", "") === (link.url || "").replaceAll("/", "")) ||
@@ -296,7 +294,7 @@ export const MuiLayout: FC<{
         </List>
         <Divider />
       </Drawer>
-      <Box component="main" sx={{flexGrow: 1, p: 3}}>
+      <Box component="main" sx={{flexGrow: 1, p: 3, paddingBottom: 15,}}>
         <DrawerHeader />
         {children}
       </Box>
