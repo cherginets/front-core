@@ -105,6 +105,8 @@ const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
             return "Тарифы";
           case "devices":
             return "Устройства";
+          case "payment_methods":
+            return "Платёжные методы";
 
           case "new-user":
             return "Новый пользователь";
