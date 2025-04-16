@@ -32,7 +32,7 @@ export const Dialog = ({
   return (
     <MuiDialog open={true} onClose={() => onClose()} {...props}>
       {title && <DialogTitle className={"!text-2xl !font-bold"}>{title}</DialogTitle>}
-      <DialogContent>{children}</DialogContent>
+      <DialogContent className={'!pt-2'}>{children}</DialogContent>
       <DialogActions className={"!p-4"}>
         <Button onClick={() => onClose()} className={"!mr-auto"} {...buttonCancelProps}>
           {buttonCancelText}
