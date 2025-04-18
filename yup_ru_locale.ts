@@ -12,7 +12,7 @@ const formatPath = (path: string):string => lrquo((path in  defaultNames) ? defa
 
 export let mixed: LocaleObject['mixed'] = {
   default: "содержит ошибку",
-  required: ({path}: {path: string}) => `${formatPath(path)} обязательно для заполнения`,
+  required: ({path}: {path: string}) => `Поле ${formatPath(path)} обязательно для заполнения`,
   defined: '${path} должен быть определен',
   oneOf: "должен содержать одно из следующих значение: ${values}",
   notOneOf: "не должен содержать одно из следующих значение: ${values}",
