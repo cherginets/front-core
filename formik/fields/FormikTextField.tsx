@@ -1,4 +1,4 @@
-import {isNumeric} from "@/core/utils/isNumeric";
+import {isNumeric} from "@/core/utils/isFunctions/isNumeric";
 import TextField, {TextFieldProps} from "@mui/material/TextField";
 import {useFormikContext} from "formik";
 
