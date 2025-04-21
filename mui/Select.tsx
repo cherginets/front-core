@@ -16,16 +16,9 @@ function Select<T>({label, value, options, onChange, ...props}: SelectProps<T>) 
     <FormControl fullWidth>
       {label && <InputLabel>{label}</InputLabel>}
       <MuiSelect sx={{
-        boxShadow: "none",
-        ".MuiOutlinedInput-notchedOutline": { border: 0 },
-        "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
-          {
-            border: 0,
-          },
-        "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-          {
-            border: 0,
-          },
+        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+          borderColor: 'rgba(0,0,0,0.10)', // стандартный цвет MUI для неактивного состояния
+        },
       }}
         fullWidth
                  disableUnderline
