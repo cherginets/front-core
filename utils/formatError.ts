@@ -1,4 +1,8 @@
 export const formatError = (error: any): string => {
+  console.log('error', error);
+  if (typeof error === "string") return error;
+  if (typeof error === "boolean") return JSON.stringify(error);
+  if (typeof error === "number") return JSON.stringify(error);
   const status = error?.response?.status || error?.status || error?.statusCode || 0;
 
   const UNKNOWN_ERROR = `${status > 0 ? `[${status}] ` : ""}` + JSON.stringify(error);
@@ -6,9 +10,7 @@ export const formatError = (error: any): string => {
   if (!error) {
     return UNKNOWN_ERROR;
   }
-  if (typeof error === "string") return error;
-  if (typeof error === "boolean") return JSON.stringify(error);
-  if (typeof error === "number") return JSON.stringify(error);
+
 
   const potentialError =
     error?.error ||

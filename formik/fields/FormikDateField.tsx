@@ -1,4 +1,4 @@
-import moment from "@/core/moment";
+import moment from "moment";
 import {ButtonProps, Stack, TextField} from "@mui/material";
 import {TextFieldProps} from "@mui/material/TextField";
 import {useFormikContext} from "formik";

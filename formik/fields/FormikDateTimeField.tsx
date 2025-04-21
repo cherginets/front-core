@@ -1,6 +1,6 @@
 "use client";
 
-import moment from "@/core/moment";
+import moment from "moment";
 import {Button, ButtonProps, Stack, TextField, Typography} from "@mui/material";
 import {useFormikContext} from "formik";
 

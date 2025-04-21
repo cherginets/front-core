@@ -22,7 +22,7 @@ export function number_format(
 }
 
 export function array_unique<T = any>(array: Array<T>): Array<T> {
-  return array.filter(function(value, index, array) {
+  return array.filter(function (value, index, array) {
     return array.indexOf(value) === index;
-  })
+  });
 }

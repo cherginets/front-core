@@ -25,7 +25,7 @@ export const n_promise: typeof toast.promise = (promise, {pending, error, succes
   return toast.promise(promise, {
     pending: pending || "Выполнение скрипта",
     error: error || {
-      render: ({data: error}) => {
+      render: (error) => {
         console.log("error", error);
         // @ts-ignore
         return formatError(error?.data as any);

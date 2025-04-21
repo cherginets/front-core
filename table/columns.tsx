@@ -1,6 +1,6 @@
 import {NextLink} from "@/core/components/NextMuiLink";
 import {n_promise} from "@/core/features/notifications";
-import moment from "@/core/moment";
+import moment from "moment";
 import {MOMENT_DATE_PRETTY} from "@/core/utils";
 import {OpenInNew, ToggleOff, ToggleOn} from "@mui/icons-material";
 import {IconButton} from "@mui/material";

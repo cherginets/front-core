@@ -1,6 +1,6 @@
 import {HistoryRow} from "@/core/features/element_history/ElementHistory.types";
 import {formatElementHistoryLevelAsJSX} from "@/core/features/element_history/formatElementHistoryLevelAsJSX";
-import moment from "@/core/moment";
+import moment from "moment";
 import {useMemo, useState} from "react";
 
 export const ElementHistoryRow = ({

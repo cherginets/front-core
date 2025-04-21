@@ -12,7 +12,7 @@ const formatPath = (path: string):string => lrquo((path in  defaultNames) ? defa
 
 export let mixed: LocaleObject['mixed'] = {
   default: "содержит ошибку",
-  required: ({path}: {path: string}) => `${formatPath(path)} обязательно для заполнения`,
+  required: ({path}: {path: string}) => `Поле ${formatPath(path)} обязательно для заполнения`,
   defined: '${path} должен быть определен',
   oneOf: "должен содержать одно из следующих значение: ${values}",
   notOneOf: "не должен содержать одно из следующих значение: ${values}",
@@ -40,7 +40,7 @@ export let string: LocaleObject['string'] = {
   max: ({path, max}) => `Поле ${formatPath(path)} должно содержать не более ${max} символов`,
   matches: '${path} должен совпадать со следующим регулярном выражением: "${regex}"',
   email: "должен быть email",
-  url: "значение должно быть валидной ссылкой",
+  url: ({label}) => `Поле ${lrquo(label)} должно быть ссылкой`,
   uuid: "значение должно быть валидными UUID",
   trim: "поле не должно содержать в начале или в конце пробелы",
   lowercase: "значение должно быть в нижним регистре",

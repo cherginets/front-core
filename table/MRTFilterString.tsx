@@ -1,14 +1,14 @@
-import {useState} from "react";
-import {MRT_ColumnDef} from "material-react-table";
 import {TextField} from "@mui/material";
+import {MRT_ColumnDef} from "material-react-table";
+import {useState} from "react";
 
-export const MRTFilterString:MRT_ColumnDef<any>['Filter'] = ({ column }) => {
-  console.log('column', column);
-  const [filterValue, setFilterValue] = useState<string>(column.getFilterValue() as string || '');
+export const MRTFilterString: MRT_ColumnDef<any>["Filter"] = ({column}) => {
+  console.log("column", column);
+  const [filterValue, setFilterValue] = useState<string>((column.getFilterValue() as string) || "");
 
   return (
     <TextField
-      variant={'standard'}
+      variant={"standard"}
       value={filterValue}
       fullWidth
       placeholder={`Фильтр по ${column.columnDef.header}`}
@@ -16,4 +16,4 @@ export const MRTFilterString:MRT_ColumnDef<any>['Filter'] = ({ column }) => {
       onBlur={() => column.setFilterValue(filterValue)} // Применение фильтра при onBlur
     />
   );
-}
+};

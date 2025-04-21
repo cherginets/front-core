@@ -6,7 +6,7 @@ export type FormikAutocompleteFieldProps<OptionType extends Option = Option> = {
   label: string;
   name: string;
   helperText?: string;
-  loading: boolean;
+  loading?: boolean;
   optionsMap?: Map<OptionType["value"], OptionType>;
   onAddElementClick?: () => any;
 } & Omit<AutocompleteProps<OptionType, any>, "renderInput">;
