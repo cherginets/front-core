@@ -4,7 +4,7 @@ import {
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
   Group,
-  Menu as MenuIcon,
+  Menu as MenuIcon, Search,
 } from "@mui/icons-material";
 import {
   Badge,
@@ -23,13 +23,14 @@ import {
   Stack,
   Toolbar,
   Tooltip,
-  Typography,
+  Typography, Container,
 } from "@mui/material";
 import {CSSObject, Theme, styled, useTheme} from "@mui/material/styles";
 import {FC, Fragment, ReactNode, useMemo, useState} from "react";
 
 import {Link} from "@/core/components/NextMuiLink";
 import {usePathname} from "next/navigation";
+import MuiLayoutSearch from "@/core/components/MuiLayoutSearch";
 
 const drawerWidth = 240;
 
@@ -137,8 +138,10 @@ export const MuiLayout: FC<{
   links: MuiLayoutLinkType[];
   topRightElements?: any;
   topLeftElements?: any;
+  searchQuery?: any
   children?: any;
-}> = ({left = [], top = [], links, topLeftElements, topRightElements, children}) => {
+  useLazySearchQuery?: any;
+}> = ({left = [], top = [], useLazySearchQuery, links, topLeftElements, topRightElements, children}) => {
   const pathname = usePathname() || "";
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -173,6 +176,8 @@ export const MuiLayout: FC<{
     return titleElement?.title || "";
   }, [links, pathname]);
 
+  const [searchOpen, setSearchOpen] = useState(false);
+
   return (
     <Box sx={{display: "flex", flexGrow: 1}}>
       <CssBaseline />
@@ -190,45 +195,52 @@ export const MuiLayout: FC<{
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            {title}
-          </Typography>
-          <div style={{margin: "auto"}} />
-          {topLeftElements}
-          {top.length > 0 && (
-            <Stack direction={"row"} spacing={2} sx={{marginRight: 4}}>
-              {top.map((id, index) => {
-                const link = linksMap.get(id);
-                if (!link) return null;
+          {searchOpen ? <Container>
+            <MuiLayoutSearch onClose={() => setSearchOpen(false)} useLazySearchQuery={useLazySearchQuery} />
+          </Container> : <>
+            <Typography variant="h6" noWrap component="div">
+              {title}
+            </Typography>
+            <div style={{margin: "auto"}} />
+            {topLeftElements}
+            {top.length > 0 && (
+              <Stack direction={"row"} spacing={2} sx={{marginRight: 4}}>
+                {useLazySearchQuery && <IconButton title={'Поиск по админке'} color={"inherit"} onClick={() => setSearchOpen(true)}><Search/></IconButton>}
 
-                const {title, url, onClick, IconComponent} = link;
+                {top.map((id, index) => {
+                  const link = linksMap.get(id);
+                  if (!link) return null;
 
-                const Wrapper = url
-                  ? ({children}: {children: ReactNode}) => <StyledLink href={url}>{children}</StyledLink>
-                  : ({children}: {children: ReactNode}) => <Fragment>{children}</Fragment>;
+                  const {title, url, onClick, IconComponent} = link;
 
-                const Icon =
-                  link.redCounter !== undefined
-                    ? () => (
+                  const Wrapper = url
+                    ? ({children}: {children: ReactNode}) => <StyledLink href={url}>{children}</StyledLink>
+                    : ({children}: {children: ReactNode}) => <Fragment>{children}</Fragment>;
+
+                  const Icon =
+                    link.redCounter !== undefined
+                      ? () => (
                         <Badge badgeContent={link.redCounter} color="error">
                           <IconComponent />
                         </Badge>
                       )
-                    : IconComponent;
+                      : IconComponent;
 
-                return (
-                  <Wrapper key={id}>
-                    <Tooltip title={title}>
-                      <IconButton color={"inherit"}>
-                        <Icon color={"inherit"} />
-                      </IconButton>
-                    </Tooltip>
-                  </Wrapper>
-                );
-              })}
-            </Stack>
-          )}
-          {topRightElements}
+                  return (
+                    <Wrapper key={id}>
+                      <Tooltip title={title}>
+                        <IconButton color={"inherit"}>
+                          <Icon color={"inherit"} />
+                        </IconButton>
+                      </Tooltip>
+                    </Wrapper>
+                  );
+                })}
+              </Stack>
+            )}
+            {topRightElements}
+          </>}
+
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
