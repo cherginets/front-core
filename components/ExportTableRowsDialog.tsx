@@ -137,16 +137,14 @@ export const ExportTableRowsDialog = ({onClose, rows, isDisable = false, attribu
         <Typography color={'error'}>{error}</Typography>
 
         <Typography fontWeight={'bold'} sx={{marginBottom: '12px'}}>Нажмите, чтобы дополнить значение формата</Typography>
-        <Stack flexWrap={'wrap'} direction={'row'} sx={{ marginBottom: '12px' }}>
+        <div className={'flex flex-wrap gap-2 mb-3 items-center text-sm'} >
           {Object.entries(attributes).map(([key]) => {
             const isInFormat = format.includes(`{${key}}`);
 
+            if(isInFormat) return <div>{key}</div>
+
             return (
-              <Button
-                key={key}
-                sx={{ paddingInline: '3px', minWidth: '12px' }}
-                variant={isInFormat ? 'outlined' : 'text'}
-                disabled={isInFormat}
+              <div key={key} className={'text-blue-500 hover:text-blue-600 cursor-pointer'}
                 onClick={() => {
                   setError('')
                   if (!isInFormat) {
@@ -155,27 +153,26 @@ export const ExportTableRowsDialog = ({onClose, rows, isDisable = false, attribu
                 }}
               >
                 {key}
-              </Button>
+              </div>
             );
           })}
-        </Stack>
+        </div>
 
         {fastFormats && fastFormats?.length > 0 && (
           <>
             <Typography fontWeight={'bold'} sx={{marginBottom: '12px'}}>Или выберите готовый</Typography>
-            <Stack gap={'2px'} alignItems={'start'}>
+            <div className={'flex flex-col gap-3 text-sm'}>
               {fastFormats.map((format, index) => (
-                <Button
+                <div className={'text-blue-500 hover:text-blue-600 cursor-pointer'}
                   key={index}
-                  variant={'text'}
                   onClick={() => {
                     setFormat(format)
                   }}
                 >
                   {format}
-                </Button>
+                </div>
               ))}
-            </Stack>
+            </div>
           </>
         )}
       </Stack>
