@@ -12,6 +12,7 @@ export const CHAR_LAQUO = "«";
 export const CHAR_RAQUO = "»";
 
 export const TG_CHAT_ID_ANTON = 179766304;
+export const TG_CHAT_ID_MAKSIM = 6907993512;
 
 export const lrquo = (str: string): string => `${CHAR_LAQUO}${str}${CHAR_RAQUO}`;
 
