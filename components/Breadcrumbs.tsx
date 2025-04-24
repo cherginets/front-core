@@ -1,7 +1,7 @@
 "use client";
 import {Link} from "@/core/components/NextMuiLink";
 import {Breadcrumbs as MuiBreadcrumbs, Typography} from "@mui/material";
-import {FC} from "react";
+import {FC, useMemo} from "react";
 
 import {ReactNode} from "react";
 
@@ -55,82 +55,50 @@ const NextBreadcrumb = ({
   );
 };
 
-type BreadcrumbsProps = {};
-const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
+const breadcrumpsLabels: Record<string, string> = {
+  "admin": "Админка",
+  "analytics": "Аналитика",
+  "users": "Пользователи",
+  "blog": "Блог",
+  "articles": "Статьи",
+  "server": "Сервер",
+  "servers": "Серверы",
+  "assort": "Ассортимент",
+  "orders": "Заказы",
+  "proxies": "Прокси",
+  "products": "Товары",
+  "payments": "Оплаты",
+  "sessions": "Сессии",
+  "coupons": "Купоны",
+  "settings": "Настройки",
+  "integration": "Интеграция",
+  "transactions": "Транзакции",
+  "main": "Общая информация",
+  "content": "Контент",
+  "tariffs": "Тарифы",
+  "devices": "Устройства",
+  "payment_methods": "Платёжные методы",
+  "new-user": "Новый пользователь",
+  "new-order": "Новый заказ",
+  "new-assort": "Новая страница ассортимента",
+  "new-coupon": "Новый купон",
+  "new-server": "Новый сервер",
+  "new-device": "Новое устройство",
+  "new": "Новый элемент",
+  "attributes": "Аттрибуты",
+  "locations": "Локации",
+}
+
+type BreadcrumbsProps = {
+  labels: Record<string, string>
+};
+const Breadcrumbs: FC<BreadcrumbsProps> = ({labels, ...props}) => {
+  const map = useMemo(() => ({...breadcrumpsLabels, ...labels}), [labels])
   return (
     <NextBreadcrumb
       capitalizeLinks
       excludeLabels={["detail"]}
-      transformLabel={(title) => {
-        switch (title) {
-          case "admin":
-            return "Админка";
-          case "analytics":
-            return "Аналитика";
-          case "users":
-            return "Пользователи";
-          case "blog":
-            return "Блог";
-          case "articles":
-            return "Статьи";
-          case "server":
-            return "Сервер";
-          case "servers":
-            return "Серверы";
-          case "assort":
-            return "Ассортимент";
-          case "orders":
-            return "Заказы";
-          case "proxies":
-            return "Прокси";
-          case "products":
-            return "Товары";
-          case "payments":
-            return "Оплаты";
-          case "sessions":
-            return "Сессии";
-          case "coupons":
-            return "Купоны";
-          case "settings":
-            return "Настройки";
-          case "integration":
-            return "Интеграция";
-          case "transactions":
-            return "Транзакции";
-          case "main":
-            return "Общая информация";
-          case "content":
-            return "Контент";
-          case "tariffs":
-            return "Тарифы";
-          case "devices":
-            return "Устройства";
-          case "payment_methods":
-            return "Платёжные методы";
-
-          case "new-user":
-            return "Новый пользователь";
-          case "new-order":
-            return "Новый заказ";
-          case "new-assort":
-            return "Новая страница ассортимента";
-          case "new-coupon":
-            return "Новый купон";
-          case "new-server":
-            return "Новый сервер";
-          case "new-device":
-            return "Новое устройство";
-          case "new":
-            return "Новый элемент";
-
-          case "attributes":
-            return "Аттрибуты";
-          case "locations":
-            return "Локации";
-          default:
-            return title;
-        }
-      }}
+      transformLabel={(title) => map[title] || title}
       {...props}
     />
   );
