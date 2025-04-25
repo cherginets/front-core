@@ -104,7 +104,7 @@ const MRTColumns_date = (): Pick<MRT_ColumnDef<any>, "size" | "Cell" | "enableCo
   size: 0,
   enableColumnFilter: false,
   // filterVariant: "date-range",
-  Cell: ({row}: any) => moment(row.original.created_at).format(MOMENT_DATE_PRETTY),
+  Cell: ({row}: any) => <div className={'text-sm whitespace-nowrap'}>{moment(row.original.created_at).format(MOMENT_DATE_PRETTY)}</div>,
 });
 
 export const MRTColumns_updated_at = (): MRT_ColumnDef<any> => ({
