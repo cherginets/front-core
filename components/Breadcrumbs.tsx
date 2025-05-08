@@ -90,9 +90,9 @@ const breadcrumpsLabels: Record<string, string> = {
 }
 
 type BreadcrumbsProps = {
-  labels: Record<string, string>
+  labels?: Record<string, string>
 };
-const Breadcrumbs: FC<BreadcrumbsProps> = ({labels, ...props}) => {
+const Breadcrumbs: FC<BreadcrumbsProps> = ({labels = {}, ...props}) => {
   const map = useMemo(() => ({...breadcrumpsLabels, ...labels}), [labels])
   return (
     <NextBreadcrumb
