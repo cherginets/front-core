@@ -10,6 +10,7 @@ export default function MuiThemeProvider({children}: {children: ReactNode}) {
     <AppRouterCacheProvider>
       <ThemeProvider theme={theme}>
         <ConfirmProvider
+          useLegacyReturn
           defaultOptions={{
             cancellationText: "Отмена",
             confirmationText: "Подтвердить",
