@@ -3,34 +3,38 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import MuiSelect, {SelectProps as MuiSelectProps} from "@mui/material/Select";
+import {useState} from "react";
 
 export type SelectProps<T> = {
+  className?: string;
+  selectClassName?: string;
   label?: string;
   value: string | number | null;
   options: Option<T>[];
   onChange: (value: T) => any;
 } & Omit<MuiSelectProps, "label" | "value" | "onChange">;
 
-function Select<T>({label, value, options, onChange, ...props}: SelectProps<T>) {
+function Select<T>({className, selectClassName, variant, label, value, options, onChange, ...props}: SelectProps<T>) {
+
   return (
-    <FormControl fullWidth>
-      {label && <InputLabel>{label}</InputLabel>}
-      <MuiSelect sx={{
-        boxShadow: "none",
-        ".MuiOutlinedInput-notchedOutline": { border: 0 },
-        "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
-          {
-            border: 0,
+    <FormControl variant={variant} className={className} fullWidth>
+      {label && <InputLabel  id="demo-simple-select-filled-label">{label}</InputLabel>}
+      <MuiSelect
+        className={selectClassName}
+        labelId="demo-simple-select-filled-label"
+
+        sx={{
+          boxShadow: "none",
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            border: "1px solid #484850",
+            borderRadius: "5px 5px 0 0"
           },
-        "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-          {
-            border: 0,
-          },
-      }}
+        }}
         fullWidth
-                 disableUnderline
+        disableUnderline
         value={value}
         label={label}
+        variant={variant}
         onChange={(event, child) => onChange(event.target.value as any)}
         {...props}
       >
