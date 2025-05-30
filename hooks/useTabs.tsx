@@ -2,7 +2,7 @@ import {Tab, TabProps} from "@mui/material";
 import Tabs, {TabsProps} from "@mui/material/Tabs";
 import CSS from "csstype";
 import {useParams, useRouter} from "next/navigation";
-import {FC, useCallback, useMemo, useState} from "react";
+import {FC, ReactNode, useCallback, useMemo, useState} from "react";
 
 type TabType = {label: string; value: string} & Partial<TabProps>;
 
@@ -17,7 +17,7 @@ export type useTabsProps = {
 
 export type useTabsResult = {
   tab: string;
-  renderedTabs: JSX.Element;
+  renderedTabs: ReactNode;
   TabsComponent: FC<TabsProps>;
 };
 

@@ -49,7 +49,7 @@ function MuiAuthForm({
 
   return (
     <Grid container spacing={2} alignContent={"center"} justifyContent={"center"} alignItems={"center"}>
-      <Grid item xs={12} md={12}>
+      <Grid size={{xs: 12, md: 12}}>
         <Formik<InitialData>
           initialValues={initialData}
           onSubmit={(values, {setSubmitting}) => {
@@ -63,14 +63,12 @@ function MuiAuthForm({
                 </Avatar>
 
                 <Field
-                  // @ts-ignore
                   component={PreparedTextField}
                   name="username"
                   type="username"
                   label="Username *"
                 />
                 <Field
-                  // @ts-ignore
                   component={PreparedTextField}
                   type="password"
                   label="Password *"
@@ -96,7 +94,7 @@ function MuiAuthForm({
       </Grid>
 
       {registerLink && (
-        <Grid item xs={6}>
+        <Grid size={{xs: 6}}>
           <NextLink href={registerLink}>
             <Button fullWidth>Регистрация</Button>
           </NextLink>
@@ -104,7 +102,7 @@ function MuiAuthForm({
       )}
 
       {forgotLink && (
-        <Grid item xs={6}>
+        <Grid size={{xs: 6}}>
           <NextLink href={forgotLink}>
             <Button fullWidth>Забыли пароль</Button>
           </NextLink>
@@ -112,7 +110,7 @@ function MuiAuthForm({
       )}
 
       {!disableAuthByCode && (
-        <Grid item xs={12} md={6}>
+        <Grid size={{xs: 12, md: 6}}>
           <Stack direction={"column"} spacing={2}>
             <h2>По коду</h2>
             <Button fullWidth variant={"outlined"}>
@@ -126,7 +124,7 @@ function MuiAuthForm({
       )}
 
       {!disableAuthByServices && (
-        <Grid item xs={12} md={6}>
+        <Grid  size={{xs: 12, md: 6}}>
           <Stack direction={"column"} spacing={2}>
             <h2>Через сервисы</h2>
             <Button fullWidth variant={"contained"}>

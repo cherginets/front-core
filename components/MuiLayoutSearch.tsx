@@ -22,7 +22,7 @@ export default function MuiLayoutSearch({onClose, useLazySearchQuery}: {onClose:
     setOpen(true);
   }, []);
 
-  const menuRef = useRef();
+  const menuRef = useRef(null);
 
   useOutsideClick(menuRef, () => {
     setOpen(false);
