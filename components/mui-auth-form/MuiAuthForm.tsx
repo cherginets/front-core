@@ -77,16 +77,16 @@ function MuiAuthForm({
                   name="password"
                 />
 
-                <LoadingButton
+                <Button
                   variant="contained"
                   size={"large"}
                   color="primary"
                   onClick={() => submitForm()}
                   fullWidth
-                  loading={isLoading}
+                  disabled={isLoading}
                 >
                   Войти в систему
-                </LoadingButton>
+                </Button>
 
                 {error && <Alert severity={"error"}>{error}</Alert>}
               </Stack>

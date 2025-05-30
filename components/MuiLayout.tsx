@@ -23,7 +23,7 @@ import {
   Stack,
   Toolbar,
   Tooltip,
-  Typography, Container,
+  Typography, Container, TextField,
 } from "@mui/material";
 import {CSSObject, Theme, styled, useTheme} from "@mui/material/styles";
 import {FC, Fragment, ReactNode, useMemo, useState} from "react";
@@ -141,7 +141,8 @@ export const MuiLayout: FC<{
   searchQuery?: any
   children?: any;
   useLazySearchQuery?: any;
-}> = ({left = [], top = [], useLazySearchQuery, links, topLeftElements, topRightElements, children}) => {
+  searchVariant?: "icon" | 'textField';
+}> = ({left = [], top = [], useLazySearchQuery, searchVariant = 'icon', links, topLeftElements, topRightElements, children}) => {
   const pathname = usePathname() || "";
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -205,7 +206,7 @@ export const MuiLayout: FC<{
             {topLeftElements}
             {top.length > 0 && (
               <Stack direction={"row"} spacing={2} sx={{marginRight: 4}}>
-                {useLazySearchQuery && <IconButton title={'Поиск по админке'} color={"inherit"} onClick={() => setSearchOpen(true)}><Search/></IconButton>}
+                {useLazySearchQuery && searchVariant === 'icon' ? <IconButton title={'Поиск по админке'} color={"inherit"} onClick={() => setSearchOpen(true)}><Search/></IconButton> : <TextField label={'Поиск...'} style={{background: 'white', width: 150}} size={'small'} onClick={() => setSearchOpen(true)}><Search/></TextField>}
 
                 {top.map((id, index) => {
                   const link = linksMap.get(id);

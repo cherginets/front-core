@@ -47,6 +47,7 @@ export default function MuiLayoutSearch({onClose, useLazySearchQuery}: {onClose:
         style={{background: "white"}}
         color={"primary"}
         onChange={handleChange}
+        autoComplete={'off'}
         fullWidth
         size={'small'}
         placeholder={'Поиск по админке, введите что-нибудь...'}

@@ -8,6 +8,7 @@ export type ConfirmProviderProps = {
 export default function ConfirmProvider({children}: ConfirmProviderProps) {
   return (
     <OriginalConfirmProvider
+      useLegacyReturn
       defaultOptions={{
         confirmationText: "ОК",
         cancellationText: "Отменить",

@@ -3,7 +3,6 @@ import {useElementHistory, useElementHistoryProps} from "@/core/components/histo
 import moment from "moment";
 import {formatError} from "@/core/utils/formatError";
 import {Add, Close, Send, Sync} from "@mui/icons-material";
-import {LoadingButton} from "@mui/lab";
 import {Alert, Button, Divider} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import {Fragment} from "react";
@@ -129,9 +128,9 @@ function ElementHistory({title, ...props}: ElementHistoryProps) {
           )}
 
           {canLoadMore && (
-            <LoadingButton onClick={fetchMore} loading={loadingMore}>
+            <Button onClick={fetchMore} disabled={loadingMore}>
               Загрузить ещё
-            </LoadingButton>
+            </Button>
           )}
         </>
       )}
