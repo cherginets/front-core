@@ -7,6 +7,7 @@ export const IS_DEV = process.env.NODE_ENV === "development";
 export const DEBUG_ON = process.env.NEXT_PUBLIC_DEBUG === "on";
 
 export const APP_HOST = (process.env.APP_HOST as string) || (process.env.NEXT_PUBLIC_APP_HOST as string);
+export const SOCKET_HOST = (process.env.NEXT_PUBLIC_SOCKET_HOST as string) || (process.env.NEXT_PUBLIC_APP_HOST as string);
 
 export const CHAR_DOT = "•";
 export const CHAR_RUBLE = "₽";
