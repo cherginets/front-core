@@ -71,9 +71,10 @@ export function useMRTable<TData extends MRT_RowData>({
   // const error =
 
   const data = useMemo<TData[]>(() => {
+    if(error) return [];
     if (query) return queryGetRows(query.data);
     return _data || [];
-  }, [_data, query, queryGetRows]);
+  }, [_data, query, error, queryGetRows]);
 
   return useOriginalMaterialReactTable({
     ...tableOptions,
