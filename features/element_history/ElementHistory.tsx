@@ -46,7 +46,7 @@ const ElementHistory = ({title, element_type, element_id, useAddMutation, useSea
   }, [newComment, add, element_type, element_id]);
 
   return (
-    <div className={"flex flex-col"}>
+    <div className={"flex flex-col w-full"}>
       {title && <div className={"mb-4 text-2xl font-bold"}>{title}</div>}
 
       <div

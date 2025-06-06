@@ -25,7 +25,7 @@ export const ElementHistoryRow = ({
   );
 
   return (
-    <div className={"flex flex-col gap-1 py-2"}>
+    <div className={"flex flex-col gap-1 py-2 max-w-full w-full"}>
       <div className={"flex flex-row gap-2 text-sm max-md:flex-col"}>
         <div className={"flex gap-2"}>
           <div>#{index}</div>
@@ -49,9 +49,9 @@ export const ElementHistoryRow = ({
         </div>
       </div>
       <div>
-        <div className={"whitespace-break-spaces break-words"} dangerouslySetInnerHTML={{__html: row.text}} />
+        <div className={"whitespace-break-spaces break-words  max-w-full w-full"} dangerouslySetInnerHTML={{__html: row.text}} />
         {showContext && row.context !== null && (
-          <pre className={"mt-2 whitespace-break-spaces break-words rounded-xl bg-gray-100 p-2 text-gray-500"}>
+          <pre className={"mt-2 whitespace-break-spaces break-words rounded-xl bg-gray-100 p-2 text-gray-500  max-w-full w-full"}>
             {JSON.stringify(row.context, null, 2)}
           </pre>
         )}
