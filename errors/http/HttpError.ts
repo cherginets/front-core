@@ -1,8 +1,9 @@
 export default class HttpError extends Error {
-  httpCode: number;
+  httpCode: number = 500;
+  code: number = 0;
 
-  constructor(message?: string, code?: number) {
+  constructor(message?: string, code: number = 0) {
     super(message || "Что-то пошло не так, обратитесь к администратору.");
-    this.httpCode = code || 500;
+    this.code = code;
   }
 }
