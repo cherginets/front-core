@@ -111,3 +111,27 @@ export function randomINN(type: "person" | "company" = "person"): string {
 
   return digits.join('');
 }
+
+export function validateINN(inn: string, type: "person" | "company" = "person"): boolean {
+    if (!/^\d{10}$|^\d{12}$/.test(inn)) return false;
+
+    const getControl = (innArr: number[], coefficients: number[]) =>
+      coefficients.reduce((sum, coef, i) => sum + coef * innArr[i], 0) % 11 % 10;
+
+    const digits = inn.split("").map(Number);
+
+    if (inn.length === 10 && (!type || type === "company")) {
+      // Юрлицо
+      const control = getControl(digits, [2, 4, 10, 3, 5, 9, 4, 6, 8]);
+      return control === digits[9];
+    }
+
+    if (inn.length === 12 && (!type || type === "person")) {
+      // Физлицо
+      const control1 = getControl(digits, [7, 2, 4, 10, 3, 5, 9, 4, 6, 8, 0]);
+      const control2 = getControl(digits, [3, 7, 2, 4, 10, 3, 5, 9, 4, 6, 8, 0]);
+      return control1 === digits[10] && control2 === digits[11];
+    }
+
+    return false;
+}
