@@ -16,6 +16,7 @@ export default function ConfirmProvider({children}: ConfirmProviderProps) {
           style: {
             marginRight: "auto",
           },
+          variant: "text",
         },
         confirmationButtonProps: {
           variant: "contained",
