@@ -1,6 +1,6 @@
 import {formatError} from "@/core/utils/formatError";
 import {Fragment, ReactNode} from "react";
-import {ToastContainer, ToastContent, ToastOptions, toast} from "react-toastify";
+import {ToastContainer, ToastContent, ToastOptions, toast, ToastPromiseParams, UpdateOptions} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const NotificationsProvider = ({children}: {children: ReactNode}) => (
@@ -18,19 +18,23 @@ export const n_error = (error: ToastContent, options?: ToastOptions) => {
 export const n_info = toast.info;
 export const n_warning = toast.warning;
 
-export const n_promise: typeof toast.promise = (promise, {pending, error, success} = {}) => {
-  // @ts-ignore
+export const n_promise = function<TData = unknown, TError = unknown, TPending = unknown>(promise: Promise<TData> | (() => Promise<TData>), {pending, error, success}: {
+  pending?: null | string | UpdateOptions<TPending>;
+  success?: null | string | UpdateOptions<TData>;
+  error?: null | string | UpdateOptions<TError>;
+}
+= {}) {
+  // @ts-expect-error rtk query unwrap
   if (!!promise.unwrap) promise = promise.unwrap();
 
   return toast.promise(promise, {
-    pending: pending || "Выполнение скрипта",
-    error: error || {
+    pending: pending !== undefined ? pending! : "Выполнение скрипта",
+    error: error !== undefined ? error! : {
       render: (error) => {
         console.log("error", error);
-        // @ts-ignore
         return formatError(error?.data as any);
       },
     },
-    success: success || "Успех",
+    success: success !== undefined ? success! : "Успех",
   });
 };
