@@ -1,10 +1,10 @@
 import {Option} from "@/core/formik/types/options";
 import {FormControl, FormHelperText, InputLabel, MenuItem, Select, SelectProps} from "@mui/material";
 import {useFormikContext} from "formik";
-import {useMemo} from "react";
+import {ReactNode, useMemo} from "react";
 
 export type FormikSelectFieldProps = {
-  helperText?: string;
+  helperText?: ReactNode;
   options: Option[];
   optionsMap?: Map<Option["value"], Option>;
 } & Omit<SelectProps, "name"> &
