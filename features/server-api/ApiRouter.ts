@@ -1,72 +1,70 @@
 import {HTTP_METHOD} from "next/dist/server/web/http";
 import {NextRequest, NextResponse} from "next/server";
-import {ApiContext, ApiMiddleware } from "./types";
+import {ApiContext, ApiMiddleware} from "./types";
 import NotFoundError from "@/core/errors/http/NotFoundError";
 
-export class ApiRouter {
+export class ApiRouter<Context extends ApiContext> {
   public prefix = "";
-  public middlewares: ApiMiddleware[] = [];
+  public middlewares: ApiMiddleware<Context>[] = [];
   // Ключ - URL, значение - обработчик
-  public methodsMap: Partial<Record<HTTP_METHOD, Record<string, (ctx: ApiContext) => any>>> = {};
+  public methodsMap: Partial<Record<HTTP_METHOD, Record<string, (ctx: Context) => any>>> = {};
 
-  use(middleware: ApiMiddleware) {
+  use(middleware: ApiMiddleware<Context>) {
     this.middlewares.push(middleware);
   }
 
   // region HTTP methods
-  get(url: string, handler: (ctx: ApiContext) => any) {
-    if (!this.methodsMap.GET) {
-      this.methodsMap.GET = {};
+
+  private method(method: HTTP_METHOD, url: string, middlewaresOrHandler: any, maybeHandler?: any):ApiRouter<Context> {
+    const middlewares: ApiMiddleware<Context>[] = Array.isArray(middlewaresOrHandler) ? middlewaresOrHandler : [];
+    const handler: (ctx: Context) => any = Array.isArray(middlewaresOrHandler) ? maybeHandler : middlewaresOrHandler;
+
+    if (!this.methodsMap[method]) {
+      this.methodsMap[method] = {};
     }
-    if (url in this.methodsMap.GET) {
+    if (url in this.methodsMap[method]) {
       throw new Error("Handler for this URL already exists: " + url);
     }
-    this.methodsMap.GET[url] = handler;
+
+    this.methodsMap[method][url] = async (ctx: Context) => {
+      return await this.applyMiddlewares(ctx, handler, middlewares);
+    };
+
+    return this;
   }
 
-  post(url: string, handler: (ctx: ApiContext) => any) {
-    if (!this.methodsMap.POST) {
-      this.methodsMap.POST = {};
-    }
-    if (url in this.methodsMap.POST) {
-      throw new Error("Handler for this URL already exists: " + url);
-    }
-    this.methodsMap.POST[url] = handler;
+  get(url: string, handler: (ctx: Context) => any): ApiRouter<Context>;
+  get(url: string, middlewares: ApiMiddleware<Context>[], handler: (ctx: Context) => any): ApiRouter<Context>;
+  get(url: string, middlewaresOrHandler: any, maybeHandler?: any): ApiRouter<Context> {
+    return this.method("GET", url, middlewaresOrHandler, maybeHandler);
   }
 
-  patch(url: string, handler: (ctx: ApiContext) => any) {
-    if (!this.methodsMap.PATCH) {
-      this.methodsMap.PATCH = {};
-    }
-    if (url in this.methodsMap.PATCH) {
-      throw new Error("Handler for this URL already exists: " + url);
-    }
-    this.methodsMap.PATCH[url] = handler;
+  post(url: string, handler: (ctx: Context) => any): ApiRouter<Context>;
+  post(url: string, middlewares: ApiMiddleware<Context>[], handler: (ctx: Context) => any): ApiRouter<Context>;
+  post(url: string, middlewaresOrHandler: any, maybeHandler?: any): ApiRouter<Context> {
+   return this.method("POST", url, middlewaresOrHandler, maybeHandler);
   }
 
-  put(url: string, handler: (ctx: ApiContext) => any) {
-    if (!this.methodsMap.PUT) {
-      this.methodsMap.PUT = {};
-    }
-    if (url in this.methodsMap.PUT) {
-      throw new Error("Handler for this URL already exists: " + url);
-    }
-    this.methodsMap.PUT[url] = handler;
+  put(url: string, handler: (ctx: Context) => any): ApiRouter<Context>;
+  put(url: string, middlewares: ApiMiddleware<Context>[], handler: (ctx: Context) => any): ApiRouter<Context>;
+  put(url: string, middlewaresOrHandler: any, maybeHandler?: any): ApiRouter<Context> {
+    return this.method("PUT", url, middlewaresOrHandler, maybeHandler);
   }
 
-  delete(url: string, handler: (ctx: ApiContext) => any) {
-    if (!this.methodsMap.DELETE) {
-      this.methodsMap.DELETE = {};
-    }
-    if (url in this.methodsMap.DELETE) {
-      throw new Error("Handler for this URL already exists: " + url);
-    }
-    this.methodsMap.DELETE[url] = handler;
+  delete(url: string, handler: (ctx: Context) => any): ApiRouter<Context>;
+  delete(url: string, middlewares: ApiMiddleware<Context>[], handler: (ctx: Context) => any): ApiRouter<Context>;
+  delete(url: string, middlewaresOrHandler: any, maybeHandler?: any): ApiRouter<Context> {
+    return this.method("DELETE", url, middlewaresOrHandler, maybeHandler);
   }
 
+  patch(url: string, handler: (ctx: Context) => any): ApiRouter<Context>;
+  patch(url: string, middlewares: ApiMiddleware<Context>[], handler: (ctx: Context) => any): ApiRouter<Context>;
+  patch(url: string, middlewaresOrHandler: any, maybeHandler?: any): ApiRouter<Context> {
+    return this.method("PATCH", url, middlewaresOrHandler, maybeHandler);
+  }
   // endregion
 
-  async handler(ctx: ApiContext, url: string) {
+  async handler(ctx: Context, url: string) {
     const method = ctx.req.method! as HTTP_METHOD;
     const pathname = ctx.pathname;
 
@@ -110,7 +108,7 @@ export class ApiRouter {
     throw new NotFoundError("Not found");
   }
 
-  async applyMiddlewares(ctx: ApiContext, next: (ctx: ApiContext) => Promise<any>, middlewares = this.middlewares):Promise<any> {
+  async applyMiddlewares(ctx: Context, next: (ctx: Context) => Promise<any>, middlewares = this.middlewares):Promise<any> {
     // Если нет middlewares, просто вызываем next
     if(!middlewares.length) {
       return await next(ctx);

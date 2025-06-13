@@ -6,6 +6,7 @@ export type ApiContext = {
   pathname: string;
   query: Record<string, string>
   params: Record<string, string>
+  ip: string
 };
 
-export type ApiMiddleware = (ctx: ApiContext, next: (ctx: ApiContext) => any) => any;
+export type ApiMiddleware<Context extends ApiContext> = (ctx: Context, next: (ctx: Context) => any) => any;
