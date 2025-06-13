@@ -9,4 +9,4 @@ export type ApiContext = {
   ip: string
 };
 
-export type ApiMiddleware<Context extends ApiContext> = (ctx: Context, next: (ctx: Context) => any) => any;
+export type ApiMiddleware<Context extends ApiContext = ApiContext> = (ctx: Context, next: (ctx: Context) => any) => any;
