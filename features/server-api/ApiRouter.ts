@@ -71,7 +71,10 @@ export class ApiRouter {
     if (this.methodsMap[method] && this.methodsMap[method][url]) {
       // Если есть, вызываем middlewares и обработчик
       // @ts-expect-error todo
-      return await this.applyMiddlewares(ctx, async (ctx) => await (this.methodsMap[method][url](ctx)), this.middlewares);
+      return await this.applyMiddlewares(ctx, async (ctx) => {
+        console.log('main handler')
+        return await (this.methodsMap[method][url](ctx));
+      }, this.middlewares);
     }
 
     console.log("this.methodsMap", this.methodsMap);
@@ -84,10 +87,13 @@ export class ApiRouter {
     console.log('middlewares.length', middlewares.length);
     // Если нет middlewares, просто вызываем next
     if(!middlewares.length) {
-      return next(ctx);
+      console.log('run next')
+      return await next(ctx);
     }
     // Берем первый middleware и вызываем его
     const [currentMiddleware, ...restMiddlewares] = middlewares;
+
+    console.log('currentMiddleware', currentMiddleware.name);
 
     return currentMiddleware(ctx, async (nextCtx = ctx) => {
       return await this.applyMiddlewares(nextCtx, next, restMiddlewares);

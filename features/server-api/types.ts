@@ -8,4 +8,4 @@ export type ApiContext = {
 
 export type ApiNext = () => ((ctx: ApiContext) => any) | (() => any);
 
-export type ApiMiddleware = (ctx: ApiContext, next: (ctx: ApiContext) => any) => ApiNext;
+export type ApiMiddleware = (ctx: ApiContext, next: (ctx: ApiContext) => any) => any;

@@ -1,4 +1,4 @@
-import {ApiMiddleware} from "@/core/server/types";
+import {ApiMiddleware} from "@/core/features/server-api/types";
 
 export const createRequestMiddleware: ({prefix}: {prefix: string}) => ApiMiddleware =
   ({prefix}) =>

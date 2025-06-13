@@ -1,5 +1,5 @@
-import {ApiRouter} from "@/core/server/ApiRouter";
-import {ApiContext} from "@/core/server/types";
+import {ApiRouter} from "@/core/features/server-api/ApiRouter";
+import {ApiContext} from "@/core/features/server-api/types";
 import {NextResponse} from "next/server";
 
 export class ApiApp extends ApiRouter {
@@ -11,28 +11,11 @@ export class ApiApp extends ApiRouter {
       pathname: _ctx.req.nextUrl.pathname.slice(4),
     };
 
-    const result = await this.applyMiddlewares(ctx, async (newCtx = ctx) => {
-      return NextResponse.json(newCtx.pathname);
-      // return await router.handler(ctx, ctx.pathname.slice(pathPrefix.length) || "/");
-    });
-
-    return result;
-
-    if (result instanceof NextResponse) {
-      return result;
-    } else if (result !== undefined) {
-      return NextResponse.json(result);
-    }
-
-
-
     for (const [pathPrefix, router] of Object.entries(this.routersMap)) {
       if (ctx.pathname.startsWith(pathPrefix)) {
 
-
-        const result = await this.applyMiddlewares(ctx, async (ctx) => {
-          return 2;
-          // return await router.handler(ctx, ctx.pathname.slice(pathPrefix.length) || "/");
+        const result = await this.applyMiddlewares(ctx, async (newCtx = ctx) => {
+          return await router.handler(newCtx, newCtx.pathname.slice(pathPrefix.length) || "/");
         });
 
         if (result instanceof NextResponse) {
