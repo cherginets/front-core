@@ -9,8 +9,8 @@ export class CoreApiRouter<Context extends ApiContext> {
   // Ключ - URL, значение - обработчик
   public methodsMap: Partial<Record<HTTP_METHOD, Record<string, (ctx: Context) => any>>> = {};
 
-  use(middleware: ApiMiddleware<Context>) {
-    this.middlewares.push(middleware);
+  use(...middlewares: ApiMiddleware<Context>[]) {
+    this.middlewares.push(...middlewares);
   }
 
   // region HTTP methods

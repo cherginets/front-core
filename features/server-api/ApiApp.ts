@@ -40,5 +40,6 @@ export class ApiApp<Context extends ApiContext> extends CoreApiRouter<Context> {
     }
     router.prefix = pathPrefix
     this.routersMap[pathPrefix] = router;
+    return router;
   }
 }
