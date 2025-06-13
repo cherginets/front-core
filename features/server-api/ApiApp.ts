@@ -6,10 +6,9 @@ import {getUserIpFromNextRequest} from "@/core/utils/getUserIpFromNextRequest";
 export class ApiApp<Context extends ApiContext> extends CoreApiRouter<Context> {
   private routersMap: Record<string, CoreApiRouter<Context>> = {};
 
-  async start(req: NextRequest, res: NextResponse): Promise<NextResponse> {
+  async start(req: NextRequest): Promise<NextResponse> {
     const ctx = {
       req,
-      res,
       pathname: this.getPathname(req),
       query: Object.fromEntries(req.nextUrl.searchParams),
       params: {},
