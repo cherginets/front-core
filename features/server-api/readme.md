@@ -19,15 +19,18 @@
 
 ```typescript
 // route.ts
-import api from "./api.ts"
+import api from "./api";
+import {NextRequest, NextResponse} from "next/server";
+
 const handler = async (req: NextRequest, res: NextResponse) => {
   return await api.start({req, res});
-}
-export const GET = async (req: NextRequest) => await handler(req);
-export const POST = async (req: NextRequest) => await handler(req);
-export const PATCH = async (req: NextRequest) => await handler(req);
-export const PUT = async (req: NextRequest) => await handler(req);
-export const DELETE = async (req: NextRequest) => await handler(req);
+};
+export const GET = async (req: NextRequest, res: NextResponse) => await handler(req, res);
+export const POST = async (req: NextRequest, res: NextResponse) => await handler(req, res);
+export const PATCH = async (req: NextRequest, res: NextResponse) => await handler(req, res);
+export const PUT = async (req: NextRequest, res: NextResponse) => await handler(req, res);
+export const DELETE = async (req: NextRequest, res: NextResponse) => await handler(req, res);
+
 ```
 
 ```typescript

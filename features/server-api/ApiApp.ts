@@ -1,21 +1,26 @@
 import {ApiRouter} from "@/core/features/server-api/ApiRouter";
 import {ApiContext} from "@/core/features/server-api/types";
-import {NextResponse} from "next/server";
+import {NextRequest, NextResponse} from "next/server";
 
 export class ApiApp extends ApiRouter {
   private routersMap: Record<string, ApiRouter> = {};
 
-  async start(_ctx: Pick<ApiContext, "req" | "res">) {
+
+
+  async start(req: NextRequest, res: NextResponse): Promise<NextResponse> {
     const ctx = {
-      ..._ctx,
-      pathname: _ctx.req.nextUrl.pathname.slice(4),
+      req,
+      res,
+      pathname: this.getPathname(req),
+      query: Object.fromEntries(req.nextUrl.searchParams),
+      params: {},
     };
 
     for (const [pathPrefix, router] of Object.entries(this.routersMap)) {
       if (ctx.pathname.startsWith(pathPrefix)) {
 
-        const result = await this.applyMiddlewares(ctx, async (newCtx = ctx) => {
-          return await router.handler(newCtx, newCtx.pathname.slice(pathPrefix.length) || "/");
+        const result = await this.applyMiddlewares(ctx, async (ctx) => {
+          return await router.handler(ctx, ctx.pathname.slice(pathPrefix.length) || "/");
         });
 
         if (result instanceof NextResponse) {
@@ -33,6 +38,7 @@ export class ApiApp extends ApiRouter {
     if (pathPrefix in this.routersMap) {
       throw new Error("Router with this path prefix already exists: " + pathPrefix);
     }
+    router.prefix = pathPrefix
     this.routersMap[pathPrefix] = router;
   }
 }
