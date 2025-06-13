@@ -1,11 +1,8 @@
 import {ApiRouter} from "@/core/features/server-api/ApiRouter";
-import {ApiContext} from "@/core/features/server-api/types";
 import {NextRequest, NextResponse} from "next/server";
 
 export class ApiApp extends ApiRouter {
   private routersMap: Record<string, ApiRouter> = {};
-
-
 
   async start(req: NextRequest, res: NextResponse): Promise<NextResponse> {
     const ctx = {
@@ -16,22 +13,24 @@ export class ApiApp extends ApiRouter {
       params: {},
     };
 
-    for (const [pathPrefix, router] of Object.entries(this.routersMap)) {
-      if (ctx.pathname.startsWith(pathPrefix)) {
+    const result = await this.applyMiddlewares(ctx, async (ctx) => {
+      for (const [pathPrefix, router] of Object.entries(this.routersMap)) {
+        if (ctx.pathname.startsWith(pathPrefix)) {
 
-        const result = await this.applyMiddlewares(ctx, async (ctx) => {
           return await router.handler(ctx, ctx.pathname.slice(pathPrefix.length) || "/");
-        });
 
-        if (result instanceof NextResponse) {
-          return result;
-        } else if (result !== undefined) {
-          return NextResponse.json(result);
+          if (result instanceof NextResponse) {
+            return result;
+          } else if (result !== undefined) {
+            return NextResponse.json(result);
+          }
         }
       }
-    }
 
-    return NextResponse.json({error: "Not Found"}, {status: 404});
+      return NextResponse.json({error: "Not Found"}, {status: 404});
+    });
+
+    return result;
   }
 
   addRouter(pathPrefix: string, router: ApiRouter) {

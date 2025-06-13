@@ -1,6 +1,7 @@
 import {HTTP_METHOD} from "next/dist/server/web/http";
 import {NextRequest, NextResponse} from "next/server";
 import {ApiContext, ApiMiddleware } from "./types";
+import NotFoundError from "@/core/errors/http/NotFoundError";
 
 export class ApiRouter {
   public prefix = "";
@@ -69,7 +70,8 @@ export class ApiRouter {
     const method = ctx.req.method! as HTTP_METHOD;
     const pathname = ctx.pathname;
 
-    for(const [routePath, handler] of Object.entries(this.methodsMap[method] || {})) {
+    let routerHandler: any = null;
+    for(const [routePath, localHandler] of Object.entries(this.methodsMap[method] || {})) {
 
       const routeUrl = this.prefix + routePath;
       const paramsArray: string[] = [];
@@ -95,22 +97,22 @@ export class ApiRouter {
         return acc;
       }, {});
 
-      return await this.applyMiddlewares(ctx, async (ctx) => {
-        return await handler(ctx);
+      routerHandler = async () => await this.applyMiddlewares(ctx, async (ctx) => {
+        return await localHandler(ctx);
       }, this.middlewares);
-
+      break;
     }
 
+    if(routerHandler) {
+      return await routerHandler();
+    }
 
-    // Если обработчика нет, возвращаем 404
-    return NextResponse.json({error: "Not Found"}, {status: 404});
+    throw new NotFoundError("Not found");
   }
 
   async applyMiddlewares(ctx: ApiContext, next: (ctx: ApiContext) => Promise<any>, middlewares = this.middlewares):Promise<any> {
-    console.log('middlewares.length', middlewares.length, ctx.params);
     // Если нет middlewares, просто вызываем next
     if(!middlewares.length) {
-      console.log('run next')
       return await next(ctx);
     }
     // Берем первый middleware и вызываем его
@@ -120,32 +122,6 @@ export class ApiRouter {
       return await this.applyMiddlewares(ctx, next, restMiddlewares);
     });
 
-  }
-
-  private parseSlugParams(req: NextRequest, routeUrl: string) {
-    const paramsArray: string[] = [];
-
-    const routeRegex = new RegExp(
-      "^" +
-      routeUrl
-        .replace(/{([^/{}]+)}/g, (_, paramName) => {
-          paramsArray.push(paramName); // Сохраняем имена параметров
-          return "([^/]+)"; // Заменяем на группу
-        })
-        .replace(/\//g, "\\/") + // Экранируем слэши
-      "$"
-    );
-
-    const match = this.getPathname(req).match(routeRegex);
-    if (!match) {
-      return {};
-    }
-
-    // Извлекаем параметры
-    return paramsArray.reduce<Record<string, string>>((acc, paramName, index) => {
-      acc[paramName] = match[index + 1];
-      return acc;
-    }, {});
   }
 
   protected getPathname(req: NextRequest): string {
